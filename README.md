@@ -1,7 +1,7 @@
 # Meetup
 
 ## Database Schema Design
-![Untitled](https://user-images.githubusercontent.com/75222415/176785720-6f117f68-fab5-43ad-8f2f-b54dafeafb58.png)
+![Meetup BackEnd plan](https://user-images.githubusercontent.com/75222415/176930620-8695cecd-1c99-42ef-b218-49156bd2d171.png)
 
 
 ## API Documentation
