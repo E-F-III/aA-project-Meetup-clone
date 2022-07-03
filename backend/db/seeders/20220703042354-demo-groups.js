@@ -7,7 +7,7 @@ module.exports = {
         {
           organizerId: 1,
           name: "Evening Tennis on the Water",
-          about: "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          about: "Enjoy rounds of tennis with a tight-nit group of people on the water.",
           type: "In person",
           private: true,
           city: "New York",
@@ -16,7 +16,7 @@ module.exports = {
         {
           organizerId: 1,
           name: "Evening Water on the Tennis",
-          about: "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          about: "Enjoy rounds of water with a tight-nit group of people on the tennis.",
           type: "Online",
           private: false,
           city: "New York",
@@ -25,7 +25,7 @@ module.exports = {
         {
           organizerId: 2,
           name: "Tennis Water on the Evening",
-          about: "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
+          about: "Enjoy rounds of tennis water with a tight-nit group of people on the evening.",
           type: "In person",
           private: true,
           city: "Honolulu",
