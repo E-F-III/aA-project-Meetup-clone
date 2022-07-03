@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+const { User } = require('./user')
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
     /**
@@ -11,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Group.belongsToMany(models.User, {
+        through: 'UsersGroups'
+      })
+
+      Group.belongsTo(models.User, { foreignKey: 'organizerId' })
     }
   }
   Group.init({
