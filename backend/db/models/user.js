@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 
 'use strict';
 const {  Model, Validator } = require('sequelize');
-const { Group } = require('./group')
+const Group = require('./group')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
@@ -44,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsToMany(models.Group, {
-        through: 'UsersGroups'
+        through: 'UsersGroups',
+        foreignKey: 'memberId'
       })
 
       User.hasMany(models.Group, { foreignKey: 'organizerId' })

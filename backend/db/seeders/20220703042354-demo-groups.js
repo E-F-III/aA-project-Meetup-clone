@@ -12,6 +12,7 @@ module.exports = {
           private: true,
           city: "New York",
           state: "NY",
+          previewImage: "image url 1"
         },
         {
           organizerId: 1,
@@ -21,6 +22,7 @@ module.exports = {
           private: false,
           city: "New York",
           state: "NY",
+          previewImage: "image url 2",
         },
         {
           organizerId: 2,
@@ -30,6 +32,7 @@ module.exports = {
           private: true,
           city: "Honolulu",
           state: "HI",
+          previewImage: "image url 3",
         },
       ])
   },

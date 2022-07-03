@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group, sequelize } = require('../../db/models');
+const { User, Group, UsersGroup, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -14,9 +14,16 @@ router.get(
         const groups = await Group.findAll({
             attributes: {
                 include: [
-                    [sequelize.fn('COUNT', sequelize.col('')), 'members']
+                    [sequelize.fn('COUNT', sequelize.col('Users.id')), 'numMembers']
                 ]
-            }
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: []
+                }
+            ],
+            group: ['groupId']
         })
 
         res.json(groups)
