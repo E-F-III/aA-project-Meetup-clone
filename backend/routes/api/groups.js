@@ -5,9 +5,39 @@ const { User, Group, UsersGroup, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+// const { where } = require('sequelize/types');
+const group = require('../../db/models/group');
 
 const router = express.Router();
 
+
+//GET a specific group with member count AND information about the organizer
+router.get(
+    '/:groupId',
+    async (req, res, next) => {
+        const groupId = req.params.groupId
+
+        const group = await Group.findByPk(groupId, {
+            attributes: {
+                include: [
+                    [sequelize.fn('COUNT', sequelize.col('Users.id')), 'numMembers'],
+
+                ]
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: []
+                },
+                'Organizer'
+            ],
+            group: ['groupId']
+        })
+
+        res.json(group)
+    })
+
+//GET all groups with member count
 router.get(
     '/',
     async (_req, res, next) => {
@@ -20,7 +50,7 @@ router.get(
             include: [
                 {
                     model: User,
-                    attributes: []
+                    attributes: [],
                 }
             ],
             group: ['groupId']

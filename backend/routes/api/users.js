@@ -40,6 +40,15 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+// GET groups joined or organized by a user
+
+router.get(
+  '/groups',
+  async (req, res, next) => {
+    // const
+  }
+)
+
 // Sign up
 router.post(
   '/',
