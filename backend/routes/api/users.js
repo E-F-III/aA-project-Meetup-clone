@@ -42,11 +42,12 @@ const validateSignup = [
 ];
 
 // GET groups joined or organized by the current User
-
 router.get(
   '/currentUser/groups',
+  requireAuth,
   async (req, res, next) => {
     const currUserId = req.user.id
+    const currUser = User.findByPk(currUserId, {include:'MembersGroups'})
 
     const organizedGroups = await Group.findAll({
       where: {
@@ -67,18 +68,13 @@ router.get(
       group: ['Group.Id']
     })
 
-    const joinedGroups = await User.findByPk(currUserId, {
-      include: [
-        {
-          model: Group,
-          as: 'MembersGroups',
-        }
-      ],
-      attributes: []
-    })
+    const joinedGroups = await currUser.getGroups()
+    console.log(joinedGroups)
 
-    const allGroups = [...organizedGroups, ...joinedGroups.MembersGroups]
-      res.json(allGroups)
+    // const allGroups = [...organizedGroups, ...joinedGroups.MembersGroups]
+      // res.json(allGroups)
+
+    res.json(organizedGroups)
   }
 )
 
@@ -86,7 +82,7 @@ router.get(
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
+  async (req, res, next) => {
     const { email, password, firstName, lastName } = req.body;
 
     const existingUser = await User.findOne({
@@ -96,13 +92,19 @@ router.post(
     })
 
     if (existingUser) {
-      return res.status(403).json({
-        message: "User already exists",
-        statusCode: 403,
-        errors: {
-          email: "User with that email already exists"
-        }
-      })
+
+      const err = new Error('User already exists')
+      err.status(403)
+      err.errors.email = 'User with that email already exists'
+
+      return next(err)
+      // return res.status(403).json({
+      //   message: "User already exists",
+      //   statusCode: 403,
+      //   errors: {
+      //     email: "User with that email already exists"
+      //   }
+      // })
     }
 
     const user = await User.signup({ email, firstName, lastName, password });
