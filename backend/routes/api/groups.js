@@ -6,7 +6,7 @@ const { User, Group, UsersGroup, sequelize } = require('../../db/models');
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 // const { where } = require('sequelize/types');
-const group = require('../../db/models/group');
+// const group = require('../../db/models/group');
 
 const router = express.Router();
 
@@ -20,18 +20,19 @@ router.get(
         const group = await Group.findByPk(groupId, {
             attributes: {
                 include: [
-                    [sequelize.fn('COUNT', sequelize.col('Users.id')), 'numMembers'],
+                    [sequelize.fn('COUNT', sequelize.col('MembersGroups.id')), 'numMembers'],
 
                 ]
             },
             include: [
                 {
                     model: User,
-                    attributes: []
+                    attributes: [],
+                    as: 'MembersGroups'
                 },
                 'Organizer'
             ],
-            group: ['groupId']
+            group: ['Group.Id']
         })
 
         res.json(group)
@@ -44,16 +45,17 @@ router.get(
         const groups = await Group.findAll({
             attributes: {
                 include: [
-                    [sequelize.fn('COUNT', sequelize.col('Users.id')), 'numMembers']
+                    [sequelize.fn('COUNT', sequelize.col('MembersGroups.id')), 'numMembers']
                 ]
             },
             include: [
                 {
                     model: User,
                     attributes: [],
+                    as: 'MembersGroups'
                 }
             ],
-            group: ['groupId']
+            group: ['Group.Id'],
         })
 
         res.json(groups)

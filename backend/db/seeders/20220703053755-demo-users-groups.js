@@ -6,13 +6,33 @@ module.exports = {
     [
       {
         groupId: 1,
-        memberId: 1,
+        memberId: 2,
         status: 'member'
       },
       {
         groupId: 1,
-        memberId: 2,
+        memberId: 3,
         status: 'co-host'
+      },
+      {
+        groupId: 1,
+        memberId: 4,
+        status: 'member'
+      },
+      {
+        groupId: 1,
+        memberId: 5,
+        status: 'member'
+      },
+      {
+        groupId: 2,
+        memberId: 5,
+        status: 'co-host'
+      },
+      {
+        groupId: 2,
+        memberId: 2,
+        status: 'pending'
       },
       {
         groupId: 2,
@@ -21,18 +41,18 @@ module.exports = {
       },
       {
         groupId: 3,
-        memberId: 4,
+        memberId: 1,
         status: 'member'
       },
       {
         groupId: 3,
-        memberId: 5,
-        status: 'co-host'
+        memberId: 3,
+        status: 'member'
       },
       {
         groupId: 3,
-        memberId: 1,
-        status: 'pending'
+        memberId: 4,
+        status: 'member'
       },
     ])
   },

@@ -1,10 +1,11 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Group, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const group = require('../../db/models/group');
 
 const router = express.Router();
 
@@ -40,12 +41,44 @@ const validateSignup = [
   handleValidationErrors
 ];
 
-// GET groups joined or organized by a user
+// GET groups joined or organized by the current User
 
 router.get(
-  '/groups',
+  '/currentUser/groups',
   async (req, res, next) => {
-    // const
+    const currUserId = req.user.id
+
+    const organizedGroups = await Group.findAll({
+      where: {
+        organizerId: currUserId
+      },
+      attributes: {
+        include: [
+          [sequelize.fn('COUNT', sequelize.col('*')), 'numMembers'],
+        ]
+      },
+      include: [
+        {
+          model: User,
+          as: 'MembersGroups',
+          attributes: [],
+        },
+      ],
+      group: ['groupId']
+    })
+
+    const joinedGroups = await User.findByPk(currUserId, {
+      include: [
+        {
+          model: Group,
+          as: 'MembersGroups',
+        }
+      ],
+      attributes: []
+    })
+
+    const allGroups = [...organizedGroups, ...joinedGroups.MembersGroups]
+      res.json(allGroups)
   }
 )
 
