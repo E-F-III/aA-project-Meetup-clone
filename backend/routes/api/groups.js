@@ -122,10 +122,14 @@ router.delete(
         }
         //Only the owner can edit the group
         if (group.organizerId !== req.user.id) {
-            const err = new Error('You must be the owner to edit this group')
+            const err = new Error('You must be the owner to delete this group')
             err.status = 403
             return next(err)
         }
+
+        await group.destroy()
+
+        res.status(200).json({message: "Successfully deleted", statusCode: 200})
     }
 )
 
