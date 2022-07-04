@@ -54,7 +54,7 @@ router.get(
       },
       attributes: {
         include: [
-          [sequelize.fn('COUNT', sequelize.col('*')), 'numMembers'],
+          [sequelize.fn('COUNT', sequelize.col('MembersGroups.Id')), 'numMembers'],
         ]
       },
       include: [
@@ -64,7 +64,7 @@ router.get(
           attributes: [],
         },
       ],
-      group: ['groupId']
+      group: ['Group.Id']
     })
 
     const joinedGroups = await User.findByPk(currUserId, {

@@ -1,35 +1,43 @@
 'use strict';
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UsersGroups', {
+    await queryInterface.createTable('Images', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         onDelete: 'cascade',
+        defaultValue: null,
         references: {
           model: 'Groups',
           key: 'id'
         }
       },
-      memberId: {
+      eventId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         onDelete: 'cascade',
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
+        defaultValue: null,
+        // references: {
+        //   model: 'Events',
+        //   key: 'id'
+        // }
       },
-      status: {
-        type: Sequelize.TEXT,
-        defaultValue: 'pending'
+      venueId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'cascade',
+        defaultValue: null,
+        // references: {
+        //   model: 'Venues',
+        //   key: 'id'
+        // }
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +52,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UsersGroups');
+    await queryInterface.dropTable('Images');
   }
 };

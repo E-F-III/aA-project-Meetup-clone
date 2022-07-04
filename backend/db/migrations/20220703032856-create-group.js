@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Groups', {
@@ -11,7 +12,11 @@ module.exports = {
       organizerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        onDelete: 'cascade'
+        onDelete: 'cascade',
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       name: {
         type: Sequelize.STRING,

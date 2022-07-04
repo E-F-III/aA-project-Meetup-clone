@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Group, UsersGroup, sequelize } = require('../../db/models');
+const { User, Group, UsersGroup, Image, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -22,20 +22,22 @@ router.get(
                 include: [
                     [sequelize.fn('COUNT', sequelize.col('MembersGroups.id')), 'numMembers'],
 
-                ]
+                ],
+                group: ['UsersGroups.groupId']
             },
             include: [
                 {
                     model: User,
                     attributes: [],
-                    as: 'MembersGroups'
+                    as: 'MembersGroups',
                 },
-                'Organizer'
+                'Organizer',
             ],
-            group: ['Group.Id']
         })
 
-        res.json(group)
+        const groupJSON = group.toJSON()
+        groupJSON.Images = await group.getImages()
+        res.json(groupJSON)
     })
 
 //GET all groups with member count
