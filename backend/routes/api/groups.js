@@ -37,37 +37,7 @@ const validateGroup = [
     handleValidationErrors
 ]
 
-//GET a specific group with member count AND information about the organizer
-router.get(
-    '/:groupId',
-    async (req, res, next) => {
-        const groupId = req.params.groupId
 
-        const group = await Group.findByPk(groupId, {
-            attributes: {
-                include: [
-                    [sequelize.fn('COUNT', sequelize.col('MembersGroups.id')), 'numMembers'],
-
-                ],
-                exclude: [
-                    'previewImage'
-                ],
-                group: ['UsersGroups.groupId']
-            },
-            include: [
-                {
-                    model: User,
-                    attributes: [],
-                    as: 'MembersGroups',
-                },
-                'Organizer',
-            ],
-        })
-
-        const groupJSON = group.toJSON()
-        groupJSON.Images = await group.getImages()
-        res.json(groupJSON)
-    })
 
 //EDIT a specific group
 router.put(

@@ -47,34 +47,6 @@ router.get(
   requireAuth,
   async (req, res, next) => {
     const currUserId = req.user.id
-    const currUser = User.findByPk(currUserId, {include:'MembersGroups'})
-
-    const organizedGroups = await Group.findAll({
-      where: {
-        organizerId: currUserId
-      },
-      attributes: {
-        include: [
-          [sequelize.fn('COUNT', sequelize.col('MembersGroups.Id')), 'numMembers'],
-        ]
-      },
-      include: [
-        {
-          model: User,
-          as: 'MembersGroups',
-          attributes: [],
-        },
-      ],
-      group: ['Group.Id']
-    })
-
-    const joinedGroups = await currUser.getGroups()
-    console.log(joinedGroups)
-
-    // const allGroups = [...organizedGroups, ...joinedGroups.MembersGroups]
-      // res.json(allGroups)
-
-    res.json(organizedGroups)
   }
 )
 
