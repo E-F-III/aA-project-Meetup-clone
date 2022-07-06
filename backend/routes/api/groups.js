@@ -42,6 +42,63 @@ router.put(
     requireAuth,
     async (req, res, next) => {
 
+        const group = await Group.findByPk(req.params.groupId)
+
+        const membership = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.body.memberId
+            },
+            attributes: {
+                // exclude: ['UserId'] // THIS WORK AROUND FIXES THE UserId COLUMN ERROR
+            }
+        })
+
+        const currentUserMembership = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id
+            },
+            attributes: {
+                // exclude: ['UserId'] // THIS WORK AROUND FIXES THE UserId COLUMN ERROR
+            }
+        })
+
+        //check if group exists
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+        //check if request exists
+        if (!membership){
+            const err = new Error('Membership between the user and the group does not exits')
+            err.status = 404
+            return next(err)
+        }
+        //cannot change a status to pending
+        if (req.body.status === 'pending'){
+            const err = new Error('Cannot change a membership status to pending')
+            err.status = 400
+            return next(err)
+        }
+        //only the organizer can add co-hosts
+        if (req.body.status === 'co-host' && group.organizerId !== req.user.id){
+            const err = new Error('Current User must be the organizer to add a co-host')
+            err.status = 403
+            return next(err)
+        }
+        //current user has to be either an organizer or a co-host to change memberships
+        if (group.organizerId !== req.user.id && currentUserMembership.status !== 'co-host') {
+            const err = new Error('Current User must be the organizer or a co-host to make someone a member')
+            err.status = 403
+            return next(err)
+        }
+
+        membership.status = req.body.status
+        await membership.save()
+
+        res.json(membership)
     }
 )
 
@@ -100,21 +157,15 @@ router.get(
             return next(err)
         }
 
-        const membersList = await group.getMembers({
-            // include : {
-            //     model: User
-            // },
-            attributes: { exclude: ['UserId'] }
-        })
+        const membersList = await group.getMembers()
+        // console.log(membersList, '=================================================')
+
         // exclude UserId due to query looking for UserId despite that column not existing.
         const foundCurrentUser = await Member.findOne({
             where: {
                 groupId: req.params.groupId,
                 memberId: req.user.id
             },
-            attributes: {
-                exclude: ['UserId']
-            }
         })
         const members = []
 
