@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, UsersGroup, Image, sequelize } = require('../../db/models');
+const { User, Group, Member, Image, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -37,7 +37,15 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+//GET a specific group
+router.get(
+    '/:groupId',
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
 
+        res.json(group)
+    }
+)
 
 //EDIT a specific group
 router.put(

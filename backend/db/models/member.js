@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  UsersGroup.init({
+  Member.init({
     groupId: {
       type: DataTypes.INTEGER,
       allowNull: false,
