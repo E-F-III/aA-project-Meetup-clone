@@ -39,12 +39,26 @@ const validateGroup = [
 //POST a request to be a member of a group
 router.post(
     '/:groupId/members',
+    requireAuth,
     async (req, res, next) => {
         const group = await Group.findByPk(req.params.groupId)
 
         if (!group) {
             const err = new Error('Group couldn\'t be found')
             err.status = 404
+            return next(err)
+        }
+
+        const Membership = await Member.findOne({ where: { groupId: req.params.groupId, memberId: req.user.id }, attributes: {exclude: ['UserId']}})
+
+        if (Membership.status === 'pending') {
+            const err = new Error('Membership has already been requested')
+            err.status = 400
+            return next(err)
+        }
+        if (Membership.status === 'member' || Membership.status === 'co-host') {
+            const err = new Error('User is already a member of the group')
+            err.status = 400
             return next(err)
         }
 
