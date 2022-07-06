@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.TEXT,
       allowNull: false,
+      defaultValue: 'pending',
       validate: {
         validStatus(value){
           let validStatuses = ['co-host', 'member', 'pending']

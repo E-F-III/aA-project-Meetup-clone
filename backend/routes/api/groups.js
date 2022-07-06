@@ -36,11 +36,39 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+//POST a request to be a member of a group
+router.post(
+    '/:groupId/members',
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const newMember = await Member.create({
+            groupId: Number(req.params.groupId),
+            memberId: req.user.id
+        })
+
+        const resMember = {groupId: newMember.groupId, memberId: newMember.memberId, status: newMember.status}
+        res.json(resMember)
+    }
+)
+
 //GET members of a group
 router.get(
     '/:groupId/members',
     async (req, res, next) => {
         const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
 
         const membersList = await group.getMembers({
             // include : {
@@ -66,10 +94,12 @@ router.get(
                 let user = await User.findByPk(member.memberId)
                 user = user.toJSON()
 
-                user.status = member.status
+                user.Membership = {status: member.status}
+
+                //check if currently logged in User is a co-host or a organizer
+                //only include pending members IF user is a co-host or a organizer
                 if (req.user.id === group.organizerId || foundCurrentUser.status === 'co-host') members.push(user)
                 else if (req.user.id !== group.organizerId && user.status !== 'pending') members.push(user)
-
             }
         }
 

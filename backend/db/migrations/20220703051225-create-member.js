@@ -29,6 +29,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.TEXT,
+        allowNull: false,
         defaultValue: 'pending'
       },
       createdAt: {
