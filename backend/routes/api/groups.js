@@ -43,7 +43,20 @@ router.get(
     async (req, res, next) => {
         const group = await Group.findByPk(req.params.groupId)
 
-        res.json(group)
+        if (!group){
+            const err = new Error ('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        // LAZY LOADING INFORMATION
+        const groupJSON = group.toJSON()
+
+        groupJSON.numMembers = await group.countGroupMembers()
+        groupJSON.images = await group.getImages()
+        groupJSON.Organizer = await group.getOrganizer()
+
+        res.json(groupJSON)
     }
 )
 
@@ -136,20 +149,28 @@ router.post(
 router.get(
     '/',
     async (_req, res, next) => {
+        // EAGER LOADING WITH numMembers. ADDING MORE INCLUDES BREAKS THE COUNT
         const groups = await Group.findAll({
-            attributes: {
-                include: [
-                    [sequelize.fn('COUNT', sequelize.col('MembersGroups.id')), 'numMembers']
-                ]
-            },
             include: [
                 {
-                    model: User,
+                    model: Member,
                     attributes: [],
-                    as: 'MembersGroups'
-                }
+                    as: 'members'
+                },
+                {
+                    model: Image, // returns an array. clarify during stand up how to properly do this query
+                    as: 'previewImage',
+                    attributes: ['url'],
+                    limit: 1
+                 },
             ],
-            group: ['Group.Id'],
+            attributes: {
+                include: [
+                    [sequelize.fn('COUNT', sequelize.col('Members.groupId')), 'numMembers']
+                ]
+            },
+            group: ['Group.id'],
+            order: ['id'],
         })
 
         res.json(groups)

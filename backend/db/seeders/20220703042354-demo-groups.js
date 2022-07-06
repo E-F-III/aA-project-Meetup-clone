@@ -12,7 +12,7 @@ module.exports = {
           private: true,
           city: "New York",
           state: "NY",
-          previewImage: "image url 1"
+          // previewImage: "image url 1"
         },
         {
           organizerId: 1,
@@ -22,7 +22,7 @@ module.exports = {
           private: false,
           city: "New York",
           state: "NY",
-          previewImage: "image url 2",
+          // previewImage: "image url 2",
         },
         {
           organizerId: 2,
@@ -32,7 +32,7 @@ module.exports = {
           private: true,
           city: "Honolulu",
           state: "HI",
-          previewImage: "image url 3",
+          // previewImage: "image url 3",
         },
         {
           organizerId: 2,
@@ -42,7 +42,7 @@ module.exports = {
           private: true,
           city: "Honolulu",
           state: "HI",
-          previewImage: "image url 4",
+          // previewImage: "image url 4",
         },
         {
           organizerId: 3,
@@ -52,7 +52,7 @@ module.exports = {
           private: true,
           city: "Los Angeles",
           state: "CA",
-          previewImage: "image url 5",
+          // previewImage: "image url 5",
         },
       ])
   },

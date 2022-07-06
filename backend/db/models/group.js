@@ -15,10 +15,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         as: 'GroupMembers'
       })
+      Group.belongsTo(models.User, { foreignKey: 'organizerId', as: 'Organizer' })
 
-      Group.belongsTo(models.User, { as: 'Organizer' })
+      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'images' })
+      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'previewImage' })
 
-      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'Images'})
+      Group.hasMany(models.Member, {foreignKey: 'groupId', as: 'members'})
     }
   }
   Group.init({
@@ -82,9 +84,6 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-    },
-    previewImage: {
-      type: DataTypes.STRING
     },
   }, {
     sequelize,
