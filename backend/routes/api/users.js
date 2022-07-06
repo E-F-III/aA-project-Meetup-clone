@@ -5,6 +5,7 @@ const { User, Group, Member, Image, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -45,27 +46,11 @@ router.get(
   '/currentUser/groups',
   requireAuth,
   async (req, res, next) => {
-    // const currUser = await User.findByPk(req.user.id)
-
-    // const organized = await currUser.getOrganized()
-    // const joined = await currUser.getJoinedGroups({
-    //   attributes: {
-    //     exclude: ['Members']
-    //   }
-    // })
-
-    // res.json([...organized, ...joined])
-
-    const organizedGroups = await Group.findAll({
+    const orgGroups = await Group.findAll({
       where: {
         organizerId: req.user.id
       },
       include: [
-        {
-          model: Member,
-          attributes: [],
-          as: 'members'
-        },
         {
           model: Image, // returns an array. clarify during stand up how to properly do this query
           as: 'previewImage',
@@ -73,41 +58,48 @@ router.get(
           limit: 1
         },
       ],
-      attributes: {
-        include: [
-          [sequelize.fn('COUNT', sequelize.col('Members.groupId')), 'numMembers']
-        ]
-      },
-      group: ['Group.id'],
-      order: ['id'],
     })
 
     const joinedGroups = await Group.findAll({
       include: [
-          {
-              model: Member,
-              attributes: [],
-              as: 'members',
-              where: {
-                memberId: req.user.id
-              }
-          },
-          {
-              model: Image, // returns an array. clarify during stand up how to properly do this query
-              as: 'previewImage',
-              attributes: ['url'],
-              limit: 1
-           },
-      ],
-      attributes: {
-          include: [
-              [sequelize.fn('COUNT', sequelize.col('Members.groupId')), 'numMembers'] //count gets thrown off when where attribute is added to the members
-          ]
-      },
-      group: ['Group.id'],
-      order: ['id'],
-  })
-    res.json(joinedGroups)
+        {
+          model: Image, // returns an array. clarify during stand up how to properly do this query
+          as: 'previewImage',
+          attributes: ['url'],
+          limit: 1
+        },
+        {
+          model: Member,
+          as: 'members',
+          attributes: [],
+          where: {
+            memberId: req.user.id
+          }
+        }
+      ]
+    })
+
+    const allGroups = []
+
+    for (let group of orgGroups) {
+      const numMembers = await group.countGroupMembers()
+      const groupJSON = group.toJSON()
+
+      groupJSON.numMembers = numMembers
+      if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
+      allGroups.push(groupJSON)
+    }
+
+    for (let group of joinedGroups) {
+      const numMembers = await group.countGroupMembers()
+      const groupJSON = group.toJSON()
+
+      groupJSON.numMembers = numMembers
+      if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
+      allGroups.push(groupJSON)
+    }
+
+    res.json(allGroups)
   }
 )
 

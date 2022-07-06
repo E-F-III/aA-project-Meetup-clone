@@ -6,8 +6,6 @@ const { User, Group, Member, Image, sequelize } = require('../../db/models');
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
-// const { where } = require('sequelize/types');
-// const group = require('../../db/models/group');
 
 const router = express.Router();
 
@@ -95,7 +93,7 @@ router.get(
         const groupJSON = group.toJSON()
 
         groupJSON.numMembers = await group.countGroupMembers()
-        groupJSON.images = await group.getImages()
+        groupJSON.images = await group.getImages({attributes: ['url']})
         groupJSON.Organizer = await group.getOrganizer()
 
         res.json(groupJSON)
@@ -195,27 +193,26 @@ router.get(
         const groups = await Group.findAll({
             include: [
                 {
-                    model: Member,
-                    attributes: [],
-                    as: 'members'
-                },
-                {
                     model: Image, // returns an array. clarify during stand up how to properly do this query
                     as: 'previewImage',
                     attributes: ['url'],
                     limit: 1
                  },
             ],
-            attributes: {
-                include: [
-                    [sequelize.fn('COUNT', sequelize.col('Members.groupId')), 'numMembers']
-                ]
-            },
-            group: ['Group.id'],
-            order: ['id'],
         })
 
-        res.json(groups)
+        const allGroups = []
+
+        for (let group of groups) {
+            const numMembers = await group.countGroupMembers()
+            const groupJSON = group.toJSON()
+
+            groupJSON.numMembers = numMembers
+            if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
+            allGroups.push(groupJSON)
+        }
+
+        res.json(allGroups)
     }
 )
 
