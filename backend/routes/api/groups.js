@@ -50,7 +50,11 @@ router.post(
         }
 
         const Membership = await Member.findOne({ where: { groupId: req.params.groupId, memberId: req.user.id }, attributes: {exclude: ['UserId']}})
-
+        if (group.organizerId === req.user.id) {
+            const err = new Error('You can\'t request for membership when you are the organizer')
+            err.status = 400
+            return next(err)
+        }
         if (Membership.status === 'pending') {
             const err = new Error('Membership has already been requested')
             err.status = 400
