@@ -5,6 +5,7 @@ const { User, Group, Member, Image, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
 // const { where } = require('sequelize/types');
 // const group = require('../../db/models/group');
 
@@ -36,6 +37,47 @@ const validateGroup = [
         .withMessage('State is required'),
     handleValidationErrors
 ]
+
+//GET members of a group
+router.get(
+    '/:groupId/members',
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        const members = await group.getMembers({
+            attributes: {
+                exclude: ['GroupId', 'UserId']
+            }
+        })
+
+        res.json({Members: members})
+
+        // const members = await User.findAll({
+        //     attributes: {
+        //         include: [
+        //             [
+        //                 sequelize.literal(`(
+        //                     SELECT status
+        //                     FROM Members AS Member
+        //                     WHERE
+        //                         Member.memberId = User.id
+        //                         AND
+        //                         Member.groupId = ${req.params.groupId}
+        //                 )`),
+        //                 'membership'
+        //             ]
+        //         ]
+        //     },
+        //     where: {
+        //         membership: {
+        //             [Op.not]: null
+        //         }
+        //     }
+        // })
+        // console.log(members)
+        // res.json(members)
+    }
+)
 
 //GET a specific group
 router.get(
