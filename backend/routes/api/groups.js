@@ -36,6 +36,15 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+//PUT a membership from pending to member
+router.put(
+    '/:groupId/members',
+    requireAuth,
+    async (req, res, next) => {
+
+    }
+)
+
 //POST a request to be a member of a group
 router.post(
     '/:groupId/members',
@@ -49,21 +58,24 @@ router.post(
             return next(err)
         }
 
-        const Membership = await Member.findOne({ where: { groupId: req.params.groupId, memberId: req.user.id }, attributes: {exclude: ['UserId']}})
+        const Membership = await Member.findOne({ where: { groupId: req.params.groupId, memberId: req.user.id }, attributes: { exclude: ['UserId'] } })
         if (group.organizerId === req.user.id) {
             const err = new Error('You can\'t request for membership when you are the organizer')
             err.status = 400
             return next(err)
         }
-        if (Membership.status === 'pending') {
-            const err = new Error('Membership has already been requested')
-            err.status = 400
-            return next(err)
-        }
-        if (Membership.status === 'member' || Membership.status === 'co-host') {
-            const err = new Error('User is already a member of the group')
-            err.status = 400
-            return next(err)
+        if (Membership) {
+
+            if (Membership.status === 'pending') {
+                const err = new Error('Membership has already been requested')
+                err.status = 400
+                return next(err)
+            }
+            if (Membership.status === 'member' || Membership.status === 'co-host') {
+                const err = new Error('User is already a member of the group')
+                err.status = 400
+                return next(err)
+            }
         }
 
         const newMember = await Member.create({
@@ -71,7 +83,7 @@ router.post(
             memberId: req.user.id
         })
 
-        const resMember = {groupId: newMember.groupId, memberId: newMember.memberId, status: newMember.status}
+        const resMember = { groupId: newMember.groupId, memberId: newMember.memberId, status: newMember.status }
         res.json(resMember)
     }
 )
@@ -103,7 +115,7 @@ router.get(
             attributes: {
                 exclude: ['UserId']
             }
-            })
+        })
         const members = []
 
         if (membersList.length) {
@@ -112,7 +124,7 @@ router.get(
                 let user = await User.findByPk(member.memberId)
                 user = user.toJSON()
 
-                user.Membership = {status: member.status}
+                user.Membership = { status: member.status }
 
                 //check if currently logged in User is a co-host or a organizer
                 //only include pending members IF user is a co-host or a organizer
