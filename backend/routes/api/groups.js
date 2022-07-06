@@ -42,38 +42,39 @@ router.get(
     async (req, res, next) => {
         const group = await Group.findByPk(req.params.groupId)
 
-        const members = await group.getMembers({
-            attributes: {
-                exclude: ['GroupId', 'UserId']
-            }
+        const membersList = await group.getMembers({
+            // include : {
+            //     model: User
+            // },
+            attributes: { exclude: ['UserId'] }
         })
+        // exclude UserId due to query looking for UserId despite that column not existing.
+        const foundCurrentUser = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id
+            },
+            attributes: {
+                exclude: ['UserId']
+            }
+            })
+        const members = []
 
-        res.json({Members: members})
+        if (membersList.length) {
 
-        // const members = await User.findAll({
-        //     attributes: {
-        //         include: [
-        //             [
-        //                 sequelize.literal(`(
-        //                     SELECT status
-        //                     FROM Members AS Member
-        //                     WHERE
-        //                         Member.memberId = User.id
-        //                         AND
-        //                         Member.groupId = ${req.params.groupId}
-        //                 )`),
-        //                 'membership'
-        //             ]
-        //         ]
-        //     },
-        //     where: {
-        //         membership: {
-        //             [Op.not]: null
-        //         }
-        //     }
-        // })
-        // console.log(members)
-        // res.json(members)
+            for (let member of membersList) {
+                let user = await User.findByPk(member.memberId)
+                user = user.toJSON()
+
+                user.status = member.status
+                if (req.user.id === group.organizerId || foundCurrentUser.status === 'co-host') members.push(user)
+                else if (req.user.id !== group.organizerId && user.status !== 'pending') members.push(user)
+
+            }
+        }
+
+        res.json(members)
+
     }
 )
 
@@ -83,8 +84,8 @@ router.get(
     async (req, res, next) => {
         const group = await Group.findByPk(req.params.groupId)
 
-        if (!group){
-            const err = new Error ('Group couldn\'t be found')
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
             err.status = 404
             return next(err)
         }
@@ -93,7 +94,7 @@ router.get(
         const groupJSON = group.toJSON()
 
         groupJSON.numMembers = await group.countGroupMembers()
-        groupJSON.images = await group.getImages({attributes: ['url']})
+        groupJSON.images = await group.getImages({ attributes: ['url'] })
         groupJSON.Organizer = await group.getOrganizer()
 
         res.json(groupJSON)
@@ -109,8 +110,8 @@ router.put(
         const group = await Group.findByPk(req.params.groupId)
 
         //Group cannot be found
-        if (!group){
-            const err = new Error ('Group couldn\'t be found')
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
             err.status = 404
             return next(err)
         }
@@ -146,8 +147,8 @@ router.delete(
         const group = await Group.findByPk(req.params.groupId)
 
         //Group cannot be found
-        if (!group){
-            const err = new Error ('Group couldn\'t be found')
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
             err.status = 404
             return next(err)
         }
@@ -160,7 +161,7 @@ router.delete(
 
         await group.destroy()
 
-        res.status(200).json({message: "Successfully deleted", statusCode: 200})
+        res.status(200).json({ message: "Successfully deleted", statusCode: 200 })
     }
 )
 
@@ -197,7 +198,7 @@ router.get(
                     as: 'previewImage',
                     attributes: ['url'],
                     limit: 1
-                 },
+                },
             ],
         })
 
