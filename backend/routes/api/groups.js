@@ -90,7 +90,7 @@ router.delete(
             err.status = 404
             return next(err)
         }
-        //Only the owner can edit the group
+        //Only the owner can delete the group
         if (group.organizerId !== req.user.id) {
             const err = new Error('You must be the owner to delete this group')
             err.status = 403
