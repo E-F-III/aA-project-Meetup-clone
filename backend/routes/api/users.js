@@ -1,10 +1,11 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Group, Member, Image, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -40,11 +41,73 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+// GET groups joined or organized by the current User
+router.get(
+  '/currentUser/groups',
+  requireAuth,
+  async (req, res, next) => {
+    const orgGroups = await Group.findAll({
+      where: {
+        organizerId: req.user.id
+      },
+      include: [
+        {
+          model: Image, // returns an array. clarify during stand up how to properly do this query
+          as: 'previewImage',
+          attributes: ['url'],
+          limit: 1
+        },
+      ],
+    })
+
+    const joinedGroups = await Group.findAll({
+      include: [
+        {
+          model: Image, // returns an array. clarify during stand up how to properly do this query
+          as: 'previewImage',
+          attributes: ['url'],
+          limit: 1
+        },
+        {
+          model: Member,
+          as: 'members',
+          attributes: [],
+          where: {
+            memberId: req.user.id
+          }
+        }
+      ]
+    })
+
+    const allGroups = []
+
+    for (let group of orgGroups) {
+      const numMembers = await group.countGroupMembers()
+      const groupJSON = group.toJSON()
+
+      groupJSON.numMembers = numMembers
+      if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
+      allGroups.push(groupJSON)
+    }
+
+    for (let group of joinedGroups) {
+      const numMembers = await group.countGroupMembers()
+      const groupJSON = group.toJSON()
+
+      groupJSON.numMembers = numMembers
+      if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
+      allGroups.push(groupJSON)
+    }
+
+    res.json(allGroups)
+  }
+)
+
 // Sign up
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
+  async (req, res, next) => {
     const { email, password, firstName, lastName } = req.body;
 
     const existingUser = await User.findOne({
@@ -54,13 +117,19 @@ router.post(
     })
 
     if (existingUser) {
-      return res.status(403).json({
-        message: "User already exists",
-        statusCode: 403,
-        errors: {
-          email: "User with that email already exists"
-        }
-      })
+
+      const err = new Error('User already exists')
+      err.status(403)
+      err.errors.email = 'User with that email already exists'
+
+      return next(err)
+      // return res.status(403).json({
+      //   message: "User already exists",
+      //   statusCode: 403,
+      //   errors: {
+      //     email: "User with that email already exists"
+      //   }
+      // })
     }
 
     const user = await User.signup({ email, firstName, lastName, password });

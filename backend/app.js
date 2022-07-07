@@ -67,6 +67,7 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
+    // console.log(err.message, '======================================================')
     res.status(err.status || 500);
     console.error(err);
     res.json({
