@@ -49,9 +49,6 @@ router.put(
                 groupId: req.params.groupId,
                 memberId: req.body.memberId
             },
-            attributes: {
-                // exclude: ['UserId'] // THIS WORK AROUND FIXES THE UserId COLUMN ERROR
-            }
         })
 
         const currentUserMembership = await Member.findOne({
@@ -59,9 +56,6 @@ router.put(
                 groupId: req.params.groupId,
                 memberId: req.user.id
             },
-            attributes: {
-                // exclude: ['UserId'] // THIS WORK AROUND FIXES THE UserId COLUMN ERROR
-            }
         })
 
         //check if group exists
@@ -158,9 +152,7 @@ router.get(
         }
 
         const membersList = await group.getMembers()
-        // console.log(membersList, '=================================================')
 
-        // exclude UserId due to query looking for UserId despite that column not existing.
         const foundCurrentUser = await Member.findOne({
             where: {
                 groupId: req.params.groupId,
