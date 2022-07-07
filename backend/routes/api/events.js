@@ -12,6 +12,14 @@ const router = express.Router();
 const validateEvent = []
 
 
+//GET attendees of a specific event
+router.get(
+    ':/eventId/attendees',
+    async (req, res, next) => {
+
+    }
+)
+
 //DELETE a specific event
 router.delete(
     '/:eventId',
@@ -55,15 +63,7 @@ router.get(
         const event = await Event.findByPk(req.params.eventId,
             {
                 attributes:
-                    ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate'],
-                include: [
-                    {
-                        model: Image, // returns an array. clarify during stand up how to properly do this query
-                        as: 'previewImage',
-                        attributes: ['url'],
-                        limit: 1
-                    },
-                ],
+                    ['id', 'groupId', 'venueId', 'name', 'type', 'capacity', 'price', 'startDate', 'endDate'],
             },
         )
 
@@ -104,6 +104,7 @@ router.get(
             const images = await event.getImages()
 
             if (images.length) eventJSON.previewImage = images[0].url
+            else eventJSON.previewImage = null
             eventJSON.numAttending = await event.countEventAttendees()
             eventJSON.Group = await event.getGroup({
                 attributes: ['id', 'name', 'city', 'state']
