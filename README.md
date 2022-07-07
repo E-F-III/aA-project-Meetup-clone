@@ -1415,7 +1415,7 @@ Delete an event specified by its id
 
 Returns the attendees of an event specified by its id.
 
-* Require Authentication: false
+* Require Authentication: true
 * Request
   * Method: GET
   * URL: /events/:eventId/attendees
