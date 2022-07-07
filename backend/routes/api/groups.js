@@ -50,9 +50,27 @@ router.get(
             return next(err)
         }
 
-        const events = group.getEvents()
+        const events = await group.getEvents({
+            attributes:
+                    ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate'],
+        })
 
-        res.json({ Events: events })
+        const allEvents = []
+
+        for (let event of events) {
+            const eventJSON = event.toJSON()
+
+            eventJSON.numMembers = await event.countEventAttendees()
+            eventJSON.Group = await event.getGroup({
+                attributes: ['id', 'name', 'city', 'state']
+            })
+            eventJSON.Venue = await event.getVenue({
+                attributes: ['id', 'city', 'state']
+            })
+            allEvents.push(eventJSON)
+        }
+
+        res.json({ Events: allEvents })
     }
 )
 
