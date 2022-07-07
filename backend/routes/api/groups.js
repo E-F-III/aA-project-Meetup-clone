@@ -36,6 +36,29 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+
+// EVENTS OF A SPECIFIC GROUP ROUTE HANDLERS
+
+router.get(
+    '/:groupId/events',
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const events = group.getEvents()
+
+        res.json({ Events: events })
+    }
+)
+
+
+// MEMBERSHIPS OF A SPECIFIC GROUP ROUTE HANDLERS
+
 //DELETE a membership
 router.delete(
     '/:groupId/members',
@@ -222,6 +245,8 @@ router.get(
     }
 )
 
+// SPECIFIC GROUP ROUTE HANDLERS
+
 //GET a specific group
 router.get(
     '/:groupId',
@@ -282,6 +307,8 @@ router.put(
         res.json(group)
     }
 )
+
+//GENERIC GROUP ROUTE HANDLERS
 
 //DELETE a group
 router.delete(

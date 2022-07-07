@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Groups',
+    return await queryInterface.bulkInsert('Groups',
       [
         {
           organizerId: 1,
@@ -10,8 +10,8 @@ module.exports = {
           about: "-------------------- about group 1 --------------------",
           type: "In person",
           private: true,
-          city: "New York",
-          state: "NY",
+          city: "Kapolei",
+          state: "HI",
           // previewImage: "image url 1"
         },
         {
@@ -20,8 +20,8 @@ module.exports = {
           about: "-------------------- about group 2 --------------------",
           type: "Online",
           private: false,
-          city: "New York",
-          state: "NY",
+          city: "Ewa Beach",
+          state: "HI",
           // previewImage: "image url 2",
         },
         {
@@ -40,7 +40,7 @@ module.exports = {
           about: "-------------------- about group 4 --------------------",
           type: "Online",
           private: true,
-          city: "Honolulu",
+          city: "Pearl City",
           state: "HI",
           // previewImage: "image url 4",
         },
@@ -50,8 +50,8 @@ module.exports = {
           about: "-------------------- about group 5 --------------------",
           type: "In person",
           private: true,
-          city: "Los Angeles",
-          state: "CA",
+          city: "Kaneohe",
+          state: "HI",
           // previewImage: "image url 5",
         },
       ])
@@ -60,7 +60,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Groups', {
-      name: { [Op.in]: ['Evening Tennis on the Water', 'Evening Eater on the Tennis', 'Tennis Water on the Evening'] }
+      name: { [Op.in]: ['GROUP 1', 'GROUP 2', 'GROUP 3', 'GROUP 4', 'GROUP 5'] }
     }, {});
   }
 };
