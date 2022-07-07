@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, Member, Image, Event, sequelize } = require('../../db/models');
+const { User, Group, Member, Image, Event, Attendee, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -14,9 +14,47 @@ const validateEvent = []
 
 //GET attendees of a specific event
 router.get(
-    ':/eventId/attendees',
+    '/:eventId/attendees',
+    requireAuth,
     async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
 
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await Group.findByPk(event.groupId)
+
+        const attendanceList = await event.getAttendees()
+
+        const foundCurrentUser = await Member.findOne({
+            where: {
+                groupId: event.groupId,
+                memberId: req.user.id
+            },
+        })
+
+        console.log(foundCurrentUser, '----------------------------------------------------')
+
+        const attendees = []
+
+        if (attendanceList.length) {
+
+            for (let attendee of attendanceList) {
+                let user = await User.findByPk(attendee.userId)
+                // console.log(attendee.status)
+                user = user.toJSON()
+
+                user.Attendance = { status: attendee.status }
+
+                if (req.user.id === group.organizerId || (foundCurrentUser && foundCurrentUser.status === 'co-host')) attendees.push(user)
+                else if (attendee.status !== 'pending') attendees.push(user)
+            }
+        }
+
+        res.json(attendees)
     }
 )
 

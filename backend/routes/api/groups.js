@@ -241,6 +241,7 @@ router.get(
                 memberId: req.user.id
             },
         })
+
         const members = []
 
         if (membersList.length) {
