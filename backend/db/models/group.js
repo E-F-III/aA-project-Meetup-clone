@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'previewImage' })
 
       Group.hasMany(models.Member, {foreignKey: 'groupId', as: 'members'})
+
+      Group.hasMany(models.Venue, {foreignKey: 'groupId', as: 'venues'})
+      Group.hasMany(models.Event, {foreignKey: 'groupId', as: 'events'})
     }
   }
   Group.init({
