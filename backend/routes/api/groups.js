@@ -36,6 +36,46 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+//DELETE a membership
+router.delete(
+    '/:groupId/members',
+    requireAuth,
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        const membership = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.body.memberId
+            }
+        })
+
+        //check if group exists
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+        //check if membership exists
+        if (!membership){
+            const err = new Error('Membership between the user and the group does not exits')
+            err.status = 404
+            return next(err)
+        }
+        //check if current user is either organizer or the member
+        if (req.user.id !== group.organizerId && req.user.id !== req.body.memberId){
+            const err = new Error('Only the User or organizer may delete a Membership')
+            err.status = 403
+            return next(err)
+        }
+
+        await membership.destroy()
+        res.json({
+            message: "Successfully deleted membership from group"
+          })
+    }
+)
+
 //PUT a membership from pending to member
 router.put(
     '/:groupId/members',
@@ -92,7 +132,8 @@ router.put(
         membership.status = req.body.status
         await membership.save()
 
-        res.json(membership)
+
+        res.json({id: membership.id, groupId: membership.groupId, memberId: membership.memberId, status: membership.status})
     }
 )
 
