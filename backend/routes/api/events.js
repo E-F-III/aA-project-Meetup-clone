@@ -18,6 +18,15 @@ router.delete(
     requireAuth,
     async (req, res, next) => {
         const event = await Event.findByPk(req.params.eventId)
+
+        //Event cannot be found
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        //Other queries to verify ownership and membership
         const group = await event.getGroup()
         const membership = await Member.findOne({
             where: {
@@ -26,18 +35,10 @@ router.delete(
             },
         })
 
-        //Event cannot be found
-        if (!event) {
-            const err = new Error('Event couldn\'t be found')
-            err.status = 404
-            return next(err)
-        }
         //Only the owner and cohosts can delete the event
         if (group.organizerId === req.user.id || (membership && membership.status === 'co-host')) {
-
             await event.destroy()
             res.json({ message: "Successfully deleted" })
-
         } else {
             const err = new Error('You must be either the owner or a co-host to delete this event')
             err.status = 403
@@ -51,7 +52,20 @@ router.delete(
 router.get(
     '/:eventId',
     async (req, res, next) => {
-        const event = Event.findByPk(req.params.eventId)
+        const event = await Event.findByPk(req.params.eventId,
+            {
+                attributes:
+                    ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate'],
+                include: [
+                    {
+                        model: Image, // returns an array. clarify during stand up how to properly do this query
+                        as: 'previewImage',
+                        attributes: ['url'],
+                        limit: 1
+                    },
+                ],
+            },
+        )
 
         if (!event) {
             const err = new Error('Event couldn\'t be found')
@@ -59,7 +73,17 @@ router.get(
             return next(err)
         }
 
-        res.json(event)
+        const eventJSON = event.toJSON()
+        eventJSON.numAttending = await event.countEventAttendees()
+        eventJSON.Group = await event.getGroup({
+            attributes: ['id', 'name', 'private', 'city', 'state']
+        })
+        eventJSON.Venue = await event.getVenue({
+            attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
+        })
+        eventJSON.Images = await event.getImages()
+
+        res.json(eventJSON)
     }
 )
 
@@ -68,7 +92,11 @@ router.get(
 router.get(
     '/',
     async (req, res, next) => {
-        const events = await Event.findAll({ attributes: { exclude: ['eventId'] } })
+        const events = await Event.findAll({
+            attributes:
+                ['id', 'groupId', 'venueId', 'name', 'description',
+                    'type', 'capacity', 'price', 'startDate', 'endDate']
+        })
 
         res.json({ Events: events })
     })
