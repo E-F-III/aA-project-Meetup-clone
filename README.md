@@ -518,7 +518,7 @@ Deletes an existing group.
 
 Returns the members of a group specified by its id.
 
-* Require Authentication: false
+* Require Authentication: true
 * Request
   * Method: GET
   * URL: /groups/:groupId/members
