@@ -235,7 +235,7 @@ router.get(
 
                 //check if currently logged in User is a co-host or a organizer
                 //only include pending members IF user is a co-host or a organizer
-                if (req.user.id === group.organizerId || foundCurrentUser.status === 'co-host') members.push(user)
+                if (req.user.id === group.organizerId || (foundCurrentUser && foundCurrentUser.status === 'co-host')) members.push(user)
                 else if (req.user.id !== group.organizerId && user.status !== 'pending') members.push(user)
             }
         }
@@ -384,7 +384,7 @@ router.get(
             allGroups.push(groupJSON)
         }
 
-        res.json(allGroups)
+        res.json({Groups: allGroups})
     }
 )
 
