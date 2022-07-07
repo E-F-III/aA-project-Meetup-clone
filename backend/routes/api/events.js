@@ -34,7 +34,7 @@ router.get(
 router.get(
     '/',
     async (req, res, next) => {
-        const events = await Event.findAll()
+        const events = await Event.findAll({ attributes: { exclude: ['eventId']}})
 
         res.json({Events: events})
     })
