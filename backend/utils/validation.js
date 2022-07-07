@@ -7,11 +7,22 @@ const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const errors = validationErrors
-      .array()
-      .map((error) => `${error.msg}`);
+    // const errors = validationErrors
+      // .array()
+      // .map((error) => `${error.msg}`);
 
-    const err = Error('Bad request.');
+    // console.log(validationErrors)
+
+    const errors = []
+    validationErrors.array().forEach(error => {
+      let individualErrors = {}
+      individualErrors[error.param] = error.msg
+      errors.push(individualErrors)
+    })
+
+    // console.log("-------------------SEND HELP----------------------")
+
+    const err = Error('Validation error');
     err.errors = errors;
     err.status = 400;
     err.title = 'Bad request.';

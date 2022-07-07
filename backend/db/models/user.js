@@ -5,8 +5,8 @@ const {  Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
-      const { id, username, email } = this;
-      return { id, username, email }
+      const { id, firstName, lastName, email } = this;
+      return { id, firstName, lastName, email }
     }
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString())
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
-            username: credential,
+            // username: credential,
             email: credential
           }
         }
@@ -28,10 +28,12 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope('currentUser').findByPk(user.id)
       }
     }
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
-        username,
+        // username,
+        firstName,
+        lastName,
         email,
         hashedPassword
       });
@@ -44,23 +46,40 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [4, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error ("Cannot be an email.")
-          }
-        }
-      }
-    },
+    // username: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   validate: {
+    //     len: [4, 30],
+    //     isNotEmail(value) {
+    //       if (Validator.isEmail(value)) {
+    //         throw new Error ("Cannot be an email.")
+    //       }
+    //     }
+    //   }
+    // },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [3, 256]
+        len: [3, 256],
+        isEmail: true
+      }
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 256],
+        isAlpha: true,
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 256],
+        isAlpha: true,
       }
     },
     hashedPassword: {
