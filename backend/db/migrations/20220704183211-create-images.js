@@ -25,19 +25,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         defaultValue: null,
-        // references: {
-        //   model: 'Events',
-        //   key: 'id'
-        // }
+        references: {
+          model: 'Events',
+          key: 'id'
+        }
       },
       venueId: {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         defaultValue: null,
-        // references: {
-        //   model: 'Venues',
-        //   key: 'id'
-        // }
+        references: {
+          model: 'Venues',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

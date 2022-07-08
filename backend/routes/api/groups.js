@@ -36,6 +36,14 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+// POSTING a venue to a group
+router.get(
+    ':/groupId/venues',
+    requireAuth,
+    async (req, res, next) => {
+
+    }
+)
 
 // EVENTS OF A SPECIFIC GROUP ROUTE HANDLERS
 

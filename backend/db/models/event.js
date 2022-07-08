@@ -27,15 +27,56 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Event.init({
-    groupId: DataTypes.INTEGER,
-    venueId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    type: DataTypes.STRING,
-    capacity: DataTypes.INTEGER,
-    price: DataTypes.DECIMAL,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    venueId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        minLengthCheck(value){
+          if (value.length < 5){
+            throw new Error ('About must be at least 5 characters')
+          }
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        OLorIRL(value){
+          if (value !== 'In person' && value !== 'Online'){
+            throw new Error('Type must be Online or In person')
+          }
+        }
+      }
+    },
+    capacity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Event',

@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         onlyOneConnection(value) {
           if (value && (this.eventId || this.venueId)) {
-            throw new Error ('Image can only be uploaded to one group')
+            throw new Error ('Image can only be uploaded to one area')
           }
         }
       }
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         onlyOneConnection(value) {
           if (value && (this.groupId || this.venueId)) {
-            throw new Error ('Image can only be uploaded to one group')
+            throw new Error ('Image can only be uploaded to one area')
           }
         }
       }
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         onlyOneConnection(value) {
           if (value && (this.eventId || this.groupId)) {
-            throw new Error ('Image can only be uploaded to one group')
+            throw new Error ('Image can only be uploaded to one area')
           }
         }
       }
