@@ -12,6 +12,46 @@ const router = express.Router();
 const validateEvent = []
 
 
+//POST a request to attend an event
+router.post(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+        const attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id}})
+
+        if (attendance) {
+
+            if (attendance.status === 'pending') {
+                const err = new Error('Attendance has already been requested')
+                err.status = 400
+                return next(err)
+            }
+            if (attendance.status === 'member' || attendance.status === 'waitlist') {
+                const err = new Error('User is already an attendee of the event')
+                err.status = 400
+                return next(err)
+            }
+        }
+
+        const newAttendee = await Attendee.create({
+            eventId: Number(req.params.eventId),
+            userId: req.user.id
+        })
+
+        const resAttendee = { eventId: newAttendee.eventId, userId: newAttendee.userId, status: newAttendee.status }
+        res.json(resAttendee)
+    }
+)
+
 //GET attendees of a specific event
 router.get(
     '/:eventId/attendees',
@@ -36,15 +76,11 @@ router.get(
             },
         })
 
-        console.log(foundCurrentUser, '----------------------------------------------------')
-
         const attendees = []
 
         if (attendanceList.length) {
-
             for (let attendee of attendanceList) {
                 let user = await User.findByPk(attendee.userId)
-                // console.log(attendee.status)
                 user = user.toJSON()
 
                 user.Attendance = { status: attendee.status }
