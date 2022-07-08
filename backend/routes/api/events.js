@@ -12,6 +12,66 @@ const router = express.Router();
 const validateEvent = []
 
 
+//PUT a attendance from pending to member/waitlist
+router.put(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+        // check if event exists
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+        const attendance = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.body.userId
+            },
+            attributes: ['id', 'eventId', 'userId', 'status']
+        })
+        const currentUserMembership = await Member.findOne({
+            where: {
+                groupId: event.groupId,
+                memberId: req.user.id
+            },
+        })
+        // res.json(currentUserMembership)
+
+        // check if attendance request exists
+        if(!attendance){
+            const err = new Error('Attendance between the user and the event does not exist')
+            err.status = 404
+            return next(err)
+        }
+        // cannot change a status to pending
+        if (req.body.status === 'pending'){
+            const err = new Error('Cannot change a membership status to pending')
+            err.status = 400
+            return next(err)
+        }
+        //current user has to be either an organizer or a co-host to change attendance
+        if (!currentUserMembership && group.organizerId !== req.user.id) {
+            const err = new Error('Current User must be the organizer or a co-host to make someone a member')
+            err.status = 403
+            return next(err)
+        }
+        if (group.organizerId !== req.user.id && currentUserMembership.status !== 'co-host') {
+            const err = new Error('Current User must be the organizer or a co-host to make someone a member')
+            err.status = 403
+            return next(err)
+        }
+
+        attendance.status = req.body.status
+        await attendance.save()
+
+        res.json(attendance)
+    }
+)
+
 //POST a request to attend an event
 router.post(
     '/:eventId/attendees',
