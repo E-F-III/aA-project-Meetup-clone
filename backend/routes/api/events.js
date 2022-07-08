@@ -12,6 +12,53 @@ const router = express.Router();
 const validateEvent = []
 
 
+//DELETE a attendance
+router.delete(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+        // check if event exists
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+        const attendance = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.body.userId
+            },
+        })
+        const currentUserMembership = await Member.findOne({
+            where: {
+                groupId: event.groupId,
+                memberId: req.user.id
+            },
+        })
+        // check if attendance exists
+        if(!attendance){
+            const err = new Error('Attendance does not exist for this User')
+            err.status = 404
+            return next(err)
+        }
+        //check if current user is either organizer or the member
+        if (req.user.id !== group.organizerId && req.user.id !== req.body.userId){
+            const err = new Error('Only the User or organizer may delete an Attendance')
+            err.status = 403
+            return next(err)
+        }
+
+        await attendance.destroy()
+        res.json({
+            message: "Successfully deleted attendance from event"
+          })
+
+    }
+)
+
 //PUT a attendance from pending to member/waitlist
 router.put(
     '/:eventId/attendees',
@@ -39,7 +86,6 @@ router.put(
                 memberId: req.user.id
             },
         })
-        // res.json(currentUserMembership)
 
         // check if attendance request exists
         if(!attendance){
