@@ -14,10 +14,6 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isEmail()
     .withMessage('Please provide a valid email.'),
-  // check('username')
-  //   .exists({ checkFalsy: true })
-  //   .isLength({ min: 4 })
-  //   .withMessage('Please provide a username with at least 4 characters.'),
   check('firstName')
     .exists({ checkFalsy: true })
     .withMessage('First Name is required'),
@@ -52,7 +48,7 @@ router.get(
       },
       include: [
         {
-          model: Image, // returns an array. clarify during stand up how to properly do this query
+          model: Image, // returns an array to key into later
           as: 'previewImage',
           attributes: ['url'],
           limit: 1
@@ -63,7 +59,7 @@ router.get(
     const joinedGroups = await Group.findAll({
       include: [
         {
-          model: Image, // returns an array. clarify during stand up how to properly do this query
+          model: Image,
           as: 'previewImage',
           attributes: ['url'],
           limit: 1

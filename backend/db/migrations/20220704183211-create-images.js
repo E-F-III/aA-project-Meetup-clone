@@ -12,6 +12,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'cascade',
+        defaultValue: null,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
+      },
       groupId: {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',

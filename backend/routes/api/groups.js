@@ -13,7 +13,7 @@ const validateGroup = [
     check('name')
         .exists({ checkFalsy: true })
         .isLength({ min: 5, max: 60 })
-        .withMessage('Name must be 60 characters or less'),
+        .withMessage('Name must have a character count more than 5 and less than 60'),
     check('about')
         .exists({ checkFalsy: true })
         .isLength({ min: 50 })
@@ -36,11 +36,31 @@ const validateGroup = [
     handleValidationErrors
 ]
 
-// POSTING a venue to a group
+// POSTING a IMAGE to a group
 router.get(
-    ':/groupId/venues',
+    '/:groupId/images',
     requireAuth,
     async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+        //Only the owner can add images
+        if (group.organizerId !== req.user.id) {
+            const err = new Error('You must be the owner to delete this group')
+            err.status = 403
+            return next(err)
+        }
+
+        const newImage = Image.create({
+            url: req.body.url,
+            groupId: req.params.groupId
+        })
+
+        res.json() // what do i send back?
 
     }
 )

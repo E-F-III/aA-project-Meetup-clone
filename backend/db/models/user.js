@@ -57,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Group, { foreignKey: 'organizerId', as: 'Organized' })
       User.hasMany(models.Member, {foreignKey: 'memberId', as: 'membership'})
       User.hasMany(models.Attendee, {foreignKey: 'userId', as: 'attendees'})
+      User.hasMany(models.Images, {foreignKey: 'userId', as: 'owner'})
     }
   }
   User.init({

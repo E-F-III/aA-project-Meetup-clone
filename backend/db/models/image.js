@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Image.belongsTo(models.Group, { foreignKey: 'groupId' })
       Image.belongsTo(models.Event, { foreignKey: 'eventId' })
       Image.belongsTo(models.Venue, { foreignKey: 'venueId' })
+      Image.belongsTo(models.User, { foreignKey: 'userId' })
 
     }
   }
@@ -21,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     url: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     groupId: {
       type: DataTypes.INTEGER,

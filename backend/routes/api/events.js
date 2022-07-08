@@ -9,8 +9,47 @@ const { Op } = require('sequelize');
 
 const router = express.Router();
 
-const validateEvent = []
+const validateEvent = [
 
+]
+
+// POSTING a IMAGE to an event
+router.get(
+    '/:eventId/images',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.groupId)
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+
+        //Only an attendee can add images
+        const attendance = await Attendee.findOne({
+            where: {
+                eventId: req.params.eventId,
+                userId: req.user.id
+            },
+        })
+
+        if (!attendance || attendance.status !== 'member'){
+            const err = new Error('Only an attendee may add an images to an event')
+            err.status = 403
+            return next(err)
+        }
+
+        const newImage = Image.create({
+            url: req.body.url,
+            eventId: req.params.eventId
+        })
+
+        res.json() // what do i send back?
+
+    }
+)
 
 //DELETE a attendance
 router.delete(
