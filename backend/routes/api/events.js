@@ -11,6 +11,33 @@ const router = express.Router();
 
 const validateEvent = []
 
+//POST a new image for a group
+router.post(
+    '/:eventId/images',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, status: 'member' }})
+
+        if (group.organizerId === req.user.id || Attendance) {
+            const newImage = await Image.create({eventId: Number(req.params.eventId), userId: req.user.id, url: req.body.url})
+            res.json({id: newImage.id, imageableId: newImage.eventId, imageabletype: 'Event', url: newImage.url})
+        } else {
+            const err = new Error('User must be either the organizer or an attendee to upload images')
+            err.status = 403
+            return next(err)
+        }
+    }
+)
+
 //POST a request to attend an event
 router.post(
     '/:eventId/attendees',
@@ -25,6 +52,7 @@ router.post(
         }
 
         const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, }})
+        console.log(Attendance)
 
         if (Attendance) {
             if (Attendance.status === 'pending') {
