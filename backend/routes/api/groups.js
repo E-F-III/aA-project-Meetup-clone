@@ -36,6 +36,30 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+//POST a new image for a group
+router.post(
+    '/:groupId/images',
+    requireAuth,
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        if (group.organizerId === req.user.id) {
+            const newImage = await Image.create({groupId: Number(req.params.groupId), userId: req.user.id, url: req.body.url})
+            res.json({id: newImage.id, imageableId: newImage.groupId, imageabletype: 'Group', url: newImage.url})
+        } else {
+            const err = new Error('User must be the organizer to upload images')
+            err.status = 403
+            return next(err)
+        }
+    }
+)
+
 // POST a new venue for a group
 
 router.post(
