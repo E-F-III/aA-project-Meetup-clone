@@ -70,7 +70,7 @@ router.get(
         },
         {
           model: Member,
-          as: 'members',
+          as: 'Members',
           attributes: [],
           where: {
             memberId: req.user.id
@@ -82,7 +82,7 @@ router.get(
     const allGroups = []
 
     for (let group of orgGroups) {
-      const numMembers = await group.countGroupMembers()
+      const numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
       const groupJSON = group.toJSON()
 
       groupJSON.numMembers = numMembers
@@ -91,7 +91,7 @@ router.get(
     }
 
     for (let group of joinedGroups) {
-      const numMembers = await group.countGroupMembers()
+      const numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
       const groupJSON = group.toJSON()
 
       groupJSON.numMembers = numMembers
