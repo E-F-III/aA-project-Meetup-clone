@@ -11,6 +11,45 @@ const router = express.Router();
 
 const validateEvent = []
 
+//POST a request to attend an event
+router.post(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, }})
+
+        if (Attendance) {
+            if (Membership.status === 'pending') {
+                const err = new Error('Attendance has already been requested')
+                err.status = 400
+                return next(err)
+            }
+            if (Membership.status === 'member' || Membership.status === 'waitlist') {
+                const err = new Error('User is already an attendee of this event')
+                err.status = 400
+                return next(err)
+            }
+        }
+
+        const newAttendance = await Attendee.create({
+            eventId: Number(req.params.eventId),
+            userId: req.user.id
+        })
+
+        const resAttendance = { eventId: newAttendance.eventId, userId: newAttendance.userId, status: newAttendance.status }
+        res.json(resAttendance)
+    }
+)
+
 //GET attendees of an event
 router.get(
     '/:eventId/attendees',
