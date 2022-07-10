@@ -308,8 +308,6 @@ router.put(
     }
 )
 
-//GENERIC GROUP ROUTE HANDLERS
-
 //DELETE a group
 router.delete(
     '/:groupId',
