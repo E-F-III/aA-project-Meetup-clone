@@ -337,6 +337,7 @@ router.delete(
 )
 
 //POST a new group
+// PLEASE DOUBLE CHECK VALIDATIONS
 router.post(
     '/',
     requireAuth,
