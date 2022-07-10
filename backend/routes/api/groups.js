@@ -5,7 +5,7 @@ const { User, Group, Member, Image, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 const router = express.Router();
 
@@ -215,33 +215,43 @@ router.get(
             return next(err)
         }
 
-        const membersList = await group.getMembers()
-
-        const foundCurrentUser = await Member.findOne({
+        const cohost = await Member.findOne({
             where: {
                 groupId: req.params.groupId,
-                memberId: req.user.id
-            },
-        })
-        const members = []
-
-        if (membersList.length) {
-
-            for (let member of membersList) {
-                let user = await User.findByPk(member.memberId)
-                user = user.toJSON()
-
-                user.Membership = { status: member.status }
-
-                //check if currently logged in User is a co-host or a organizer
-                //only include pending members IF user is a co-host or a organizer
-                if (req.user.id === group.organizerId || (foundCurrentUser && foundCurrentUser.status === 'co-host')) members.push(user)
-                else if (req.user.id !== group.organizerId && user.status !== 'pending') members.push(user)
+                memberId: req.user.id,
+                status: 'co-host'
             }
+        })
+
+        if (group.organizerId === req.user.id || cohost) {
+            const members = await User.findAll({
+                include: {
+                    model: Member,
+                    attributes: ['status'],
+                    as: 'Membership',
+                    where: {
+                        groupId: req.params.groupId
+                    }
+                }
+            })
+            res.json(members)
+        } else {
+
+            const members = await User.findAll({
+                include: {
+                    model: Member,
+                    attributes: ['status'],
+                    as: 'Membership',
+                    where: {
+                        groupId: req.params.groupId,
+                        status: {
+                            [Op.not]: ['pending']
+                        }
+                    }
+                }
+            })
+            res.json(members)
         }
-
-        res.json(members)
-
     }
 )
 
