@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, Member, Image, Event, Venue, sequelize } = require('../../db/models');
+const { User, Group, Member, Image, Event, Venue, Attendee, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -10,6 +10,60 @@ const { Op } = require('sequelize');
 const router = express.Router();
 
 const validateEvent = []
+
+//GET attendees of an event
+router.get(
+    '/:eventId/attendees',
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+
+        const cohost = await Member.findOne({
+            where: {
+                groupId: group.id,
+                memberId: req.user.id,
+                status: 'co-host'
+            }
+        })
+
+        if (group.organizerId === req.user.id || cohost) {
+            const Attendees = await User.findAll({
+                include: {
+                    model: Attendee,
+                    as: 'Attendance',
+                    attributes: ['status'],
+                    where: {
+                        eventId: req.params.eventId
+                    }
+                }
+            })
+            res.json({Attendees})
+        } else {
+
+            const Attendees = await User.findAll({
+                include: {
+                    model: Attendee,
+                    as: 'Attendance',
+                    attributes: ['status'],
+                    where: {
+                        eventId: req.params.eventId,
+                        status: {
+                            [Op.not]: 'pending'
+                        }
+                    }
+                }
+            })
+            res.json({Attendees})
+        }
+    }
+)
 
 //DELETE an event
 router.delete(
