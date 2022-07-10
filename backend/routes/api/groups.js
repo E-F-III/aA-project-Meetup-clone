@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, Member, Image, sequelize } = require('../../db/models');
+const { User, Group, Member, Image, Venue, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -50,9 +50,40 @@ router.get(
             return next(err)
         }
 
-        const events = group.getEvents()
+        const events = await group.getEvents({
+            attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate'],
+            include: [
+                {
+                    model: Image,
+                    as: 'previewImage',
+                    attributes: ['url'],
+                    limit: 1
+                },
+                {
+                    model: Group,
+                    attributes: ['id', 'name', 'city', 'state']
+                },
+                {
+                    model: Venue,
+                    attributes: ['id', 'city', 'state']
 
-        res.json({ Events: events })
+                }
+            ]
+        })
+
+        const allEvents = []
+
+        for (let event of events) {
+            const eventJSON = event.toJSON()
+            if (eventJSON.previewImage[0]) eventJSON.previewImage = eventJSON.previewImage[0].url
+
+            const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] }}})
+            eventJSON.numAttending = numAttending
+
+            allEvents.push(eventJSON)
+        }
+
+        res.json({Events: allEvents})
     }
 )
 
