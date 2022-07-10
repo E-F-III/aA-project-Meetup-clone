@@ -37,6 +37,43 @@ const validateGroup = [
 ]
 
 
+// VENUES OF A SPECIFIC GROUP
+
+router.post(
+    '/:groupId/venues',
+    requireAuth,
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const cohost = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: 'co-host'
+            },
+        })
+
+        const { address, city, state, lat, lng } = req.body
+
+        if (group.organizerId === req.user.id || cohost){
+            const newVenue = await Venue.create({ groupId: req.params.groupId, address, city, state, lat, lng })
+
+            res.json({address, city, state, lat, lng})
+        } else {
+            const err = new Error('Current User must be the organizer or a co-host to create a venue')
+            err.status = 403
+            return next(err)
+        }
+
+    }
+)
+
 // EVENTS OF A SPECIFIC GROUP ROUTE HANDLERS
 
 router.get(
