@@ -24,16 +24,15 @@ router.post(
             return next(err)
         }
 
-        const group = await event.getGroup()
         const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, }})
 
         if (Attendance) {
-            if (Membership.status === 'pending') {
+            if (Attendance.status === 'pending') {
                 const err = new Error('Attendance has already been requested')
                 err.status = 400
                 return next(err)
             }
-            if (Membership.status === 'member' || Membership.status === 'waitlist') {
+            if (Attendance.status === 'member' || Attendance.status === 'waitlist') {
                 const err = new Error('User is already an attendee of this event')
                 err.status = 400
                 return next(err)
