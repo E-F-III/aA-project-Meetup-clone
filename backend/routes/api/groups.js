@@ -262,7 +262,7 @@ router.get(
         // LAZY LOADING INFORMATION
         const groupJSON = group.toJSON()
 
-        groupJSON.numMembers = await group.countGroupMembers()
+        groupJSON.numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
         groupJSON.images = await group.getImages({ attributes: ['url'] })
         groupJSON.Organizer = await group.getOrganizer()
 
@@ -376,7 +376,7 @@ router.get(
         const allGroups = []
 
         for (let group of groups) {
-            const numMembers = await group.countGroupMembers()
+            const numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
             const groupJSON = group.toJSON()
 
             groupJSON.numMembers = numMembers
