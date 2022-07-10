@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
-            // username: credential,
             email: credential
           }
         }
@@ -42,31 +41,15 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      // define association here
-      User.belongsToMany(models.Group, {
-        through: 'Members',
-        foreignKey: 'memberId',
-        as: 'JoinedGroups'
-      })
 
-      User.hasMany(models.Group, { foreignKey: 'organizerId', as: 'Organized' })
-      User.hasMany(models.Member, {foreignKey: 'memberId', as: 'membership'})
-      User.hasMany(models.Attendee, {foreignKey: 'userId', as: 'attendees'})
+      User.hasMany(models.Group, { foreignKey: 'organizerId', as: 'Organizer', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Member, { foreignKey: 'memberId', as: 'Membership', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Attendee, { foreignKey: 'userId', as: 'Attendance', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Attendee, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
+
     }
   }
   User.init({
-    // username: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     len: [4, 30],
-    //     isNotEmail(value) {
-    //       if (Validator.isEmail(value)) {
-    //         throw new Error ("Cannot be an email.")
-    //       }
-    //     }
-    //   }
-    // },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
