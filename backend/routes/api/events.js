@@ -17,15 +17,38 @@ const validateEvent = []
 router.get(
     '/:eventId',
     async (req, res, next) => {
-        const event = Event.findByPk(req.params.eventId)
+        const event = await Event.findByPk(req.params.eventId, {
+            attributes: ['id', 'groupId', 'venueId', 'name', 'description',
+                'type', 'capacity', 'price', 'startDate', 'endDate'],
+            include: [
+                {
+                    model: Image,
+                    as: 'images',
+                    attributes: ['url'],
+                },
+                {
+                    model: Group,
+                    attributes: ['id', 'name', 'private', 'city', 'state']
+                },
+                {
+                    model: Venue,
+                    attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
 
-        if (!event){
+                }
+            ],
+        })
+
+        if (!event) {
             const err = new Error('Event couldn\'t be found')
             err.status = 404
             return next(err)
         }
 
-        res.json(event)
+        const eventJSON = event.toJSON()
+        const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] } } })
+        eventJSON.numAttending = numAttending
+
+        res.json(eventJSON)
     }
 )
 
@@ -61,13 +84,13 @@ router.get(
             const eventJSON = event.toJSON()
             if (eventJSON.previewImage[0]) eventJSON.previewImage = eventJSON.previewImage[0].url
 
-            const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] }}})
+            const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] } } })
             eventJSON.numAttending = numAttending
 
             allEvents.push(eventJSON)
         }
 
-        res.json({Events: allEvents})
+        res.json({ Events: allEvents })
     })
 
 module.exports = router
