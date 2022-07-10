@@ -686,7 +686,7 @@ Change the status of a membership for a group specified by id.
 
     ```json
     {
-      "memberId": 2,
+      "memberId": 16,
       "status": "member"
     }
     ```
