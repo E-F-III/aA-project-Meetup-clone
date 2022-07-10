@@ -11,6 +11,61 @@ const router = express.Router();
 
 const validateEvent = []
 
+//DELETE an event
+
+//EDIT an event
+router.put(
+    '/:eventId',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(
+            req.params.eventId,
+            {
+                attributes: ['id', 'groupId', 'venueId', 'name', 'type',
+                    'capacity', 'price', 'description', 'startDate', 'endDate']
+            }
+        )
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+
+        const group = await event.getGroup()
+
+        if (venueId) {
+            const venue = await Venue.findByPk(venueId)
+
+            if (!venue) {
+                const err = new Error('Venue couldn\'t be found')
+                err.status = 404
+                return next(err)
+            }
+        }
+
+        const cohost = await Member.findOne({
+            where: {
+                groupId: group.id,
+                memberId: req.user.id,
+                status: 'co-host'
+            },
+        })
+
+        if (group.organizerId === req.user.id || cohost) {
+            await event.set({ venueId, name, type, capacity, price, description, startDate, endDate })
+            await event.save()
+            res.json({ venueId, name, type, capacity, price, description, startDate, endDate })
+        } else {
+            const err = new Error('Current User must be the organizer or a co-host to edits an event')
+            err.status = 403
+            return next(err)
+        }
+    }
+)
+
 //GET a specific event
 
 router.get(
