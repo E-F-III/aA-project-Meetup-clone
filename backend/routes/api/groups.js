@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Group, Member, Image, Venue, sequelize } = require('../../db/models');
+const { User, Group, Member, Image, Venue, Event, sequelize } = require('../../db/models');
 
 const { check, checkSchema } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -36,7 +36,6 @@ const validateGroup = [
     handleValidationErrors
 ]
 
-
 // POST a new venue for a group
 
 router.post(
@@ -61,12 +60,58 @@ router.post(
 
         const { address, city, state, lat, lng } = req.body
 
-        if (group.organizerId === req.user.id || cohost){
+        if (group.organizerId === req.user.id || cohost) {
             const newVenue = await Venue.create({ groupId: req.params.groupId, address, city, state, lat, lng })
 
-            res.json({address, city, state, lat, lng})
+            res.json({ address, city, state, lat, lng })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to create a venue')
+            err.status = 403
+            return next(err)
+        }
+
+    }
+)
+
+//POST a new Event
+router.post(
+    '/:groupId/events',
+    requireAuth,
+    async (req, res, next) => {
+        const group = await Group.findByPk(req.params.groupId)
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+
+        if (venueId) {
+            const venue = await Venue.findByPk(venueId)
+
+            if (!venue) {
+                const err = new Error('Venue couldn\'t be found')
+                err.status = 404
+                return next(err)
+            }
+        }
+
+        const cohost = await Member.findOne({
+            where: {
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: 'co-host'
+            },
+        })
+
+        if (group.organizerId === req.user.id || cohost) {
+            const event = await Event.create({ groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate })
+
+            res.json({ groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate })
+        } else {
+            const err = new Error('Current User must be the organizer or a co-host to create an event')
             err.status = 403
             return next(err)
         }
@@ -114,13 +159,13 @@ router.get(
             const eventJSON = event.toJSON()
             if (eventJSON.previewImage[0]) eventJSON.previewImage = eventJSON.previewImage[0].url
 
-            const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] }}})
+            const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] } } })
             eventJSON.numAttending = numAttending
 
             allEvents.push(eventJSON)
         }
 
-        res.json({Events: allEvents})
+        res.json({ Events: allEvents })
     }
 )
 
@@ -145,13 +190,13 @@ router.delete(
             return next(err)
         }
         //check if membership exists
-        if (!membership){
+        if (!membership) {
             const err = new Error('Membership between the user and the group does not exits')
             err.status = 404
             return next(err)
         }
         //check if current user is either organizer or the member
-        if (req.user.id !== group.organizerId && req.user.id !== req.body.memberId){
+        if (req.user.id !== group.organizerId && req.user.id !== req.body.memberId) {
             const err = new Error('Only the User or organizer may delete a Membership')
             err.status = 403
             return next(err)
@@ -160,7 +205,7 @@ router.delete(
         await membership.destroy()
         res.json({
             message: "Successfully deleted membership from group"
-          })
+        })
     }
 )
 
@@ -195,19 +240,19 @@ router.put(
             return next(err)
         }
         //check if request exists
-        if (!membership){
+        if (!membership) {
             const err = new Error('Membership between the user and the group does not exits')
             err.status = 404
             return next(err)
         }
         //cannot change a status to pending
-        if (req.body.status === 'pending'){
+        if (req.body.status === 'pending') {
             const err = new Error('Cannot change a membership status to pending')
             err.status = 400
             return next(err)
         }
         //only the organizer can add co-hosts
-        if (req.body.status === 'co-host' && group.organizerId !== req.user.id){
+        if (req.body.status === 'co-host' && group.organizerId !== req.user.id) {
             const err = new Error('Current User must be the organizer to add a co-host')
             err.status = 403
             return next(err)
@@ -216,7 +261,7 @@ router.put(
         if (group.organizerId === req.user.id || cohost) {
             membership.status = req.body.status
             await membership.save()
-            res.json({id: membership.id, groupId: membership.groupId, memberId: membership.memberId, status: membership.status})
+            res.json({ id: membership.id, groupId: membership.groupId, memberId: membership.memberId, status: membership.status })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to make someone a member')
             err.status = 403
@@ -339,7 +384,7 @@ router.get(
         // LAZY LOADING INFORMATION
         const groupJSON = group.toJSON()
 
-        groupJSON.numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
+        groupJSON.numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] } } })
         groupJSON.images = await group.getImages({ attributes: ['url'] })
         groupJSON.Organizer = await group.getOrganizer()
 
@@ -454,7 +499,7 @@ router.get(
         const allGroups = []
 
         for (let group of groups) {
-            const numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
+            const numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] } } })
             const groupJSON = group.toJSON()
 
             groupJSON.numMembers = numMembers
@@ -462,7 +507,7 @@ router.get(
             allGroups.push(groupJSON)
         }
 
-        res.json({Groups: allGroups})
+        res.json({ Groups: allGroups })
     }
 )
 
