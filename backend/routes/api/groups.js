@@ -114,10 +114,11 @@ router.put(
             },
         })
 
-        const currentUserMembership = await Member.findOne({
+        const cohost = await Member.findOne({
             where: {
                 groupId: req.params.groupId,
-                memberId: req.user.id
+                memberId: req.user.id,
+                status: 'co-host'
             },
         })
 
@@ -146,17 +147,16 @@ router.put(
             return next(err)
         }
         //current user has to be either an organizer or a co-host to change memberships
-        if (group.organizerId !== req.user.id && currentUserMembership.status !== 'co-host') {
+        if (group.organizerId === req.user.id || cohost) {
+            membership.status = req.body.status
+            await membership.save()
+            res.json({id: membership.id, groupId: membership.groupId, memberId: membership.memberId, status: membership.status})
+        } else {
             const err = new Error('Current User must be the organizer or a co-host to make someone a member')
             err.status = 403
             return next(err)
         }
 
-        membership.status = req.body.status
-        await membership.save()
-
-
-        res.json({id: membership.id, groupId: membership.groupId, memberId: membership.memberId, status: membership.status})
     }
 )
 
