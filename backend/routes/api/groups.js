@@ -37,7 +37,7 @@ const validateGroup = [
 ]
 
 
-// VENUES OF A SPECIFIC GROUP
+// POST a new venue for a group
 
 router.post(
     '/:groupId/venues',
@@ -74,7 +74,7 @@ router.post(
     }
 )
 
-// EVENTS OF A SPECIFIC GROUP ROUTE HANDLERS
+// GET all events of a group
 
 router.get(
     '/:groupId/events',
@@ -124,9 +124,6 @@ router.get(
     }
 )
 
-
-// MEMBERSHIPS OF A SPECIFIC GROUP ROUTE HANDLERS
-
 //DELETE a membership
 router.delete(
     '/:groupId/members',
@@ -168,6 +165,7 @@ router.delete(
 )
 
 //PUT a membership from pending to member
+
 router.put(
     '/:groupId/members',
     requireAuth,
@@ -229,6 +227,7 @@ router.put(
 )
 
 //POST a request to be a member of a group
+
 router.post(
     '/:groupId/members',
     requireAuth,
@@ -272,6 +271,7 @@ router.post(
 )
 
 //GET members of a group
+
 router.get(
     '/:groupId/members',
     async (req, res, next) => {
@@ -323,9 +323,8 @@ router.get(
     }
 )
 
-// SPECIFIC GROUP ROUTE HANDLERS
-
 //GET a specific group
+
 router.get(
     '/:groupId',
     async (req, res, next) => {
@@ -349,6 +348,7 @@ router.get(
 )
 
 //EDIT a specific group
+
 router.put(
     '/:groupId',
     requireAuth,
@@ -387,6 +387,7 @@ router.put(
 )
 
 //DELETE a group
+
 router.delete(
     '/:groupId',
     requireAuth,
@@ -413,7 +414,7 @@ router.delete(
 )
 
 //POST a new group
-// PLEASE DOUBLE CHECK VALIDATIONS
+
 router.post(
     '/',
     requireAuth,
@@ -438,11 +439,11 @@ router.post(
 router.get(
     '/',
     async (_req, res, next) => {
-        // EAGER LOADING WITH numMembers. ADDING MORE INCLUDES BREAKS THE COUNT
+
         const groups = await Group.findAll({
             include: [
                 {
-                    model: Image, // returns an array. clarify during stand up how to properly do this query
+                    model: Image,
                     as: 'previewImage',
                     attributes: ['url'],
                     limit: 1

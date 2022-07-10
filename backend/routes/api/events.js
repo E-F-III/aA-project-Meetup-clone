@@ -11,9 +11,8 @@ const router = express.Router();
 
 const validateEvent = []
 
-
 //GET a specific event
-// including numAttending, previewImage, Group, and Venus
+
 router.get(
     '/:eventId',
     async (req, res, next) => {
@@ -53,7 +52,7 @@ router.get(
 )
 
 //GET all events
-// including numAttending, previewImage, Group, and Venus
+
 router.get(
     '/',
     async (req, res, next) => {
