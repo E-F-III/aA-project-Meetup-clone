@@ -34,9 +34,31 @@ router.get(
 router.get(
     '/',
     async (req, res, next) => {
-        const events = await Event.findAll({ attributes: { exclude: ['eventId']}})
+        const events = await Event.findAll({
+            attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate'],
+            include: [
+                {
+                    model: Image,
+                    as: 'previewImage',
+                    attributes: ['url'],
+                    limit: 1
+                },
+            ],
+        })
 
-        res.json({Events: events})
+        const allEvents = []
+
+        for (let event of events) {
+            const eventJSON = event.toJSON()
+            if (eventJSON.previewImage[0]) eventJSON.previewImage = eventJSON.previewImage[0].url
+
+            const numAttending = await event.countAttendees({ where: { status: { [Op.in]: ['member'] }}})
+            eventJSON.numAttending = numAttending
+
+            allEvents.push(eventJSON)
+        }
+
+        res.json({Events: allEvents})
     })
 
 module.exports = router
