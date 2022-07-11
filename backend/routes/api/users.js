@@ -119,7 +119,7 @@ router.post(
     if (existingUser) {
 
       const err = new Error('User already exists')
-      err.status(403)
+      err.status = 403
       err.errors.email = 'User with that email already exists'
 
       return next(err)
