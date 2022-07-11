@@ -25,11 +25,11 @@ router.post(
         }
 
         const group = await event.getGroup()
-        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, status: 'member' }})
+        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, status: 'member' } })
 
         if (group.organizerId === req.user.id || Attendance) {
-            const newImage = await Image.create({eventId: Number(req.params.eventId), userId: req.user.id, url: req.body.url})
-            res.json({id: newImage.id, imageableId: newImage.eventId, imageabletype: 'Event', url: newImage.url})
+            const newImage = await Image.create({ eventId: Number(req.params.eventId), userId: req.user.id, url: req.body.url })
+            res.json({ id: newImage.id, imageableId: newImage.eventId, imageabletype: 'Event', url: newImage.url })
         } else {
             const err = new Error('User must be either the organizer or an attendee to upload images')
             err.status = 403
@@ -59,17 +59,66 @@ router.delete(
             return next(err)
         }
 
-        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.body.userId, }})
+        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.body.userId, } })
 
         if (group.organizerId === req.user.id || Attendance.userId === req.user.id) {
             await Attendance.destroy()
-            res.json( {message: "Successfully deleted attendance from event" })
+            res.json({ message: "Successfully deleted attendance from event" })
         } else {
             const err = new Error('Only the User or organizer may delete an attendance')
             err.status = 403
             return next(err)
         }
     }
+)
+
+//EDIT an attendance
+router.put(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+        //check if event exists
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+        const cohost = await Member.findOne({
+            where: {
+                groupId: group.id,
+                memberId: req.user.id,
+                status: 'co-host'
+            },
+        })
+
+        const attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.body.userId } })
+        //check if request exists
+        if (!attendance) {
+            const err = new Error('Attendance between the user and the event does not exist')
+            err.status = 404
+            return next(err)
+        }
+        //cannot change a status to pending
+        if (req.body.status === 'pending') {
+            const err = new Error('Cannot change an attendance status to pending')
+            err.status = 400
+            return next(err)
+        }
+
+        if (group.organizerId === req.user.id || cohost) {
+            attendance.status = req.body.status
+            await attendance.save()
+            res.json({ id: attendance.id, eventId: attendance.eventId, userId: attendance.memberId, status: attendance.status })
+        } else {
+            const err = new Error('Current User must be the organizer or a co-host to update an attendance')
+            err.status = 403
+            return next(err)
+        }
+    }
+
 )
 
 //POST a request to attend an event
@@ -85,7 +134,7 @@ router.post(
             return next(err)
         }
 
-        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, }})
+        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, } })
         console.log(Attendance)
 
         if (Attendance) {
@@ -144,7 +193,7 @@ router.get(
                     }
                 }
             })
-            res.json({Attendees})
+            res.json({ Attendees })
         } else {
 
             const Attendees = await User.findAll({
@@ -160,7 +209,7 @@ router.get(
                     }
                 }
             })
-            res.json({Attendees})
+            res.json({ Attendees })
         }
     }
 )
