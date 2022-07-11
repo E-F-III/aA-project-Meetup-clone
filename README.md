@@ -309,7 +309,7 @@ Returns the details of a group specified by its id.
       "updatedAt": "2021-11-19 20:39:36",
       "numMembers": 10,
       "images": [
-        "image url"
+        {"url": "image url"}
       ],
       "Organizer": {
         "id": 1,
