@@ -1862,7 +1862,7 @@ Return events filtered by query parameters.
     * size: integer, minimum: 0, maximum: 20, default: 20
     * name: string, optional
     * type: string, optional
-    * startDate: string, optional
+    * startDate: string, optional (example: 2022-11-19 20:00:00)
   * Body: none
 
 * Successful Response
