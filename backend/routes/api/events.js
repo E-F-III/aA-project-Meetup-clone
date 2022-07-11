@@ -380,6 +380,7 @@ router.get(
 
 router.get(
     '/',
+    validateQueries,
     async (req, res, next) => {
         // handling Queries from request
         let { page, size, name, type, startDate } = req.query
