@@ -362,7 +362,7 @@ router.get(
         })
 
         if (group.organizerId === req.user.id || cohost) {
-            const members = await User.findAll({
+            const Members = await User.findAll({
                 include: {
                     model: Member,
                     attributes: ['status'],
@@ -372,10 +372,10 @@ router.get(
                     }
                 }
             })
-            res.json(members)
+            res.json({Members})
         } else {
 
-            const members = await User.findAll({
+            const Members = await User.findAll({
                 include: {
                     model: Member,
                     attributes: ['status'],
@@ -388,7 +388,7 @@ router.get(
                     }
                 }
             })
-            res.json(members)
+            res.json({Members})
         }
     }
 )
