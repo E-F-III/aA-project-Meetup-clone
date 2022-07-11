@@ -150,7 +150,7 @@ router.post(
         if (group.organizerId === req.user.id || cohost) {
             const newVenue = await Venue.create({ groupId: req.params.groupId, address, city, state, lat, lng })
 
-            res.json({ id: newVenue.id, address: newVenue.address, city: newVenue.city, state: newVenue.state, lat: newVenue.lat, lng: newVenue.lng })
+            res.json({ id: newVenue.id, groupId: newVenue.groupId, address: newVenue.address, city: newVenue.city, state: newVenue.state, lat: newVenue.lat, lng: newVenue.lng })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to create a venue')
             err.status = 403
@@ -398,7 +398,7 @@ router.post(
             memberId: req.user.id
         })
 
-        const resMember = { groupId: newMember.groupId, memberId: newMember.memberId, status: newMember.status }
+        const resMember = { id: newMember.id, groupId: newMember.groupId, memberId: newMember.memberId, status: newMember.status }
         res.json(resMember)
     }
 )
