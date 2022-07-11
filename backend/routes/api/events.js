@@ -69,10 +69,7 @@ const validateQueries = [
     query('startDate')
         .optional()
         .isAfter()
-        .custom(
-            (val, { req }) => {
-                return !isNaN(Date.parse(val))
-            })
+        .custom((val) =>  !isNaN(Date.parse(val))) //takes a date string and converts to exact seconds since epox date, and if its NaN then the string passed is not a valid date
         .toDate()
         .withMessage('Start date must be a valid datetime'),
     handleValidationErrors
