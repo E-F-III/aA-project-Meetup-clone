@@ -36,6 +36,28 @@ const validateGroup = [
     handleValidationErrors
 ]
 
+const validateVenue = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 2, max: 2 })
+        .withMessage('Abbreviation of the State is required'),
+    check('lat')
+        .exists()
+        .isDecimal()
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists()
+        .isDecimal()
+        .withMessage('Longitude is not valid'),
+    handleValidationErrors
+]
+
 //POST a new image for a group
 router.post(
     '/:groupId/images',
@@ -50,8 +72,8 @@ router.post(
         }
 
         if (group.organizerId === req.user.id) {
-            const newImage = await Image.create({groupId: Number(req.params.groupId), userId: req.user.id, url: req.body.url})
-            res.json({id: newImage.id, imageableId: newImage.groupId, imageabletype: 'Group', url: newImage.url})
+            const newImage = await Image.create({ groupId: Number(req.params.groupId), userId: req.user.id, url: req.body.url })
+            res.json({ id: newImage.id, imageableId: newImage.groupId, imageabletype: 'Group', url: newImage.url })
         } else {
             const err = new Error('User must be the organizer to upload images')
             err.status = 403
@@ -65,6 +87,7 @@ router.post(
 router.post(
     '/:groupId/venues',
     requireAuth,
+    validateVenue,
     async (req, res, next) => {
         const group = await Group.findByPk(req.params.groupId)
 
@@ -87,7 +110,7 @@ router.post(
         if (group.organizerId === req.user.id || cohost) {
             const newVenue = await Venue.create({ groupId: req.params.groupId, address, city, state, lat, lng })
 
-            res.json({ address, city, state, lat, lng })
+            res.json({ id: newVenue.id, address: newVenue.address, city: newVenue.city, state: newVenue.state, lat: newVenue.lat, lng: newVenue.lng })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to create a venue')
             err.status = 403
@@ -372,7 +395,7 @@ router.get(
                     }
                 }
             })
-            res.json({Members})
+            res.json({ Members })
         } else {
 
             const Members = await User.findAll({
@@ -388,7 +411,7 @@ router.get(
                     }
                 }
             })
-            res.json({Members})
+            res.json({ Members })
         }
     }
 )
