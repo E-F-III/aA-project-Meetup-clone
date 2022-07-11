@@ -38,6 +38,40 @@ router.post(
     }
 )
 
+//DELETE attendance to an event
+router.delete(
+    '/:eventId/attendees',
+    requireAuth,
+    async (req, res, next) => {
+        const event = await Event.findByPk(req.params.eventId)
+
+        if (!event) {
+            const err = new Error('Event couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const group = await event.getGroup()
+
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
+        const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.body.userId, }})
+
+        if (group.organizerId === req.user.id || Attendance.userId === req.user.id) {
+            await Attendance.destroy()
+            res.json( {message: "Successfully deleted attendance from event" })
+        } else {
+            const err = new Error('Only the User or organizer may delete an attendance')
+            err.status = 403
+            return next(err)
+        }
+    }
+)
+
 //POST a request to attend an event
 router.post(
     '/:eventId/attendees',
