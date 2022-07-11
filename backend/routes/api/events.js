@@ -3,7 +3,7 @@ const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { User, Group, Member, Image, Event, Venue, Attendee, sequelize } = require('../../db/models');
 
-const { check, checkSchema } = require('express-validator');
+const { check, checkSchema, query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 
