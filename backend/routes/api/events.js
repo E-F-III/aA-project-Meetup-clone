@@ -12,7 +12,7 @@ const router = express.Router();
 const validateEvent = [
     check('venueId')
         .custom(
-            async (val, {req}) => {
+            async (val, { req }) => {
                 const venue = await Venue.findByPk(val)
                 if (venue) return true
                 else return false
@@ -34,14 +34,14 @@ const validateEvent = [
         .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
         .withMessage('Price is invalid'),
     check('description')
-        .exists( {checkFalsy: true } )
+        .exists({ checkFalsy: true })
         .withMessage('Description is required'),
     check('startDate')
         .isAfter()
         .withMessage('Start date must be in the future'),
     check('endDate')
         .custom(
-            (val, {req}) => {
+            (val, { req }) => {
                 return (Date.parse(val) - Date.parse(req.body.startDate)) >= 0
             }
         )
@@ -67,6 +67,7 @@ const validateQueries = [
         .isIn(['Online', 'In Person'])
         .withMessage('Type must be Online or In Person'),
     query('startDate')
+        // .exists({ checkFalsy: true })
         .optional()
         .isAfter()
         .custom((val) =>  !isNaN(Date.parse(val))) //takes a date string and converts to exact seconds since epox date, and if its NaN then the string passed is not a valid date
