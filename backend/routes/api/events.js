@@ -345,6 +345,12 @@ router.put(
 
         const group = await event.getGroup()
 
+        if (!group) {
+            const err = new Error('Group couldn\'t be found')
+            err.status = 404
+            return next(err)
+        }
+
         if (venueId) {
             const venue = await Venue.findByPk(venueId)
 
