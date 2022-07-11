@@ -9,7 +9,45 @@ const { Op } = require('sequelize');
 
 const router = express.Router();
 
-const validateEvent = []
+const validateEvent = [
+    check('venueId')
+        .custom(
+            async (val, {req}) => {
+                const venue = await Venue.findByPk(val)
+                if (venue) return true
+                else return false
+            }
+        )
+        .withMessage('Venue doesnt exist'),
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 5 })
+        .withMessage('Name must have at least 5 characters'),
+    check('type')
+        .exists({ checkFalsy: true })
+        .isIn(['In Person', 'Online'])
+        .withMessage('Type must be Online or In Person'),
+    check('capacity')
+        .isInt({ min: 1 })
+        .withMessage('Capacity must be an integer'),
+    check('price')
+        .isCurrency({ allow_negatives: false, digits_after_decimal: [0, 1, 2] })
+        .withMessage('Price is invalid'),
+    check('description')
+        .exists( {checkFalsy: true } )
+        .withMessage('Description is required'),
+    check('startDate')
+        .isAfter()
+        .withMessage('Start date must be in the future'),
+    check('endDate')
+        .custom(
+            (val, {req}) => {
+                return (Date.parse(val) - Date.parse(req.body.startDate)) >= 0
+            }
+        )
+        .withMessage('End date must be after the start date'),
+    handleValidationErrors
+]
 
 const validateQueries = [
     query('page')
@@ -287,6 +325,7 @@ router.delete(
 router.put(
     '/:eventId',
     requireAuth,
+    validateEvent,
     async (req, res, next) => {
         const event = await Event.findByPk(
             req.params.eventId,
