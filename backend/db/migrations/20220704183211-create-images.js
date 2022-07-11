@@ -30,7 +30,7 @@ module.exports = {
         //   key: 'id'
         // }
       },
-      venueId: {
+      userId: {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         defaultValue: null,

@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Image.belongsTo(models.Group, { foreignKey: 'groupId' })
-      Image.belongsTo(models.Event, { foreignKey: 'eventId' })
-      Image.belongsTo(models.Venue, { foreignKey: 'venueId' })
+      Image.belongsTo(models.Group, { foreignKey: 'groupId', onDelete: 'CASCADE' })
+      Image.belongsTo(models.Event, { foreignKey: 'eventId', onDelete: 'CASCADE' })
+      Image.belongsTo(models.User, { foreignKey: 'userId' })
 
     }
   }
@@ -22,11 +22,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     groupId: {
       type: DataTypes.INTEGER,
       validate: {
         onlyOneConnection(value) {
-          if (value && (this.eventId || this.venueId)) {
+          if (value && (this.eventId)) {
             throw new Error ('Image can only be uploaded to one group')
           }
         }
@@ -37,16 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         onlyOneConnection(value) {
           if (value && (this.groupId || this.venueId)) {
-            throw new Error ('Image can only be uploaded to one group')
-          }
-        }
-      }
-    },
-    venueId: {
-      type: DataTypes.INTEGER,
-      validate: {
-        onlyOneConnection(value) {
-          if (value && (this.eventId || this.groupId)) {
             throw new Error ('Image can only be uploaded to one group')
           }
         }

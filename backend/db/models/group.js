@@ -10,20 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Group.belongsToMany(models.User, {
-        through: 'Members',
-        foreignKey: 'groupId',
-        as: 'GroupMembers'
-      })
+
       Group.belongsTo(models.User, { foreignKey: 'organizerId', as: 'Organizer' })
+      Group.hasMany(models.Member, { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true })
 
-      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'images' })
-      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'previewImage' })
+      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'previewImage', onDelete: 'CASCADE', hooks: true })
+      Group.hasMany(models.Image, { foreignKey: 'groupId', as: 'images', onDelete: 'CASCADE', hooks: true })
 
-      Group.hasMany(models.Member, {foreignKey: 'groupId', as: 'members'})
+      Group.hasMany(models.Venue, { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true })
+      Group.hasMany(models.Event, { foreignKey: 'groupId', onDelete: 'CASCADE', hooks: true })
 
-      Group.hasMany(models.Venue, {foreignKey: 'groupId', as: 'venues'})
-      Group.hasMany(models.Event, {foreignKey: 'groupId', as: 'events'})
     }
   }
   Group.init({

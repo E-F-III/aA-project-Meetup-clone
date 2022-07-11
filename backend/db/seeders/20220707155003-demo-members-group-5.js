@@ -6,6 +6,11 @@ module.exports = {
     [
       {
         groupId: 5,
+        memberId: 1,
+        status: 'member'
+      },
+      {
+        groupId: 5,
         memberId: 5,
         status: 'member'
       },
