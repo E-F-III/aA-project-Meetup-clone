@@ -61,6 +61,12 @@ router.delete(
 
         const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.body.userId, } })
 
+        if (!Attendance){
+            const err = new Error('Attendance does not exist for this User')
+            err.status = 404
+            return next (err)
+        }
+
         if (group.organizerId === req.user.id || Attendance.userId === req.user.id) {
             await Attendance.destroy()
             res.json({ message: "Successfully deleted attendance from event" })
