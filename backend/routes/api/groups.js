@@ -197,7 +197,7 @@ router.post(
         if (group.organizerId === req.user.id || cohost) {
             const event = await Event.create({ groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate })
 
-            res.json({ groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate })
+            res.json({ id: event.id, groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to create an event')
             err.status = 403
