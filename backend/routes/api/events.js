@@ -366,7 +366,7 @@ router.put(
         if (group.organizerId === req.user.id || cohost) {
             await event.set({ venueId, name, type, capacity, price, description, startDate, endDate })
             await event.save()
-            res.json({ id: event.id, groupId: req.params.groupId, venueId, name, type, capacity, price, description, startDate, endDate })
+            res.json({ id: event.id, groupId: group.id, venueId, name, type, capacity, price, description, startDate, endDate })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to edits an event')
             err.status = 403
