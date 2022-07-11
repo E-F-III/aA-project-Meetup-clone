@@ -10,7 +10,7 @@ module.exports = {
         description: '-------------------- about event 1 --------------------',
         type: 'Online',
         capacity: 10,
-        price: 18.50,
+        price: 18.99,
         startDate: new Date('2022-11-19 20:00:00'),
         endDate: new Date('2022-11-19 21:00:00')
       },
@@ -32,7 +32,7 @@ module.exports = {
         description: '-------------------- about event 3 --------------------',
         type: 'Online',
         capacity: 10,
-        price: 18.50,
+        price: 18.99,
         startDate: new Date('2022-11-20 20:00:00'),
         endDate: new Date('2022-11-20 21:00:00')
       },
@@ -54,7 +54,7 @@ module.exports = {
         description: '-------------------- about event 5 --------------------',
         type: 'Online',
         capacity: 10,
-        price: 18.50,
+        price: 18.99,
         startDate: new Date('2022-10-19 20:00:00'),
         endDate: new Date('2022-10-19 21:00:00')
       },
@@ -76,7 +76,7 @@ module.exports = {
         description: '-------------------- about event 7 --------------------',
         type: 'Online',
         capacity: 10,
-        price: 18.50,
+        price: 18.99,
         startDate: new Date('2022-12-25 20:00:00'),
         endDate: new Date('2022-12-25 21:00:00')
       },
@@ -98,7 +98,7 @@ module.exports = {
         description: '-------------------- about event 9 --------------------',
         type: 'Online',
         capacity: 10,
-        price: 18.50,
+        price: 18.99,
         startDate: new Date('2022-8-10 20:00:00'),
         endDate: new Date('2022-8-10 21:00:00')
       },
