@@ -372,7 +372,7 @@ Creates and returns a new group.
       "city": "New York",
       "state": "NY",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36" 
+      "updatedAt": "2021-11-19 20:39:36"
     }
     ```
 
@@ -438,7 +438,7 @@ Updates and returns an existing group.
       "city": "New York",
       "state": "NY",
       "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40" 
+      "updatedAt": "2021-11-20 10:06:40"
     }
     ```
 
@@ -496,7 +496,7 @@ Deletes an existing group.
     ```json
     {
       "message": "Successfully deleted",
-      "statusCode": 200 
+      "statusCode": 200
     }
     ```
 
@@ -537,25 +537,25 @@ Returns the members of a group specified by its id.
           "id": 2,
           "firstName": "Clark",
           "lastName": "Adams",
-          "Membership": {
+          "Membership": [{
             "status": "co-host"
-          },
+          }],
         },
         {
           "id": 3,
           "firstName": "John",
           "lastName": "Smith",
-          "Membership": {
+          "Membership": [{
             "status": "member"
-          },
+          }],
         },
         {
           "id": 4,
           "firstName": "Jane",
           "lastName": "Doe",
-          "Membership": {
+          "Membership": [{
             "status": "pending"
-          },
+          }],
         },
       ]
     }
@@ -575,17 +575,17 @@ Returns the members of a group specified by its id.
           "id": 2,
           "firstName": "Clark",
           "lastName": "Adams",
-          "Membership": {
+          "Membership": [{
             "status": "co-host"
-          },
+          }],
         },
         {
           "id": 3,
           "firstName": "John",
           "lastName": "Smith",
-          "Membership": {
+          "Membership": [{
             "status": "member"
-          },
+          }],
         },
       ]
     }
@@ -817,7 +817,7 @@ Delete a membership to a group specified by id.
       "statusCode": 404
     }
     ```
-    
+
     * Error response: Membership does not exist for this User
   * Status Code: 404
   * Headers:
@@ -1435,32 +1435,32 @@ Returns the attendees of an event specified by its id.
           "id": 2,
           "firstName": "Clark",
           "lastName": "Adams",
-          "Attendance": {
+          "Attendance": [{
             "status": "member"
-          },
+          }],
         },
         {
           "id": 3,
           "firstName": "John",
           "lastName": "Smith",
-          "Attendance": {
+          "Attendance": [{
             "status": "waitlist"
-          },
+          }],
         },
         {
           "id": 4,
           "firstName": "Jane",
           "lastName": "Doe",
-          "Attendance": {
+          "Attendance": [{
             "status": "pending"
-          },
+          }],
         },
       ]
     }
     ```
 
-* Successful Response: If you ARE NOT the organizer of the group or a member of 
-  the group with a status of "co-host". Shows all members that don't have a 
+* Successful Response: If you ARE NOT the organizer of the group or a member of
+  the group with a status of "co-host". Shows all members that don't have a
   status of "pending".
   * Status Code: 200
   * Headers:
@@ -1474,17 +1474,17 @@ Returns the attendees of an event specified by its id.
           "id": 2,
           "firstName": "Clark",
           "lastName": "Adams",
-          "Attendance": {
+          "Attendance": [{
             "status": "member"
-          },
+          }],
         },
         {
           "id": 3,
           "firstName": "John",
           "lastName": "Smith",
-          "Attendance": {
+          "Attendance": [{
             "status": "waitlist"
-          },
+          }],
         },
       ]
     }
@@ -1657,7 +1657,7 @@ Delete an attendance to an event specified by id.
   * URL: /api/events/:eventId/attendees/
   * Headers:
     * Content-Type: application/json
-  * * Body: 
+  * * Body:
 
     ```json
     {
@@ -1689,7 +1689,7 @@ Delete an attendance to an event specified by id.
       "statusCode": 404
     }
     ```
-    
+
     * Error response: Attendance does not exist for this User
   * Status Code: 404
   * Headers:
