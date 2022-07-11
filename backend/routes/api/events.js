@@ -71,7 +71,7 @@ const validateQueries = [
         .isAfter()
         .custom(
             (val, { req }) => {
-                !isNaN(Date.parse(val))
+                return !isNaN(Date.parse(val))
             })
         .toDate()
         .withMessage('Start date must be a valid datetime'),
