@@ -184,7 +184,7 @@ router.put(
         if (group.organizerId === req.user.id || cohost) {
             attendance.status = req.body.status
             await attendance.save()
-            res.json({ id: attendance.id, eventId: attendance.eventId, userId: attendance.memberId, status: attendance.status })
+            res.json({ id: attendance.id,userId: attendance.userId, eventId: attendance.eventId, userId: attendance.memberId, status: attendance.status })
         } else {
             const err = new Error('Current User must be the organizer or a co-host to update an attendance')
             err.status = 403
