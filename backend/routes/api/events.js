@@ -11,6 +11,35 @@ const router = express.Router();
 
 const validateEvent = []
 
+const validateQueries = [
+    query('page')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('Page must be greater than or equal to 0'),
+    query('size')
+        .optional()
+        .isInt({ min: 0 })
+        .withMessage('Size must be greater than or equal to 0'),
+    query('name')
+        .optional()
+        .isString()
+        .withMessage('Name must be a string'),
+    query('type')
+        .optional()
+        .isIn(['Online', 'In Person'])
+        .withMessage('Type must be Online or In Person'),
+    query('startDate')
+        .optional()
+        .isAfter()
+        .custom(
+            (val, { req }) => {
+                !isNaN(Date.parse(val))
+            })
+        .toDate()
+        .withMessage('Start date must be a valid datetime'),
+    handleValidationErrors
+]
+
 //POST a new image for a group
 router.post(
     '/:eventId/images',
@@ -61,10 +90,10 @@ router.delete(
 
         const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.body.userId, } })
 
-        if (!Attendance){
+        if (!Attendance) {
             const err = new Error('Attendance does not exist for this User')
             err.status = 404
-            return next (err)
+            return next(err)
         }
 
         if (group.organizerId === req.user.id || Attendance.userId === req.user.id) {
@@ -352,6 +381,30 @@ router.get(
 router.get(
     '/',
     async (req, res, next) => {
+        // handling Queries from request
+        let { page, size, name, type, startDate } = req.query
+
+        if (page) {
+            if (page < 0) page = 0
+            else if (page > 10) page = 10
+            else page = Number(page)
+        } else page = 0
+
+        if (size) {
+            if (size < 0) size = 20
+            else if (size > 20) size = 20
+            else size = Number(size)
+        } else size = 20
+
+        let pagination = { limit: size, offset: size * page }
+
+        let queries = { where: {} }
+
+        if (name) queries.where.name = { [Op.substring]: name }
+        if (type) queries.where.type = type
+        if (startDate && !isNaN(Date.parse(startDate))) queries.where.startDate = startDate
+
+        // getting the events
         const events = await Event.findAll({
             attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate'],
             include: [
@@ -371,6 +424,8 @@ router.get(
 
                 }
             ],
+            ...queries,
+            ...pagination
         })
 
         const allEvents = []
@@ -385,7 +440,7 @@ router.get(
             allEvents.push(eventJSON)
         }
 
-        res.json({ Events: allEvents })
+        res.json({ Events: allEvents, page: page, size: pagination.limit })
     })
 
 module.exports = router
