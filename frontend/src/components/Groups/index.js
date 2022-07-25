@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 import './Groups.css';
 import { getAllGroups } from '../../store/Groups';
@@ -11,7 +10,6 @@ function GroupsList() {
     const sessionUser = useSelector(state => state.session.user)
     const groups = useSelector(state => state.groups)
     const groupsList = Object.values(groups)
-    // console.log(groupsList)
 
     useEffect(() => {
         dispatch(getAllGroups())

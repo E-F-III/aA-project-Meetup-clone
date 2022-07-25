@@ -24,9 +24,10 @@ const getUsersGroups = () => {
     }
 };
 
-const getGroup = () => {
+const getGroup = (payload) => {
     return {
-        type: GET_GROUP
+        type: GET_GROUP,
+        payload
     }
 };
 
@@ -62,6 +63,12 @@ export const getAllGroups = () => async dispatch => {
     return data
 }
 
+export const getGroupDetails = (groupId) => async dispatch => {
+    const response = await csrfFetch(`/api/groups/${groupId}`)
+    const data = await response.json()
+    dispatch(getGroup(data))
+    return data
+}
 
 //Reducer
 
