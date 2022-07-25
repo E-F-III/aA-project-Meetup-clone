@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import GroupsList from "./components/Groups";
 import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
+import EventDetails from "./components/EventDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,8 +30,11 @@ function App() {
           <Route exact path="/events">
             <EventsList />
           </Route>
-          <Route path="/groups/:groupId">
+          <Route exact path="/groups/:groupId">
             <GroupDetails />
+          </Route>
+          <Route exact path="/events/:eventId">
+            <EventDetails />
           </Route>
         </Switch>
       )}

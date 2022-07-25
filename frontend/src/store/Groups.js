@@ -24,12 +24,6 @@ const getUsersGroups = () => {
     }
 };
 
-const getGroup = (payload) => {
-    return {
-        type: GET_GROUP,
-        payload
-    }
-};
 
 // other actions
 
@@ -60,13 +54,6 @@ export const getAllGroups = () => async dispatch => {
     const response = await csrfFetch('/api/groups')
     const data = await response.json()
     dispatch(getGroups(data.Groups))
-    return data
-}
-
-export const getGroupDetails = (groupId) => async dispatch => {
-    const response = await csrfFetch(`/api/groups/${groupId}`)
-    const data = await response.json()
-    dispatch(getGroup(data))
     return data
 }
 
