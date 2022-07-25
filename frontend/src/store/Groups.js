@@ -11,6 +11,7 @@ const DELETE_GROUP = 'groups/delete-group'
 
 // GET actions
 const getGroups = (payload) => {
+    // console.log(payload)
     return {
         type: GET_GROUPS,
         payload
@@ -56,21 +57,28 @@ const deleteGroup = (payload) => {
 
 export const getAllGroups = () => async dispatch => {
     const response = await csrfFetch('/api/groups')
-    const data = response.json()
-    dispatch(getGroups(data))
-    return response
+    const data = await response.json()
+    dispatch(getGroups(data.Groups))
+    return data
 }
 
 
 //Reducer
 
-const initialState = { groups: null }
+const initialState = {}
 
 const groupReducer = (state = initialState, action) => {
     let newState;
     switch (action.type){
         case GET_GROUPS: {
-
+            newState = { ...state };
+            action.payload.forEach(group => {
+                newState[group.id] = group
+            })
+            return newState
+        }
+        default: {
+            return state
         }
     }
 }
