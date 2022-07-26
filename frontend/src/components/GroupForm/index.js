@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
+import { Redirect, useHistory } from "react-router-dom"
 import { createNewGroup } from "../../store/Groups"
 
 function GroupForm() {
     // const [isLoaded, setIsLoaded] = useState(false)
     const [name, setName] = useState('')
     const [about, setAbout] = useState('')
-    const [type, setType] = useState('In Person')
+    const [type, setType] = useState('In person')
     const [privates, setPrivate] = useState(false)
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
     const [step, setStep] = useState('step 1')
 
+    const history = useHistory()
+
     const dispatch = useDispatch()
 
-    const handleSubmit = e => {
-        e.preventDeafult()
+    const handleSubmit = async e => {
+        e.preventDefault()
 
         const newGroup = {
             name: name,
@@ -26,10 +29,9 @@ function GroupForm() {
             state: state
         }
 
-        const data = dispatch(createNewGroup(newGroup))
-        console.log('NEW GROUP AFTER HANDLING SUBMIT', newGroup)
-        console.log('DATA AFTER HANDLING SUBMIT', data)
+        const data = await dispatch(createNewGroup(newGroup))
 
+        history.push(`/groups/${data.id}`)
     }
 
     return (
@@ -97,7 +99,7 @@ function GroupForm() {
                         <div>
                             <h2>What type of group will {name} be?</h2>
                             <select name='type'>
-                                <option value='In Person' onChange={e => setType(e.target.value)}>In Person</option>
+                                <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
                                 <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
                             </select>
                             <select name='private'>
@@ -121,9 +123,9 @@ function GroupForm() {
                             </ul>
                             <span>Once you submit your group, a human at Meetup will review it based on these guidelines and make sure it gets promoted to the right people.</span>
                             <button onClick={e => setStep('step 4')}>Back</button>
-                            {step === 'step 5' && <button type="submit">{'Agree & Continue'}</button>}
                         </div>
                     }
+                    {step === 'step 5' && <button type="submit">{'Agree & Continue'}</button>}
                 </form>
             </div>
         </>
