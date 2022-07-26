@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './Groups.css';
 import { getAllGroups } from '../../store/Groups';
+import { NavLink } from 'react-router-dom';
 
 function GroupsList() {
     const dispatch = useDispatch()
@@ -17,12 +18,14 @@ function GroupsList() {
 
     return (
         <div>{groupsList.map(group => (
-            <div key={group.id}>
+            <NavLink key={group.id} to={`/groups/${group.id}`}>
+            <div>
                 <h3>{group.name}</h3>
                 <h4>{group.city}, {group.state}</h4>
                 <p>{group.about}</p>
-                <p>{group.numMembers} members • {group.type}</p>
+                <p>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
             </div>
+            </NavLink>
         ))}</div>
     )
 }

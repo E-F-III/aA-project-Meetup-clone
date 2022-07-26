@@ -11,16 +11,18 @@ function GroupDetails() {
 
     const { groupId } = useParams()
 
+    const [isLoaded, setIsLoaded] = useState(false)
+
     useEffect(() => {
-        dispatch(getGroupDetails(groupId))
+        dispatch(getGroupDetails(groupId)).then(()=> setIsLoaded(true))
     }, [dispatch])
 
-    return (
+    return isLoaded && (
         <div>
-        <h1>Hello from Event Details</h1>
-        <h2>{group.name}</h2>
-    </div>
+            <h1>Hello from Event Details</h1>
+            <h2>{group.name}</h2>
+        </div>
     );
 }
 
-export default GroupDetails
+export default GroupDetails;

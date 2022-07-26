@@ -8,6 +8,7 @@ import GroupsList from "./components/Groups";
 import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
 import EventDetails from "./components/EventDetails";
+import GroupForm from "./components/GroupForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route exact path="/events/:eventId">
             <EventDetails />
+          </Route>
+          <Route path='/group-form'>
+            <GroupForm />
           </Route>
         </Switch>
       )}

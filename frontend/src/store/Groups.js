@@ -57,6 +57,22 @@ export const getAllGroups = () => async dispatch => {
     return data
 }
 
+export const createNewGroup = (payload) => async dispatch => {
+    const response = await csrfFetch(
+        '/api/groups',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }
+    )
+    const data = await response.json()
+    dispatch(createGroup(data))
+    return data
+}
+
 //Reducer
 
 const initialState = {}
@@ -69,6 +85,11 @@ const groupReducer = (state = initialState, action) => {
             action.payload.forEach(group => {
                 newState[group.id] = group
             })
+            return newState
+        }
+        case CREATE_GROUP: {
+            newState = { ...state }
+            newState[action.payload.id] = action.payload
             return newState
         }
         default: {
