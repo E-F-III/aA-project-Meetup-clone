@@ -22,7 +22,6 @@ function GroupDetails() {
 
     return isLoaded && (
         <div>
-            <h1>HELLO FROM GROUP DETAILS COMPONENT</h1>
             <div>
 
                 <h1>{group.name}</h1>
@@ -33,28 +32,34 @@ function GroupDetails() {
                 </ul>
             </div>
             <nav>
-                <span onClick={()=>setCurrTab('about')}>About</span>
-                <span onClick={()=>setCurrTab('events')}>Events</span>
-                {sessionUser.id === group.Organizer.id && <span onClick={()=>setCurrTab('edit')}>Edit</span>}
+                <span onClick={() => setCurrTab('about')}>About</span>
+                <span onClick={() => setCurrTab('events')}>Events</span>
+                {sessionUser.id === group.Organizer.id && <span onClick={() => setCurrTab('edit')}>Edit</span>}
             </nav>
 
             {
                 currTab === 'about' &&
-                <div>
-                <h2>What we're about</h2>
-                <p>{group.about}</p>
-            </div>
+                <>
+                    <div>
+                        <h2>What we're about</h2>
+                        <p>{group.about}</p>
+                    </div>
+                    <div>
+                        <h2>Events</h2>
+                        <GroupEvents groupId={groupId} />
+                    </div>
+                </>
             }
             {
                 currTab === 'events' &&
                 <div>
-                <h2>Events</h2>
-                <GroupEvents groupId={groupId}/>
-            </div>
+                    <h2>Events</h2>
+                    <GroupEvents groupId={groupId} />
+                </div>
             }
             {
                 currTab === 'edit' &&
-                <EditGroupForm group={group}/>
+                <EditGroupForm group={group} />
             }
         </div>
     );

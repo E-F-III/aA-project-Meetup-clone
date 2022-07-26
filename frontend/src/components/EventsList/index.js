@@ -18,7 +18,7 @@ function EventsList() {
     return (
         <div>{eventsList.map(event => (
             <div key={event.id}>
-                <h3>{Date(event.startDate)}</h3>
+                <h3>{(event.startDate)}</h3>
                 <h3>{event.name}</h3>
                 <h4>{event.Group.name} • {event.Group.city}, {event.Group.state}</h4>
                 <p>{event.numAttending} attendees</p>
