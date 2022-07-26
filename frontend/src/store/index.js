@@ -6,13 +6,15 @@ import groupReducer from './Groups';
 import eventReducer from './Events';
 import eventDetailsReducer from './EventDetails';
 import groupDetailsReducer from './GroupDetails';
+import groupEventsReducer from './Group-Events';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     groups: groupReducer,
     events: eventReducer,
     eventDetails: eventDetailsReducer,
-    groupDetails: groupDetailsReducer
+    groupDetails: groupDetailsReducer,
+    groupEvents: groupEventsReducer,
   });
 
 let enhancer;

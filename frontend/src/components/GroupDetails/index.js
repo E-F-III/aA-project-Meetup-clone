@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useParams } from 'react-router-dom';
 import { getGroupDetails } from '../../store/GroupDetails';
 import EditGroupForm from '../EditGroupForm';
+import GroupEvents from '../GroupEvents';
 
 function GroupDetails() {
     const dispatch = useDispatch()
@@ -48,6 +49,7 @@ function GroupDetails() {
                 currTab === 'events' &&
                 <div>
                 <h2>Events</h2>
+                <GroupEvents groupId={groupId}/>
             </div>
             }
             {

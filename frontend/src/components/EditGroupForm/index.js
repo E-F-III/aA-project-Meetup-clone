@@ -80,8 +80,8 @@ function EditGroupForm({ group }) {
                         name='state' />
 
                     <div>
-                        <button type="submit">Save</button>
                         <button onClick={handleDelete}>Delete</button>
+                        <button type="submit">Save</button>
                     </div>
                 </form>
             </div>
