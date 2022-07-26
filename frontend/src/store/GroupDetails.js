@@ -1,20 +1,13 @@
 import { csrfFetch } from "./csrf";
+import { getAllGroups } from "./Groups";
 
 const GET_GROUP_DETAILS = '/groups/group-details'
-const EDIT_GROUP_DETAILS = '/groups/edit-group-details'
 
 // actions
 
 const getGroup = (payload) => {
     return {
         type: GET_GROUP_DETAILS,
-        payload
-    }
-}
-
-const editGroup = (payload) => {
-    return {
-        type: EDIT_GROUP_DETAILS,
         payload
     }
 }
@@ -39,6 +32,7 @@ export const editGroupDetails = (groupId, group) => async dispatch => {
             body: JSON.stringify(group)
         })
     const data = await dispatch(getGroupDetails(groupId))
+    await dispatch(getAllGroups())
     return data
 }
 

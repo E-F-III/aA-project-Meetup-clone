@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { editGroupDetails } from "../../store/GroupDetails";
+import { deleteAGroup } from "../../store/Groups";
 
 function EditGroupForm({ group }) {
     const [name, setName] = useState(group.name)
@@ -32,7 +33,8 @@ function EditGroupForm({ group }) {
 
     const handleDelete = async e => {
         e.preventDefault()
-
+        const data = await dispatch(deleteAGroup(group.id))
+        history.push('/groups')
     }
 
     return (
@@ -76,7 +78,11 @@ function EditGroupForm({ group }) {
                         value={state}
                         placeholder='state...'
                         name='state' />
-                    <button type="submit">Save</button>
+
+                    <div>
+                        <button type="submit">Save</button>
+                        <button onClick={handleDelete}>Delete</button>
+                    </div>
                 </form>
             </div>
         </>
