@@ -24,11 +24,6 @@ const getUsersGroups = () => {
     }
 };
 
-const getGroup = () => {
-    return {
-        type: GET_GROUP
-    }
-};
 
 // other actions
 
@@ -62,6 +57,35 @@ export const getAllGroups = () => async dispatch => {
     return data
 }
 
+export const createNewGroup = (payload) => async dispatch => {
+    const response = await csrfFetch(
+        '/api/groups',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }
+    )
+    const data = await response.json()
+    dispatch(createGroup(data))
+    return data
+}
+
+export const deleteAGroup = (groupId) => async dispatch => {
+    const response = await csrfFetch(
+        `/api/groups/${groupId}`,
+        {
+            method: 'DELETE'
+        }
+    )
+
+    const data = await response.json()
+
+    await dispatch(deleteGroup(groupId))
+    return data
+}
 
 //Reducer
 
@@ -75,6 +99,16 @@ const groupReducer = (state = initialState, action) => {
             action.payload.forEach(group => {
                 newState[group.id] = group
             })
+            return newState
+        }
+        case CREATE_GROUP: {
+            newState = { ...state }
+            newState[action.payload.id] = action.payload
+            return newState
+        }
+        case DELETE_GROUP: {
+            newState = { ...state }
+            delete newState[action.payload]
             return newState
         }
         default: {

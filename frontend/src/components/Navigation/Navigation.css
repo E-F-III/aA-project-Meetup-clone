@@ -1,0 +1,14 @@
+img.logo {
+    max-width: auto;
+    max-height: 34px;
+}
+
+div.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding: 18px;
+    background: #fff;
+    border-bottom: #E5E7E9 500px;
+}

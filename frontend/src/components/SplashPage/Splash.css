@@ -1,0 +1,54 @@
+div.splash-outer{
+    display: flex;
+    justify-content: center;
+}
+
+div.splash-main {
+    max-width: 1120px;
+}
+
+div.splash-title-div {
+    display: flex;
+    flex-direction: row;
+}
+
+div.splash-title-text {
+    display: flex;
+    flex-direction: column;
+}
+
+div.splash-title-pic-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.splash-title-pic {
+    width: 520px;
+}
+
+div.splash-body-div {
+    text-align: center;
+}
+
+div.splash-nav-container{
+    display: flex;
+}
+
+div.splash-nav{
+    background-color: #f6f7f8;
+    border-radius: 3px;
+    padding: 0 24px 30px;
+    text-align: center;
+}
+
+h3.splash-link {
+    font-weight: 600;
+    color: #008294;
+    cursor: pointer;
+}
+
+h3.splash-link:hover{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
