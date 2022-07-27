@@ -9,11 +9,17 @@ import './Splash.css'
 function SplashPage() {
     const history = useHistory()
     return (
-        <>
+        <div className='splash-outer'>
+
+        <div className='splash-main'>
             <div className='splash-title-div'>
-                <h1>Celebrating 20 years of real connections on Meetup</h1>
-                <p>Whatever you're looking to do this year, Meetup can help. For 20 years, people have tuend to Meetup to meet people, make friends, find support, grow a business, and explore their interests. Thousands of events are happening every day - join the fun</p>
-                <img src={online_events} />
+                <div className='splash-title-text'>
+                    <h1>Celebrating 20 years of real connections on Meetup</h1>
+                    <p>Whatever you're looking to do this year, Meetup can help. For 20 years, people have tuend to Meetup to meet people, make friends, find support, grow a business, and explore their interests. Thousands of events are happening every day - join the fun</p>
+                </div>
+                <div className='splash-title-pic-div'>
+                    <img className='splash-title-pic' src={online_events} />
+                </div>
             </div>
             <div className='splash-body-div'>
                 <h2>How Meetup Works</h2>
@@ -36,8 +42,8 @@ function SplashPage() {
                     </div>
                 </div>
             </div>
-
-        </>
+        </div>
+        </div>
     )
 }
 

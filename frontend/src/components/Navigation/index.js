@@ -25,14 +25,12 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <ul>
       <div className='navigation'>
         <NavLink exact to="/"><img className='logo' src={logo} /></NavLink>
         <div>
           {isLoaded && sessionLinks}
         </div>
       </div>
-    </ul>
   );
 }
 

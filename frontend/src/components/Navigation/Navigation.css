@@ -6,7 +6,8 @@ img.logo {
 div.navigation {
     display: flex;
     justify-content: space-between;
-    height: 100px;
+    align-items: center;
+    height: 50px;
     padding: 18px;
     background: #fff;
     border-bottom: #E5E7E9 500px;
