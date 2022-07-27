@@ -34,7 +34,7 @@ function GroupDetails() {
             <nav>
                 <span onClick={() => setCurrTab('about')}>About</span>
                 <span onClick={() => setCurrTab('events')}>Events</span>
-                {sessionUser.id === group.Organizer.id && <span onClick={() => setCurrTab('edit')}>Edit</span>}
+                {(sessionUser) && sessionUser.id === group.Organizer.id && <span onClick={() => setCurrTab('edit')}>Edit</span>}
             </nav>
 
             {
