@@ -5,7 +5,9 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+import logo from '../../assets/images/logo.png'
+
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
@@ -24,10 +26,12 @@ function Navigation({ isLoaded }){
 
   return (
     <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
+      <div className='navigation'>
+        <NavLink exact to="/"><img className='logo' src={logo} /></NavLink>
+        <div>
+          {isLoaded && sessionLinks}
+        </div>
+      </div>
     </ul>
   );
 }

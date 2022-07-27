@@ -9,6 +9,9 @@ import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
 import EventDetails from "./components/EventDetails";
 import GroupForm from "./components/GroupForm";
+import EditGroupForm from "./components/EditGroupForm";
+import EventForm from "./components/EditEventForm";
+import SplashPage from "./components/SplashPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +25,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path ='/'>
+            <SplashPage />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
@@ -37,8 +43,11 @@ function App() {
           <Route exact path="/events/:eventId">
             <EventDetails />
           </Route>
-          <Route path='/group-form'>
+          <Route exact path='/group-form'>
             <GroupForm />
+          </Route>
+          <Route exact path='/events/:eventId/edit'>
+            <EventForm />
           </Route>
         </Switch>
       )}
