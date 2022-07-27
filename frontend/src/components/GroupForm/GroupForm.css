@@ -1,0 +1,26 @@
+div.group-form-steps {
+    text-align: center;
+    color: darkgray;
+}
+
+div.create-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+}
+
+h2.create-group {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+p.create-group {
+    font-size: 16px;
+}
+
+input {
+    width: 700;
+    height: 55;
+    padding: 10px 20px 10px 40px;
+}

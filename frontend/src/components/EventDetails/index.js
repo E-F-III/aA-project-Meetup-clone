@@ -28,7 +28,7 @@ function EventDetails() {
             <div>
                 <p>{event.startDate}</p>
                 <h2>{event.name}</h2>
-                {sessionUser.id === group.organizerId &&
+                {(sessionUser) && sessionUser.id === group.organizerId &&
                     <NavLink to={`/events/${eventId}/edit`}>Edit</NavLink>}
             </div>
             <div>
