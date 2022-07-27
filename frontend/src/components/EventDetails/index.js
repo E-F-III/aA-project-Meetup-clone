@@ -18,11 +18,12 @@ function EventDetails() {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(getEventDetails(eventId)).then(() => setIsLoaded(true))
-        .then(dispatch(getGroupDetails(event.Group.id)))
+        dispatch(getEventDetails(eventId))
+        .then((res) => dispatch(getGroupDetails(res.Group.id)))
+        .then(() => setIsLoaded(true))
     }, [dispatch])
 
-    return (isLoaded &&
+    return isLoaded && (
         <>
             <div>
                 <p>{event.startDate}</p>
