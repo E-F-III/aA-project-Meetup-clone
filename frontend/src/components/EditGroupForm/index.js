@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { editGroupDetails } from "../../store/GroupDetails";
 import { deleteAGroup } from "../../store/Groups";
 
-function EditGroupForm({ group }) {
+function EditGroupForm({ group, updateCurrTab }) {
     const [name, setName] = useState(group.name)
     const [about, setAbout] = useState(group.about)
     const [type, setType] = useState(group.type)
@@ -28,6 +28,7 @@ function EditGroupForm({ group }) {
         }
 
         const data = await dispatch(editGroupDetails(group.id, editedGroup))
+        .then(() => updateCurrTab('about'))
         history.push(`/groups/${group.id}`)
     }
 

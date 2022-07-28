@@ -60,7 +60,7 @@ function GroupDetails() {
             }
             {
                 currTab === 'edit' &&
-                <EditGroupForm group={group} />
+                <EditGroupForm group={group} updateCurrTab={setCurrTab} />
             }
         </div>
     );

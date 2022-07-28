@@ -2,7 +2,6 @@ import { csrfFetch } from './csrf';
 
 const GET_GROUPS = 'groups/get-all-groups'
 const GET_USERS_GROUPS = 'groups/get-users-groups'
-const GET_GROUP = 'groups/get-group-details'
 
 const CREATE_GROUP ='groups/create-group'
 const EDIT_GROUP = 'groups/edit-group'
