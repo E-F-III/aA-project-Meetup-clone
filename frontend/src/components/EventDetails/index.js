@@ -32,8 +32,10 @@ function EventDetails() {
                     <NavLink to={`/events/${eventId}/edit`}>Edit</NavLink>}
             </div>
             <div>
+                <NavLink to={`/groups/${group.id}`}>
                 <p>{event.Group.name}</p>
                 <p>{event.Group.private ? 'Private' : 'Public'} group</p>
+                </NavLink>
             </div>
             <div>
                 <div>

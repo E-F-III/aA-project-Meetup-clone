@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route, useParams, NavLink } from 'react-router-dom';
 import { getGroupDetails } from '../../store/GroupDetails';
 import EditGroupForm from '../EditGroupForm';
 import GroupEvents from '../GroupEvents';
@@ -54,6 +54,7 @@ function GroupDetails() {
                 currTab === 'events' &&
                 <div>
                     <h2>Events</h2>
+                    <NavLink to={`/groups/${groupId}/events/create-event`}>Add Event</NavLink>
                     <GroupEvents groupId={groupId} />
                 </div>
             }

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getEventDetails } from '../../store/EventDetails';
 
 
-function EventForm() {
+function EditEventForm() {
 
     const { eventId } = useParams()
     const event = useSelector(state => state.eventDetails)
@@ -67,4 +67,4 @@ function EventForm() {
     )
 }
 
-export default EventForm
+export default EditEventForm
