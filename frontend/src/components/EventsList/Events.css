@@ -1,0 +1,28 @@
+div.event-card {
+    border-top: 2px #d9d9d9 solid;
+    width: 640px ;
+    display: flex;
+    /* padding-top: 10px; */
+}
+
+div.card-image {
+    border: 2px solid black;
+    height: 100px;
+    width: 178px;
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+
+div.eventList {
+    margin-top: 10px;
+}
+
+div.card-title > h4 {
+    margin-top: 0px;
+}
+
+div.card-title > h3 + h3  {
+    margin-bottom: 5px;
+    margin-top: 0px;
+}

@@ -1,0 +1,19 @@
+div.GroupsEventsNav {
+    display: flex;
+    flex-direction: row;
+}
+
+div.listNav {
+    font-weight: 600;
+    color: #008294;
+    cursor: pointer;
+    border-bottom: 5px;
+}
+
+.active {
+    border-bottom: #008294 3px solid;
+}
+
+.header {
+    color: #008294;
+}
