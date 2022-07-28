@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroupDetails } from "../../store/GroupDetails";
+import { createNewEvent } from "../../store/Events";
 
 import './CreateEventForm.css'
 
@@ -17,7 +18,7 @@ function EventForm() {
 
     const [venueId, setVenueId] = useState()
     const [name, setName] = useState()
-    const [type, setType] = useState('In person')
+    const [type, setType] = useState('In Person')
     const [capacity, setCapacity] = useState()
     const [price, setPrice] = useState()
     const [description, setDescription] = useState()
@@ -31,6 +32,18 @@ function EventForm() {
 
     const handleSubmit = async e => {
         e.preventDefault()
+
+        const newEvent = {
+            venueId, name, type, capacity, price, description, startDate, endDate
+        }
+
+        const payload = {groupId, newEvent}
+
+        const data = await dispatch(createNewEvent(payload))
+
+        console.log(data)
+
+        history.push(`/events/${data.id}`)
     }
 
     return isLoaded && (
@@ -39,7 +52,7 @@ function EventForm() {
                 <h1>Hello from create event form</h1>
                 <div className="event-form-div">
 
-                    <label for="event-name">Event Name</label>
+                    <label htmlFor="event-name">Event Name</label>
                     <input
                     name="event-name"
                     value={name}
@@ -47,7 +60,7 @@ function EventForm() {
                 </div>
                 <div className="event-form-div">
 
-                    <label for="event-about">About this event</label>
+                    <label htmlfor="event-about">About this event</label>
                     <textarea
                         rows='13'
                         cols='76'
@@ -57,21 +70,23 @@ function EventForm() {
                         name='event-about' />
                 </div>
                 <div className="event-form-div">
-                    <label for='event-type'>Will this event be in person or offline?</label>
+                    <label htmlfor='event-type'>Will this event be in person or offline?</label>
                     <select name='event-type'>
-                        <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
+                        <option value='In Person' onChange={e => setType(e.target.value)}>In Person</option>
                         <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
                     </select>
                 </div>
                 <div className="event-form-div">
-                    <label for='event-capacity'>How many people are allowed to attend this event?</label>
+                    <label htmlfor='event-capacity'>How many people are allowed to attend this event?</label>
                     <input
                     name="event-capacity"
                     type="number"
+                    value={capacity}
+                    onChange={e => setCapacity(e.target.value)}
                     min="1" />
                 </div>
                 <div className="event-form-div">
-                    <label for="event-price">How much will it cost to attend this event?</label>
+                    <label htmlfor="event-price">How much will it cost to attend this event?</label>
                     <input
                     name="event-price"
                     value={price}
@@ -81,7 +96,7 @@ function EventForm() {
                 <div className="event-form-div">
                     <p>When will the event take place?</p>
                     <div>
-                        <label for="event-start-date">Start Date</label>
+                        <label htmlfor="event-start-date">Start Date</label>
                         <input
                         name="event-start-date"
                         type="datetime-local"
@@ -89,7 +104,7 @@ function EventForm() {
                         onChange={e => setStartDate(e.target.value)} />
                     </div>
                     <div>
-                        <label for="event-end-date">End Date</label>
+                        <label htmlfor="event-end-date">End Date</label>
                         <input
                         name="event-end-date"
                         type="datetime-local"
@@ -97,6 +112,7 @@ function EventForm() {
                         onChange={e => setEndDate(e.target.value)}/>
                     </div>
                 </div>
+                <button>Submit</button>
             </form>
         </div>
     )

@@ -46,13 +46,13 @@ export const getAllEvents = () => async dispatch => {
 
 export const createNewEvent = (payload) => async dispatch => {
     const response = await csrfFetch(
-        `/groups/${payload.groupId}/events`,
+        `/api/groups/${payload.groupId}/events`,
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload.body)
+            body: JSON.stringify(payload.newEvent)
         }
     )
 
