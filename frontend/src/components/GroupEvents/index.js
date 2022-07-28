@@ -16,7 +16,8 @@ function GroupEvents({ groupId }){
 
 
     useEffect(() => {
-        dispatch(getEventsOfGroup(groupId)).then(() => setIsLoaded(true))
+        dispatch(getEventsOfGroup(groupId))
+        .then(() => setIsLoaded(true))
     }, [dispatch])
 
     return isLoaded && (

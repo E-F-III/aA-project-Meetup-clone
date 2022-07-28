@@ -41,15 +41,13 @@ function EventForm() {
 
         const data = await dispatch(createNewEvent(payload))
 
-        console.log(data)
-
         history.push(`/events/${data.id}`)
     }
 
     return isLoaded && (
         <div>
             <form onSubmit={handleSubmit}>
-                <h1>Hello from create event form</h1>
+                <h1>Create an event!</h1>
                 <div className="event-form-div">
 
                     <label htmlFor="event-name">Event Name</label>
