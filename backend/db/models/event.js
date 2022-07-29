@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     groupId: DataTypes.INTEGER,
     venueId: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
+    description: DataTypes.STRING(1000),
     type: DataTypes.STRING,
     capacity: DataTypes.INTEGER,
     price: DataTypes.DECIMAL,
