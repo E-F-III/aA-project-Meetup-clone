@@ -9,6 +9,7 @@ div.listNav {
     color: #008294;
     cursor: pointer;
     border-bottom: 5px;
+    margin-right: 15px;
 }
 
 .tab-active {
