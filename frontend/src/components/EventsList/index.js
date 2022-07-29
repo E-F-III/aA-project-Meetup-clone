@@ -19,24 +19,28 @@ function EventsList() {
     }, [dispatch])
 
     return (
-        <div className='listbody'>
-            <GroupsEventsNav />
-            <div className='eventList'>
-                {eventsList.map(event => (
-                    <NavLink className='navLink' to={`/events/${event.id}`} key={event.id}>
-                        <div className='event-card'>
-                            <div className='card-image'> IMAGE GOES HERE</div>
-                            <div>
-                                <div className='card-title'>
-                                    <h3>{(event.startDate)}</h3>
-                                    <h3>{event.name}</h3>
-                                    <h4>{event.Group.name} • {event.Group.city}, {event.Group.state}</h4>
+        <div className='listbody-container'>
+            <div className='listbody'>
+                <GroupsEventsNav />
+                <div className='eventList'>
+                    {eventsList.map(event => (
+                        <NavLink className='navLink' to={`/events/${event.id}`} key={event.id}>
+                            <div className='event-card'>
+                                <div className='card-image'>
+                                    <img className='event-image' src={event.previewImage} />
                                 </div>
-                                <p>{event.numAttending} attendees</p>
+                                <div>
+                                    <div className='card-title'>
+                                        <h3>{(event.startDate)}</h3>
+                                        <h3>{event.name}</h3>
+                                        <h4>{event.Group.name} • {event.Group.city}, {event.Group.state}</h4>
+                                    </div>
+                                    <p>{event.numAttending} attendees</p>
+                                </div>
                             </div>
-                        </div>
-                    </NavLink>
-                ))}
+                        </NavLink>
+                    ))}
+                </div>
             </div>
         </div>
 

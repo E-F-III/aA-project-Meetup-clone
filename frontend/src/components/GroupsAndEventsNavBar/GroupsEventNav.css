@@ -1,6 +1,7 @@
 div.GroupsEventsNav {
     display: flex;
     flex-direction: row;
+    align-self: flex-start;
 }
 
 div.listNav {
@@ -10,7 +11,7 @@ div.listNav {
     border-bottom: 5px;
 }
 
-.active {
+.tab-active {
     border-bottom: #008294 3px solid;
 }
 
