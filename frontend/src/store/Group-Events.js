@@ -29,7 +29,7 @@ const groupEventsReducer = (state = initialState, aciton) => {
     let newState;
     switch(aciton.type){
         case GET_GROUP_EVENTS: {
-            newState = {...state}
+            newState = {}
             aciton.payload.Events.forEach(event => {
                 newState[event.id] = event
             })

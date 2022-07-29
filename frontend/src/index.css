@@ -2,3 +2,8 @@ body {
     background-color: #FFFFFF;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 }
+
+.navLink {
+    text-decoration: none;
+    color: black;
+}

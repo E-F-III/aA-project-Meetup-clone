@@ -102,7 +102,7 @@ function GroupForm() {
                     {
                         step === 'STEP 4' &&
                         <div className="create-group">
-                            <h2 className="create-group">What type of group will {name} be?</h2>
+                            <h2 className="create-group">What type of group will {name} be (this setting can be changed later)?</h2>
                             <select name='type'>
                                 <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
                                 <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
