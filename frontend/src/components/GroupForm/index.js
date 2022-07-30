@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom"
 import { createNewGroup } from "../../store/Groups"
 
@@ -16,8 +16,10 @@ function GroupForm() {
     const [step, setStep] = useState('STEP 1')
 
     const history = useHistory()
-
     const dispatch = useDispatch()
+
+    const sessionUser = useSelector((state) => state.session.user);
+    if (!sessionUser) return <Redirect to="/signup" />;
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -36,11 +38,27 @@ function GroupForm() {
         history.push(`/groups/${data.id}`)
     }
 
+    const USstates = [
+        'AL', 'AK', 'AS', 'AZ', 'AR',
+        'CA', 'CO', 'CT', 'DE', 'DC',
+        'FM', 'FL', 'GA', 'GU', 'HI',
+        'ID', 'IL', 'IN', 'IA', 'KS',
+        'KY', 'LA', 'ME', 'MH', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO',
+        'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'MP',
+        'OH', 'OK', 'OR', 'PW', 'PA',
+        'PR', 'RI', 'SC', 'SD', 'TN',
+        'TX', 'UT', 'VT', 'VI', 'VA',
+        'WA', 'WV', 'WI', 'WY'
+    ];
+
     return (
         <>
             <div className="group-form-steps">
                 {step} OF 5
             </div>
+
             <div>
                 <form onSubmit={handleSubmit}>
                     {
@@ -49,18 +67,30 @@ function GroupForm() {
                             <h2 className="create-group">First, set your group's location</h2>
                             <p className="create-group">Meetup groups meet locally, in person and online. We'll connect you with people in your area, and more can join you online.</p>
                             <input
+                                required
                                 type='text'
                                 onChange={e => setCity(e.target.value)}
                                 value={city}
                                 placeholder='city...'
                                 name="city" />
-                            <input
+                            {/* <input
                                 type='text'
                                 onChange={e => setState(e.target.value)}
                                 value={state}
                                 placeholder='state...'
-                                name='state' />
-                            <button onClick={e => setStep('STEP 2')}>Next</button>
+                                name='state' /> */}
+                            <select required name='state' placeholder="state...">
+                                {USstates.map(state => {
+                                    return (
+                                        <option key={state}
+                                            onChange={e => setState(e.target.value)}
+                                            value={state}
+                                        > {state}
+                                        </option>
+                                    )
+                                })}
+                            </select>
+                            <button disabled={city.length < 3} onClick={e => setStep('STEP 2')}>Next</button>
                         </div>
                     }
                     {
@@ -75,7 +105,7 @@ function GroupForm() {
                                 placeholder='group name...'
                                 name='name' />
                             <button onClick={e => setStep('STEP 1')}>Back</button>
-                            <button onClick={e => setStep('STEP 3')}>Next</button>
+                            <button disabled={name.length < 5 || name.length > 60} onClick={e => setStep('STEP 3')}>Next</button>
                         </div>
                     }
                     {
@@ -95,14 +125,15 @@ function GroupForm() {
                                 value={about}
                                 placeholder='Please write at least 50 characters'
                                 name='about' />
+                            <p>Character count: {about.length}</p>
                             <button onClick={e => setStep('STEP 2')}>Back</button>
-                            <button onClick={e => setStep('STEP 4')}>Next</button>
+                            <button disabled={about.length < 50} onClick={e => setStep('STEP 4')}>Next</button>
                         </div>
                     }
                     {
                         step === 'STEP 4' &&
                         <div className="create-group">
-                            <h2 className="create-group">What type of group will {name} be (this setting can be changed later)?</h2>
+                            <h2 className="create-group">What type of group will {name} be ?(this setting can be changed later)</h2>
                             <select name='type'>
                                 <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
                                 <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
@@ -130,7 +161,7 @@ function GroupForm() {
                             <button onClick={e => setStep('STEP 4')}>Back</button>
                         </div>
                     }
-                    {step === 'STEP 5' && <button type="submit">{'Agree & Continue'}</button>}
+                    {step === 'STEP 5' && <button type="submit">{'Agree & Create group'}</button>}
                 </form>
             </div>
         </>

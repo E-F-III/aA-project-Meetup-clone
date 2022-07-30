@@ -40,7 +40,7 @@ function EventDetails() {
                 <div className='other-info-card'>
                     <div>
                         <NavLink className='event-group-card navLink' to={`/groups/${group.id}`}>
-                            <div className='card-image'>
+                            <div className='event-group-card-image'>
                                 <img className='event-group-image' src={group.images[0].url} />
                             </div>
                             <div>
@@ -60,7 +60,14 @@ function EventDetails() {
                     </div>
                 </div>
                 <div>
-                    <img className='event-main-image' src={event.images[0].url}></img>
+                   {
+                        event.images[0] &&
+                       <img className='event-main-image' src={event.images[0].url}></img>
+                   }
+                   {
+                        !event.images[0] &&
+                       <img className='event-main-image' src={'https://www.hawaii-guide.com/images/made/honolulu-waikiki_2500_1667_95_s.jpg'}></img>
+                   }
                     <h3>Details</h3>
                     <p>{event.description}</p>
                 </div>

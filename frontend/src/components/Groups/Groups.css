@@ -21,6 +21,7 @@ div.card-image {
     height: 100px;
     width: 178px;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 div.card-title>h4 {

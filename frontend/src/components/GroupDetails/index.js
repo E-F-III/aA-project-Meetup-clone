@@ -48,10 +48,10 @@ function GroupDetails() {
                         <h2>What we're about</h2>
                         <p>{group.about}</p>
                     </div>
-                    <div>
+                    {/* <div>
                         <h2>Events</h2>
                         <GroupEvents groupId={groupId} />
-                    </div>
+                    </div> */}
                 </>
             }
             {
