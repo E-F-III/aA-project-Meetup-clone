@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import * as sessionActions from '../../store/session';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import './Groups.css';
-import { getAllGroups } from '../../store/Groups';
 import { NavLink } from 'react-router-dom';
 
+import { getAllGroups } from '../../store/Groups';
 import GroupsEventsNav from '../GroupsAndEventsNavBar';
+
+import './Groups.css';
 
 function GroupsList() {
     const dispatch = useDispatch()
-    const sessionUser = useSelector(state => state.session.user)
     const groups = useSelector(state => state.groups)
     const groupsList = Object.values(groups)
 
@@ -29,8 +27,8 @@ function GroupsList() {
                                 <div className='card-image'>
                                     <img
                                         className='group-image'
-                                        src={group.previewImage.length > 0 ? group.previewImage : ""}
-                                        style={{visibility: `${group.previewImage.length > 0? "visible" : "hidden"}`}}
+                                        src={group.previewImage?.length > 0 ? group.previewImage : ""}
+                                        style={{visibility: `${group.previewImage?.length > 0? "visible" : "hidden"}`}}
                                     />
                                 </div>
                                 <div>

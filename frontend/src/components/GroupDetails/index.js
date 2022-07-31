@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, useParams, NavLink, useRouteMatch, Switch } from 'react-router-dom';
+
 import { getGroupDetails } from '../../store/GroupDetails';
 import { getEventsOfGroup } from '../../store/Group-Events';
+
+import EventForm from '../CreateEventForm';
 import EditGroupForm from './EditGroupForm';
 import GroupEvents from './GroupEvents';
 
@@ -90,7 +93,7 @@ function GroupDetails() {
                             <div className='group-events-header'>
                                 <h2>Events</h2>
                                 <NavLink
-                                    to={`${url}/events/create-event`}
+                                    to={`${url}/create-event`}
                                     style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
                                 >
                                     <button className='default'>Add Event</button>
@@ -103,6 +106,11 @@ function GroupDetails() {
                     <Route path={`${url}/edit`}>
                         <div className='group-content'>
                             <EditGroupForm group={group} />
+                        </div>
+                    </Route>
+                    <Route path={`${url}/create-event`}>
+                        <div className='group-content'>
+                            <EventForm group={group} />
                         </div>
                     </Route>
                 </Switch>

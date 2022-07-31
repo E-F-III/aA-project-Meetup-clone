@@ -13,6 +13,7 @@ import EditEventForm from "./components/EditEventForm";
 import SplashPage from "./components/SplashPage";
 import EventForm from "./components/CreateEventForm";
 import FooterInfo from "./components/FooterInfo";
+import GroupsOfUser from "./components/GroupsOfUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,11 +49,11 @@ function App() {
             <Route exact path='/group-form'>
               <GroupForm />
             </Route>
-            <Route exact path='/groups/:groupId/events/create-event'>
-              <EventForm />
-            </Route>
             <Route exact path='/events/:eventId/edit'>
               <EditEventForm />
+            </Route>
+            <Route exact path='/your-groups'>
+              <GroupsOfUser />
             </Route>
           </Switch>
           <footer>

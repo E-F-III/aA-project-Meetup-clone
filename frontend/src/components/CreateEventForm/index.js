@@ -6,16 +6,16 @@ import { createNewEvent } from "../../store/Events";
 
 import './CreateEventForm.css'
 
-function EventForm() {
+function EventForm({ group }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const { groupId } = useParams()
+    // const { groupId } = useParams()
 
-    const group = useSelector(state => state.groupDetails)
+    // const group = useSelector(state => state.groupDetails)
+    const groupId = group.id
 
-
-    const [venueId, setVenueId] = useState()
+    // const [venueId, setVenueId] = useState()
     const [name, setName] = useState('')
     const [type, setType] = useState('In Person')
     const [capacity, setCapacity] = useState(1)
@@ -43,7 +43,7 @@ function EventForm() {
 
         setvalidationErrors(errors)
 
-    }, [name, startDate, endDate])
+    }, [name, description, startDate, endDate])
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -53,7 +53,14 @@ function EventForm() {
         if (validationErrors.length > 0) return
 
         const newEvent = {
-            venueId, name, type, capacity, price, description, startDate, endDate
+            // venueId,
+            name,
+            type,
+            capacity,
+            price,
+            description,
+            startDate,
+            endDate
         }
 
         const payload = { groupId, newEvent }
@@ -80,7 +87,7 @@ function EventForm() {
                         onChange={e => setName(e.target.value)} />
                 </div>
                 <div className="event-form-div">
-                    <label htmlfor="event-about">About this event</label>
+                    <label htmlFor="event-about">About this event</label>
                     <textarea
                         required
                         rows='13'
@@ -92,14 +99,14 @@ function EventForm() {
                     <p>{description.length} characters</p>
                 </div>
                 <div className="event-form-div">
-                    <label htmlfor='event-type'>Will this event be in person or online?</label>
+                    <label htmlFor='event-type'>Will this event be in person or online?</label>
                     <select name='type' value={type} onChange={e => setType(e.target.value)} >
                         <option value='In person'>In Person</option>
                         <option value='Online'>Online</option>
                     </select>
                 </div>
                 <div className="event-form-div">
-                    <label htmlfor='event-capacity'>How many people are allowed to attend this event?</label>
+                    <label htmlFor='event-capacity'>How many people are allowed to attend this event?</label>
                     <input
                         required
                         name="event-capacity"
@@ -109,7 +116,7 @@ function EventForm() {
                         min="1" />
                 </div>
                 <div className="event-form-div">
-                    <label htmlfor="event-price">How much will it cost to attend this event?</label>
+                    <label htmlFor="event-price">How much will it cost to attend this event?</label>
                     <input
                         required
                         name="event-price"
@@ -120,21 +127,23 @@ function EventForm() {
                 <div className="event-form-div">
                     <p>When will the event take place?</p>
                     <div>
-                        <label htmlfor="event-start-date">Start Date</label>
+                        <label htmlFor="event-start-date">Start Date</label>
                         <input
                             required
                             name="event-start-date"
                             type="datetime-local"
+                            max={"9999-12-31T00:00"}
                             value={startDate}
                             onChange={e => setStartDate(e.target.value)} />
                     </div>
                     <div>
-                        <label htmlfor="event-end-date">End Date</label>
+                        <label htmlFor="event-end-date">End Date</label>
                         <input
                             required
                             name="event-end-date"
                             type="datetime-local"
                             value={endDate}
+                            max={"9999-12-31T00:00"}
                             onChange={e => setEndDate(e.target.value)} />
                     </div>
                 </div>

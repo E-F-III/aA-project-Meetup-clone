@@ -78,8 +78,8 @@ function GroupForm() {
                                 {USstates.map(el => <option value={el} onChange={e => setState(el)}>{el}</option>)}
                             </select>
                             <div className="submission-footer">
-                                <button className="return" style={{visibility: 'hidden'}}></button>
                                 <button className="default" disabled={city.length < 3} onClick={e => setStep('STEP 2')}>Next</button>
+                                <button className="return" style={{visibility: 'hidden'}}></button>
                             </div>
                         </div>
                     }
@@ -95,8 +95,8 @@ function GroupForm() {
                                 placeholder='group name...'
                                 name='name' />
                             <div className="submission-footer">
-                                <button className="return" onClick={e => setStep('STEP 1')}>Back</button>
                                 <button className="default" disabled={name.length < 5 || name.length > 60} onClick={e => setStep('STEP 3')}>Next</button>
+                                <button className="return" onClick={e => setStep('STEP 1')}>Back</button>
                             </div>
                         </div>
                     }
@@ -119,8 +119,8 @@ function GroupForm() {
                                 name='about' />
                             <p>Character count: {about.length}</p>
                             <div className="submission-footer">
-                                <button className="return" onClick={e => setStep('STEP 2')}>Back</button>
                                 <button className="default" disabled={about.length < 50 || about.length > 1000} onClick={e => setStep('STEP 4')}>Next</button>
+                                <button className="return" onClick={e => setStep('STEP 2')}>Back</button>
                             </div>
                         </div>
                     }
@@ -139,8 +139,8 @@ function GroupForm() {
                                 <option value={true} >Private</option>
                             </select>
                             <div className="submission-footer">
-                                <button className="return" onClick={e => setStep('STEP 3')}>Back</button>
                                 <button className="default" onClick={e => setStep('STEP 5')}>Next</button>
+                                <button className="return" onClick={e => setStep('STEP 3')}>Back</button>
                             </div>
                         </div>
                     }
@@ -157,8 +157,8 @@ function GroupForm() {
                             </ul>
                             <span>Once you submit your group, you'll be redirected to your newly created group's page</span>
                             <div className="submission-footer">
-                                <button className="return" onClick={e => setStep('STEP 4')}>Back</button>
                                 <button className="default" type="submit">{'Agree & Create group'}</button>
+                                <button className="return" onClick={e => setStep('STEP 4')}>Back</button>
                             </div>
                         </div>
                     }

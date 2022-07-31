@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import './FooterInfo.css'
 
 function FooterInfo() {
+    const sessionUser = useSelector(state => state.session.user);
+
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(()=>setIsLoaded(true),[])
@@ -19,7 +22,8 @@ function FooterInfo() {
                     <li className='list-header'>
                         Your Account
                     </li>
-                    <li> <NavLink className='footerNavLink' to='/signup'> Sign Up </NavLink></li>
+                    { !sessionUser && <li> <NavLink className='footerNavLink' to='/signup'> Sign Up </NavLink></li> }
+                    { sessionUser && <li> <NavLink className='footerNavLink' to='/your-groups'> Your groups </NavLink></li> }
                 </ul>
                 <ul className='footer-list'>
                     <li className='list-header'>

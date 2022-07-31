@@ -42,15 +42,11 @@ function EventsList() {
                             <NavLink className='navLink' to={`/events/${event.id}`} key={event.id}>
                                 <div className='event-card'>
                                     <div className='card-image'>
-                                        {
-                                            event.previewImage &&
-                                        <img className='event-image' src={event.previewImage} />
-                                        }
-
-                                        {
-                                            Array.isArray(event.previewImage) &&
-                                            <img className='event-image' src='https://www.hawaii-guide.com/images/made/honolulu-waikiki_2500_1667_95_s.jpg'/>
-                                        }
+                                        <img
+                                        className='event-image'
+                                        src={event.previewImage?.length > 0 ? event.previewImage : ""}
+                                        hidden={event.previewImage?.length > 0 ? false : true}
+                                        />
                                     </div>
                                     <div>
                                         <div className='card-title'>

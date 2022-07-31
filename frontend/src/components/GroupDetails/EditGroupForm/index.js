@@ -17,8 +17,28 @@ function EditGroupForm({ group }) {
     const [city, setCity] = useState(group.city)
     const [state, setState] = useState(group.state)
 
+    const [validationErrors, setValidationErrors] = useState([])
+    const [isSubmitted, setIsSubmitted] = useState(false)
+
+    useEffect(() => {
+        const errors = []
+
+        if (name.length < 5) errors.push('Name must have atleast 5 characters')
+        if (name.length > 60) errors.push('Name must have atmost 60 characters')
+        if (about.length < 50) errors.push('About must be at least 50 characters')
+        if (about.length > 1000) errors.push('About must be atmost 1000 characters')
+        if (city.length < 3) errors.push('Please provide valid city')
+
+        setValidationErrors(errors)
+
+    }, [name, about, city])
+
     const handleSubmit = async e => {
         e.preventDefault()
+
+        setIsSubmitted(true)
+
+        if (validationErrors.length > 0) return
 
         const editedGroup = {
             name: name,
@@ -31,7 +51,7 @@ function EditGroupForm({ group }) {
 
         const data = await dispatch(editGroupDetails(group.id, editedGroup))
 
-        history.push(`/groups/${group.id}`)
+        history.push(`/groups/${group.id}/about`)
     }
 
     const handleDelete = async e => {
@@ -59,6 +79,10 @@ function EditGroupForm({ group }) {
         <>
             <div>
                 <form onSubmit={handleSubmit}>
+                    {isSubmitted && validationErrors.length > 0 &&
+                        <ul>
+                            {validationErrors.map(error => <li key={error}>{error}</li>)}
+                        </ul>}
                     <h2>Name</h2>
                     <input
                         required
@@ -76,7 +100,7 @@ function EditGroupForm({ group }) {
                         value={about}
                         placeholder='Please write at least 50 characters'
                         name='about' />
-                        <p>Character count {about.length}</p>
+                    <p>Character count {about.length}</p>
                     <h2>Type</h2>
                     <select name='type'>
                         <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
@@ -99,14 +123,15 @@ function EditGroupForm({ group }) {
                         name='state'
                         placeholder="state..."
                         value={state}
-                        >
+                        onChange={e => setState(e.target.value)}
+                    >
                         {USstates.map(USstate => {
                             return (
                                 <option
                                     key={USstate}
                                     onChange={e => setState(e.target.value)}
                                     value={USstate}
-                                    >
+                                >
                                     {USstate}
                                 </option>
                             )

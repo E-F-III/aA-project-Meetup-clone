@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { editEventDetails, getEventDetails } from '../../store/EventDetails';
 import { deleteAnEvent } from "../../store/Events";
@@ -57,7 +57,8 @@ function EditEventForm({ event, updateCurrTab}) {
         }
 
         const data = await dispatch(editEventDetails(event.id, newEvent))
-        .then(() => updateCurrTab('about'))
+
+        history.push(`/events/${event.id}/about`)
     }
 
     const handleDelete = async e => {
@@ -127,6 +128,7 @@ function EditEventForm({ event, updateCurrTab}) {
                                 name="event-start-date"
                                 type="datetime-local"
                                 value={startDate}
+                                max={"9999-12-31T00:00"}
                                 onChange={e => setStartDate(e.target.value)} />
                         </div>
                         <div>
@@ -135,6 +137,7 @@ function EditEventForm({ event, updateCurrTab}) {
                                 name="event-end-date"
                                 type="datetime-local"
                                 value={endDate}
+                                max={"9999-12-31T00:00"}
                                 onChange={e => setEndDate(e.target.value)} />
                         </div>
                     </div>
