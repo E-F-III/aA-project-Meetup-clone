@@ -26,6 +26,7 @@ div.splash-title-div {
     padding: 30px;
     background-color: #f6f7f8;
     border-radius: 15px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 }
 
 div.splash-title-text {
@@ -49,6 +50,7 @@ div.splash-body-title {
     background-color: #f6f7f8;
     border-radius: 15px;
     padding: 30px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 }
 
 div.splash-body-div {
@@ -72,6 +74,7 @@ div.splash-nav{
     padding: 0 24px 30px;
     text-align: center;
     margin: 15px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 }
 
 h3.splash-link {

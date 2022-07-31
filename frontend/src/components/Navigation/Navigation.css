@@ -5,7 +5,6 @@ img.logo {
 
 div.navigation {
     position: sticky;
-    width: 100%;
     top: 0px;
     display: flex;
     justify-content: space-between;
