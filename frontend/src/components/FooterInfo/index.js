@@ -1,8 +1,13 @@
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './FooterInfo.css'
 
 function FooterInfo() {
-    return (
+    const [isLoaded, setIsLoaded] = useState(false)
+
+    useEffect(()=>setIsLoaded(true),[])
+
+    return  isLoaded && (
         <div className='footer-info-main'>
             <div className='footer-content'>
                 <p>

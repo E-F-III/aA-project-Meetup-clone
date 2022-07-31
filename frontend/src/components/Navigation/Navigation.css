@@ -4,14 +4,14 @@ img.logo {
 }
 
 div.navigation {
-    position: fixed;
+    position: sticky;
     width: 100%;
     top: 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 60px;
-    padding: 0 18px;
+    padding: 0 25px;
     background: #fff;
     border-bottom: #E5E7E9 500px;
     border-bottom:  2px solid #E6E6E6;

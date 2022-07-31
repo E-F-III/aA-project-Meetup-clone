@@ -23,41 +23,45 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded}/>
+      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <Switch>
-          <Route exact path='/'>
-            <SplashPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route exact path="/groups">
-            <GroupsList />
-          </Route>
-          <Route exact path="/events">
-            <EventsList />
-          </Route>
-          <Route path="/groups/:groupId">
-            <GroupDetails />
-          </Route>
-          <Route exact path="/events/:eventId">
-            <EventDetails />
-          </Route>
-          <Route exact path='/group-form'>
-            <GroupForm />
-          </Route>
-          <Route exact path='/groups/:groupId/events/create-event'>
-            <EventForm />
-          </Route>
-          <Route exact path='/events/:eventId/edit'>
-            <EditEventForm />
-          </Route>
-        </Switch>
+        <>
+          <Switch>
+            <Route exact path='/'>
+              <SplashPage />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route exact path="/groups">
+              <GroupsList />
+            </Route>
+            <Route exact path="/events">
+              <EventsList />
+            </Route>
+            <Route path="/groups/:groupId">
+              <GroupDetails />
+            </Route>
+            <Route exact path="/events/:eventId">
+              <EventDetails />
+            </Route>
+            <Route exact path='/group-form'>
+              <GroupForm />
+            </Route>
+            <Route exact path='/groups/:groupId/events/create-event'>
+              <EventForm />
+            </Route>
+            <Route exact path='/events/:eventId/edit'>
+              <EditEventForm />
+            </Route>
+          </Switch>
+          <footer>
+            <FooterInfo />
+          </footer>
+        </>
       )}
-      <footer>
-        <FooterInfo />
-      </footer>
+
+
     </>
   );
 }
