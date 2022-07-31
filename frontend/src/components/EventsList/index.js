@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import * as sessionActions from '../../store/session';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './Events.css'
@@ -7,6 +6,7 @@ import { getAllEvents } from '../../store/Events'
 import { NavLink } from 'react-router-dom';
 
 import GroupsEventsNav from '../GroupsAndEventsNavBar';
+import FooterInfo from '../FooterInfo'
 
 function EventsList() {
     const dispatch = useDispatch()
@@ -19,6 +19,7 @@ function EventsList() {
     }, [dispatch])
 
     return (
+        <>
         <div className='listbody-container'>
             <div className='listbody'>
                 <GroupsEventsNav />
@@ -60,11 +61,14 @@ function EventsList() {
                             </NavLink>
                         )
                     })
-                    }
+                }
                 </div>
             </div>
         </div>
-
+        <footer>
+            <FooterInfo />
+          </footer>
+                </>
     )
 }
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getAllEvents } from "../../../store/Events";
 import { editGroupDetails } from "../../../store/GroupDetails";
-import { deleteAGroup } from "../../../store/Groups";
+import { deleteAGroup, getAllGroups } from "../../../store/Groups";
 
 import './EditGroupForm.css'
 
@@ -50,6 +51,8 @@ function EditGroupForm({ group }) {
         }
 
         const data = await dispatch(editGroupDetails(group.id, editedGroup))
+        await dispatch(getAllGroups())
+        await dispatch(getAllEvents())
 
         history.push(`/groups/${group.id}/about`)
     }

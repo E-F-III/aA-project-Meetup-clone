@@ -56,9 +56,6 @@ function App() {
               <GroupsOfUser />
             </Route>
           </Switch>
-          <footer>
-            <FooterInfo />
-          </footer>
         </>
       )}
 

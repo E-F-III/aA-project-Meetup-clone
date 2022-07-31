@@ -4,7 +4,7 @@ html {
 
 div.main-form-div {
     justify-content: center;
-    height: 100%;
+    height: 70vh;
     min-width: 900px;
 }
 
@@ -28,6 +28,7 @@ div.create-group {
 }
 
 div.submission-footer {
+    position: relative;
     bottom: 0px;
     border-top: 2px solid black;
     justify-content: space-between;
@@ -43,4 +44,8 @@ h2.create-group {
 
 p.create-group {
     font-size: 16px;
+}
+
+form.group-form {
+    height: 80%;
 }

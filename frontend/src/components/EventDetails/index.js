@@ -7,6 +7,7 @@ import { getGroupDetails } from '../../store/GroupDetails';
 
 import './EventDetails.css'
 import EditEventForm from '../EditEventForm';
+import FooterInfo from '../FooterInfo'
 
 function EventDetails() {
     const dispatch = useDispatch()
@@ -37,8 +38,8 @@ function EventDetails() {
                 <h2>{event.name}</h2>
                 {(sessionUser) && sessionUser.id === group.organizerId &&
                     <div>
-                        <h3 onClick={()=> setCurrTab('about')}>About</h3>
-                        <h3 onClick={()=> setCurrTab('edit')}>Edit</h3>
+                        <h3 onClick={() => setCurrTab('about')}>About</h3>
+                        <h3 onClick={() => setCurrTab('edit')}>Edit</h3>
                     </div>
                 }
             </div>
@@ -47,14 +48,14 @@ function EventDetails() {
                     <div>
                         <NavLink className='event-group-card navLink' to={`/groups/${group.id}`}>
                             <div className='event-group-card-image'>
-                               {
-                                   group.images[0] &&
-                                   <img className='event-group-image' src={group.images[0].url} />
-                               }
-                               {
+                                {
+                                    group.images[0] &&
+                                    <img className='event-group-image' src={group.images[0].url} />
+                                }
+                                {
                                     !group.images[0] &&
                                     <img className='event-group-image' src='https://www.hawaii.com/wp-content/uploads/2007/05/33552ff0-b2d2-40e2-8699-50be7d8eeee0-scaled.jpg' />
-                               }
+                                }
 
                             </div>
                             <div>
@@ -90,7 +91,7 @@ function EventDetails() {
                 }
                 {
                     currTab === 'edit' &&
-                    <EditEventForm event={event} updateCurrTab={setCurrTab}/>
+                    <EditEventForm event={event} updateCurrTab={setCurrTab} />
                 }
             </div>
             <div className='event-footer'>
@@ -103,6 +104,9 @@ function EventDetails() {
                     <h3>{Number(event.capacity) - Number(event.numAttending)} spots left</h3>
                 </div>
             </div>
+            <footer>
+                <FooterInfo />
+            </footer>
         </>
 
     );

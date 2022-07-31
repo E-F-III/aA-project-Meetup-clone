@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -11,12 +11,13 @@ import logo from '../../assets/images/logo.png'
 
 function Navigation({ isLoaded }) {
   const dispatch = useDispatch()
+  const history = useHistory()
   const sessionUser = useSelector(state => state.session.user);
 
   const demoLogin = (e) => {
     e.preventDefault();
 
-    const demoUser = { credential: 'demo@user.io', password:'password'}
+    const demoUser = { credential: 'demo@user.io', password: 'password' }
 
     return dispatch(sessionActions.login(demoUser))
   }
@@ -24,7 +25,10 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ProfileButton user={sessionUser} />
+      <>
+        <button className='default' onClick={()=>history.push('/group-form')}>Create a group</button>
+        <ProfileButton user={sessionUser} />
+      </>
     );
   } else {
     sessionLinks = (

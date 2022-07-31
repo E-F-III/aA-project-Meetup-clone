@@ -2,7 +2,7 @@ import online_events from '../../assets/images/online_events.svg'
 import handsup from '../../assets/images/handsUp.svg'
 import ticket from '../../assets/images/ticket.svg'
 import joinGroup from '../../assets/images/joinGroup.svg'
-import splashBG from '../../assets/images/splash-bg.jpg'
+import FooterInfo from '../FooterInfo'
 
 import { useHistory } from 'react-router-dom'
 
@@ -49,6 +49,9 @@ function SplashPage() {
                     </div>
                 </div>
             </div>
+            <footer>
+                <FooterInfo />
+            </footer>
         </>
     )
 }
