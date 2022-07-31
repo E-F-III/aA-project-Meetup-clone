@@ -3,18 +3,36 @@ div.splash-outer{
     justify-content: center;
 }
 
-div.splash-main {
-    max-width: 1120px;
+div.splash-bg {
+    background-image: url('../../assets/images/splash-bg.jpg');
+    opacity: 0.2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
+
+div.splash-main {
+    max-width: 70%;
+}
+
 
 div.splash-title-div {
     display: flex;
     flex-direction: row;
+    margin: 20px 0;
+    padding: 30px;
+    background-color: #f6f7f8;
+    border-radius: 15px;
 }
 
 div.splash-title-text {
     display: flex;
     flex-direction: column;
+    margin: 20px;
+
 }
 
 div.splash-title-pic-div{
@@ -27,19 +45,33 @@ div.splash-title-pic-div{
     width: 520px;
 }
 
+div.splash-body-title {
+    background-color: #f6f7f8;
+    border-radius: 15px;
+    padding: 30px;
+}
+
 div.splash-body-div {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 div.splash-nav-container{
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 15px;
+    max-width: 100%;
 }
 
 div.splash-nav{
     background-color: #f6f7f8;
-    border-radius: 3px;
+    border-radius: 15px;
     padding: 0 24px 30px;
     text-align: center;
+    margin: 15px;
 }
 
 h3.splash-link {
