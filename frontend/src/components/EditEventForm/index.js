@@ -64,7 +64,7 @@ function EditEventForm({ event, updateCurrTab}) {
         e.preventDefault()
         const data = await dispatch(deleteAnEvent(event.id))
 
-        history.push(`/groups/${event.groupId}`)
+        history.push(`/groups/${event.groupId}/about`)
     }
 
     return (

@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import GroupsList from "./components/Groups";
+import GroupsList from "./components/GroupsList";
 import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
 import EventDetails from "./components/EventDetails";
@@ -12,6 +12,7 @@ import GroupForm from "./components/GroupForm";
 import EditEventForm from "./components/EditEventForm";
 import SplashPage from "./components/SplashPage";
 import EventForm from "./components/CreateEventForm";
+import FooterInfo from "./components/FooterInfo";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,10 +23,10 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded}/>
       {isLoaded && (
         <Switch>
-          <Route exact path ='/'>
+          <Route exact path='/'>
             <SplashPage />
           </Route>
           <Route path="/signup">
@@ -37,7 +38,7 @@ function App() {
           <Route exact path="/events">
             <EventsList />
           </Route>
-          <Route exact path="/groups/:groupId">
+          <Route path="/groups/:groupId">
             <GroupDetails />
           </Route>
           <Route exact path="/events/:eventId">
@@ -54,6 +55,9 @@ function App() {
           </Route>
         </Switch>
       )}
+      <footer>
+        <FooterInfo />
+      </footer>
     </>
   );
 }

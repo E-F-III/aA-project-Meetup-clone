@@ -1,0 +1,32 @@
+div.footer-info-main{
+    display: flex;
+    flex-direction: column;
+    background-color: #353E48;
+    color: white;
+    justify-content: center;
+}
+
+div.footer-content{
+    width: 70%;
+    padding: 30px;
+    align-self: center;
+}
+
+div.footer-lists{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-top: white solid 3px;
+    padding: 25px;
+}
+
+.footerNavLink{
+    text-decoration: none;
+    color: white;
+}
+
+li.list-header{
+    margin-bottom: 10px;
+    font-size: large;
+    text-decoration: underline white 3px;
+}
