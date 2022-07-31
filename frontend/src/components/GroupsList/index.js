@@ -27,7 +27,11 @@ function GroupsList() {
                         <NavLink className='navLink' key={group.id} to={`/groups/${group.id}/about`}>
                             <div className='group-card'>
                                 <div className='card-image'>
-                                 { group.previewImage[0] ? <img className='group-image' src={group.previewImage} /> : <img className='group-image' src='https://img.theculturetrip.com/x/wp-content/uploads/2015/11/northam-usa-haw.JPG' />}
+                                    <img
+                                        className='group-image'
+                                        src={group.previewImage.length > 0 ? group.previewImage : ""}
+                                        style={{visibility: `${group.previewImage.length > 0? "visible" : "hidden"}`}}
+                                    />
                                 </div>
                                 <div>
                                     <div className='card-title'>

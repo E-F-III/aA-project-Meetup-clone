@@ -1,6 +1,13 @@
+div.group-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
 div.group-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 70%;
 }
@@ -28,13 +35,19 @@ div.groupNav {
     margin-right: 15px;
 }
 
+div.groupNavDiv {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 div.group-body {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
     background-color: #F6F7F8;
-    /* height: 100vh; */
 }
 
 div.group-events-header {

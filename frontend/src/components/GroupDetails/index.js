@@ -25,8 +25,7 @@ function GroupDetails() {
     }, [dispatch])
 
     return isLoaded && (
-        <div>
-
+        <div className='group-main'>
             <div className='group-header'>
                 <div className='header-img'>
                     <img className='cover'
@@ -45,32 +44,35 @@ function GroupDetails() {
             </div>
 
             <div className='groupNavBar'>
-                <div className='groupNav'>
-                    <NavLink
-                        className="navLink header"
-                        activeClassName='tab-active'
-                        to={`${url}/about`}
-                    >
-                        About
-                    </NavLink>
-                </div>
-                <div className='groupNav'>
-                    <NavLink
-                        className="navLink header"
-                        activeClassName='tab-active'
-                        to={`${url}/events`}
-                    >
-                        Events
-                    </NavLink>
-                </div>
-                <div className='groupNav'>
-                    <NavLink
-                        className="navLink header"
-                        to={`${url}/edit`}
-                        style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
-                    >
-                        <button className='default'>Edit</button>
-                    </NavLink>
+                <div className='groupNavDiv'>
+
+                    <div className='groupNav'>
+                        <NavLink
+                            className="navLink header"
+                            activeClassName='tab-active'
+                            to={`${url}/about`}
+                        >
+                            About
+                        </NavLink>
+                    </div>
+                    <div className='groupNav'>
+                        <NavLink
+                            className="navLink header"
+                            activeClassName='tab-active'
+                            to={`${url}/events`}
+                        >
+                            Events
+                        </NavLink>
+                    </div>
+                    <div className='groupNav'>
+                        <NavLink
+                            className="navLink header"
+                            to={`${url}/edit`}
+                            style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
+                        >
+                            <button className='default'>Edit</button>
+                        </NavLink>
+                    </div>
                 </div>
 
 
