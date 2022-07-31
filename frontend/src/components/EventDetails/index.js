@@ -6,17 +6,19 @@ import { getEventDetails } from '../../store/EventDetails';
 import { getGroupDetails } from '../../store/GroupDetails';
 
 import './EventDetails.css'
+import EditEventForm from '../EditEventForm';
 
 function EventDetails() {
     const dispatch = useDispatch()
+    const history = useHistory()
+
     const sessionUser = useSelector(state => state.session.user)
     const event = useSelector(state => state.eventDetails)
     const group = useSelector(state => state.groupDetails)
 
-    const history = useHistory()
-
     const { eventId } = useParams()
 
+    const [currTab, setCurrTab] = useState('about')
     const [isLoaded, setIsLoaded] = useState(false)
 
     const date = new Date(event.startDate)
@@ -34,14 +36,26 @@ function EventDetails() {
                 <p>{date.toDateString()}</p>
                 <h2>{event.name}</h2>
                 {(sessionUser) && sessionUser.id === group.organizerId &&
-                    <NavLink className='navLink' to={`/events/${eventId}/edit`}>Edit</NavLink>}
+                    <div>
+                        <h3 onClick={()=> setCurrTab('about')}>About</h3>
+                        <h3 onClick={()=> setCurrTab('edit')}>Edit</h3>
+                    </div>
+                }
             </div>
             <div className='event-info-body'>
                 <div className='other-info-card'>
                     <div>
                         <NavLink className='event-group-card navLink' to={`/groups/${group.id}`}>
                             <div className='event-group-card-image'>
-                                <img className='event-group-image' src={group.images[0].url} />
+                               {
+                                   group.images[0] &&
+                                   <img className='event-group-image' src={group.images[0].url} />
+                               }
+                               {
+                                    !group.images[0] &&
+                                    <img className='event-group-image' src='https://www.hawaii.com/wp-content/uploads/2007/05/33552ff0-b2d2-40e2-8699-50be7d8eeee0-scaled.jpg' />
+                               }
+
                             </div>
                             <div>
                                 <p>{event.Group.name}</p>
@@ -59,20 +73,25 @@ function EventDetails() {
                         </div>
                     </div>
                 </div>
-                <div>
-                   {
-                        event.images[0] &&
-                       <img className='event-main-image' src={event.images[0].url}></img>
-                   }
-                   {
-                        !event.images[0] &&
-                       <img className='event-main-image' src={'https://www.hawaii-guide.com/images/made/honolulu-waikiki_2500_1667_95_s.jpg'}></img>
-                   }
-                    <h3>Details</h3>
-                    <p>{event.description}</p>
-                </div>
-                <div>
-                </div>
+                {
+                    currTab === 'about' &&
+                    <div>
+                        {
+                            event.images[0] &&
+                            <img className='event-main-image' src={event.images[0].url}></img>
+                        }
+                        {
+                            !event.images[0] &&
+                            <img className='event-main-image' src={'https://www.hawaii-guide.com/images/made/honolulu-waikiki_2500_1667_95_s.jpg'}></img>
+                        }
+                        <h3>Details</h3>
+                        <p>{event.description}</p>
+                    </div>
+                }
+                {
+                    currTab === 'edit' &&
+                    <EditEventForm event={event} updateCurrTab={setCurrTab}/>
+                }
             </div>
             <div className='event-footer'>
                 <div>

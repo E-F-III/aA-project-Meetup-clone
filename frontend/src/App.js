@@ -9,7 +9,6 @@ import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
 import EventDetails from "./components/EventDetails";
 import GroupForm from "./components/GroupForm";
-import EditGroupForm from "./components/EditGroupForm";
 import EditEventForm from "./components/EditEventForm";
 import SplashPage from "./components/SplashPage";
 import EventForm from "./components/CreateEventForm";

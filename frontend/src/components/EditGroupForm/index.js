@@ -27,8 +27,10 @@ function EditGroupForm({ group, updateCurrTab }) {
             state: state
         }
 
+        console.log(editedGroup)
+
         const data = await dispatch(editGroupDetails(group.id, editedGroup))
-        .then(() => updateCurrTab('about'))
+            .then(() => updateCurrTab('about'))
         history.push(`/groups/${group.id}`)
     }
 
@@ -38,12 +40,28 @@ function EditGroupForm({ group, updateCurrTab }) {
         history.push('/groups')
     }
 
+    const USstates = [
+        'AL', 'AK', 'AS', 'AZ', 'AR',
+        'CA', 'CO', 'CT', 'DE', 'DC',
+        'FM', 'FL', 'GA', 'GU', 'HI',
+        'ID', 'IL', 'IN', 'IA', 'KS',
+        'KY', 'LA', 'ME', 'MH', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO',
+        'MT', 'NE', 'NV', 'NH', 'NJ',
+        'NM', 'NY', 'NC', 'ND', 'MP',
+        'OH', 'OK', 'OR', 'PW', 'PA',
+        'PR', 'RI', 'SC', 'SD', 'TN',
+        'TX', 'UT', 'VT', 'VI', 'VA',
+        'WA', 'WV', 'WI', 'WY'
+    ];
+
     return (
         <>
             <div>
                 <form onSubmit={handleSubmit}>
                     <h2>Name</h2>
                     <input
+                        required
                         type='text'
                         onChange={e => setName(e.target.value)}
                         value={name}
@@ -51,6 +69,7 @@ function EditGroupForm({ group, updateCurrTab }) {
                         name='name' />
                     <h2>About</h2>
                     <textarea
+                        required
                         rows='13'
                         cols='76'
                         onChange={e => setAbout(e.target.value)}
@@ -68,18 +87,36 @@ function EditGroupForm({ group, updateCurrTab }) {
                     </select>
                     <h2>Location</h2>
                     <input
+                        required
                         type='text'
                         onChange={e => setCity(e.target.value)}
                         value={city}
                         placeholder='city...'
                         name="city" />
-                    <input
+                    {/* <input
                         type='text'
                         onChange={e => setState(e.target.value)}
                         value={state}
                         placeholder='state...'
-                        name='state' />
-
+                        name='state' /> */}
+                    <select
+                        required
+                        name='state'
+                        placeholder="state..."
+                        value={state}
+                        >
+                        {USstates.map(USstate => {
+                            return (
+                                <option
+                                    key={USstate}
+                                    onChange={e => setState(e.target.value)}
+                                    value={USstate}
+                                    >
+                                    {USstate}
+                                </option>
+                            )
+                        })}
+                    </select>
                     <div>
                         <button onClick={handleDelete}>Delete</button>
                         <button type="submit">Save</button>

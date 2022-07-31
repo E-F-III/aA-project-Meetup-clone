@@ -37,8 +37,9 @@ function EventForm() {
         const errors = []
 
         if (name.length < 5) errors.push('Name must have at least 5 characters')
+        if (description.length < 50) errors.push('Description must be at least 50 characters')
         if (new Date(startDate) <= new Date()) errors.push('Start date must be in the future')
-        if (new Date(endDate) < new Date( startDate)) errors.push('End date must be after the start date')
+        if (new Date(endDate) < new Date(startDate)) errors.push('End date must be after the start date')
 
         setvalidationErrors(errors)
 
@@ -68,7 +69,7 @@ function EventForm() {
                 <h1>Create an event!</h1>
                 {isSubmitted && validationErrors.length > 0 &&
                     <ul>
-                        {validationErrors.map(error => <li>{error}</li>)}
+                        {validationErrors.map(error => <li key={error}>{error}</li>)}
                     </ul>}
                 <div className="event-form-div">
                     <label htmlFor="event-name">Event Name</label>
@@ -88,12 +89,13 @@ function EventForm() {
                         value={description}
                         placeholder='Please write at least 50 characters'
                         name='event-about' />
+                    <p>{description.length} characters</p>
                 </div>
                 <div className="event-form-div">
                     <label htmlfor='event-type'>Will this event be in person or online?</label>
-                    <select required name='event-type'>
-                        <option value='In Person' onChange={e => setType(e.target.value)}>In Person</option>
-                        <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
+                    <select name='type' value={type} onChange={e => setType(e.target.value)} >
+                        <option value='In person'>In Person</option>
+                        <option value='Online'>Online</option>
                     </select>
                 </div>
                 <div className="event-form-div">

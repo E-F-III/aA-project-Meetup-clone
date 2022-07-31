@@ -12,7 +12,7 @@ function GroupForm() {
     const [type, setType] = useState('In person')
     const [privates, setPrivate] = useState(false)
     const [city, setCity] = useState('')
-    const [state, setState] = useState('')
+    const [state, setState] = useState('AL')
     const [step, setStep] = useState('STEP 1')
 
     const history = useHistory()
@@ -32,6 +32,8 @@ function GroupForm() {
             city: city,
             state: state
         }
+
+        console.log(newGroup)
 
         const data = await dispatch(createNewGroup(newGroup))
 
@@ -54,13 +56,12 @@ function GroupForm() {
     ];
 
     return (
-        <>
-            <div className="group-form-steps">
-                {step} OF 5
-            </div>
-
-            <div>
-                <form onSubmit={handleSubmit}>
+        <div>
+            <div className="main-form-div">
+                <div className="group-form-steps">
+                    {step} OF 5
+                </div>
+                <form className="group-form" onSubmit={handleSubmit}>
                     {
                         step === 'STEP 1' &&
                         <div className="create-group">
@@ -73,24 +74,13 @@ function GroupForm() {
                                 value={city}
                                 placeholder='city...'
                                 name="city" />
-                            {/* <input
-                                type='text'
-                                onChange={e => setState(e.target.value)}
-                                value={state}
-                                placeholder='state...'
-                                name='state' /> */}
-                            <select required name='state' placeholder="state...">
-                                {USstates.map(state => {
-                                    return (
-                                        <option key={state}
-                                            onChange={e => setState(e.target.value)}
-                                            value={state}
-                                        > {state}
-                                        </option>
-                                    )
-                                })}
+                            <select value={state} onChange={e => setState(e.target.value)}>
+                                {USstates.map(el => <option value={el} onChange={e => setState(el)}>{el}</option>)}
                             </select>
-                            <button disabled={city.length < 3} onClick={e => setStep('STEP 2')}>Next</button>
+                            <div className="submission-footer">
+                                <button className="return" style={{visibility: 'hidden'}}></button>
+                                <button className="default" disabled={city.length < 3} onClick={e => setStep('STEP 2')}>Next</button>
+                            </div>
                         </div>
                     }
                     {
@@ -104,8 +94,10 @@ function GroupForm() {
                                 value={name}
                                 placeholder='group name...'
                                 name='name' />
-                            <button onClick={e => setStep('STEP 1')}>Back</button>
-                            <button disabled={name.length < 5 || name.length > 60} onClick={e => setStep('STEP 3')}>Next</button>
+                            <div className="submission-footer">
+                                <button className="return" onClick={e => setStep('STEP 1')}>Back</button>
+                                <button className="default" disabled={name.length < 5 || name.length > 60} onClick={e => setStep('STEP 3')}>Next</button>
+                            </div>
                         </div>
                     }
                     {
@@ -126,24 +118,30 @@ function GroupForm() {
                                 placeholder='Please write at least 50 characters'
                                 name='about' />
                             <p>Character count: {about.length}</p>
-                            <button onClick={e => setStep('STEP 2')}>Back</button>
-                            <button disabled={about.length < 50} onClick={e => setStep('STEP 4')}>Next</button>
+                            <div className="submission-footer">
+                                <button className="return" onClick={e => setStep('STEP 2')}>Back</button>
+                                <button className="default" disabled={about.length < 50 || about.length > 1000} onClick={e => setStep('STEP 4')}>Next</button>
+                            </div>
                         </div>
                     }
                     {
                         step === 'STEP 4' &&
                         <div className="create-group">
-                            <h2 className="create-group">What type of group will {name} be ?(this setting can be changed later)</h2>
-                            <select name='type'>
-                                <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
-                                <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
+                            <h2 className="create-group">What type of group will {name} be ?</h2>
+                            <p className="create-group">Will this group primarily be In Person or Online?</p>
+                            <select name='type' value={type} onChange={e => setType(e.target.value)} >
+                                <option value='In person'>In Person</option>
+                                <option value='Online'>Online</option>
                             </select>
-                            <select name='private'>
-                                <option value={false} onChange={e => setPrivate(e.target.value)}>Public</option>
-                                <option value={true} onChange={e => setPrivate(e.target.value)}>Private</option>
+                            <p className="create-group">Will this group be a private or public group?</p>
+                            <select name='private' value={privates} onChange={e => setPrivate(e.target.value)}>
+                                <option value={false} >Public</option>
+                                <option value={true} >Private</option>
                             </select>
-                            <button onClick={e => setStep('STEP 3')}>Back</button>
-                            <button onClick={e => setStep('STEP 5')}>Next</button>
+                            <div className="submission-footer">
+                                <button className="return" onClick={e => setStep('STEP 3')}>Back</button>
+                                <button className="default" onClick={e => setStep('STEP 5')}>Next</button>
+                            </div>
                         </div>
                     }
                     {
@@ -158,13 +156,15 @@ function GroupForm() {
                                 <li>Be transparent about the group's intentions</li>
                             </ul>
                             <span>Once you submit your group, a human at Meetup will review it based on these guidelines and make sure it gets promoted to the right people.</span>
-                            <button onClick={e => setStep('STEP 4')}>Back</button>
+                            <div className="submission-footer">
+                                <button className="return" onClick={e => setStep('STEP 4')}>Back</button>
+                                <button className="default" type="submit">{'Agree & Create group'}</button>
+                            </div>
                         </div>
                     }
-                    {step === 'STEP 5' && <button type="submit">{'Agree & Create group'}</button>}
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 

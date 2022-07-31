@@ -5,12 +5,9 @@ import { editEventDetails, getEventDetails } from '../../store/EventDetails';
 import { deleteAnEvent } from "../../store/Events";
 
 
-function EditEventForm() {
+function EditEventForm({ event, updateCurrTab}) {
     const dispatch = useDispatch()
     const history = useHistory()
-
-    const { eventId } = useParams()
-    const event = useSelector(state => state.eventDetails)
 
     const [venueId, setVenueId] = useState(event.venueId)
     const [name, setName] = useState(event.name)
@@ -21,15 +18,32 @@ function EditEventForm() {
     const [startDate, setStartDate] = useState(event.startDate)
     const [endDate, setEndDate] = useState(event.endDate)
 
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [validationErrors, setvalidationErrors] = useState([])
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
     useEffect(() => {
-        dispatch(getEventDetails(eventId))
-            .then(() => setIsLoaded(true))
+        dispatch(getEventDetails(event.id))
     }, [dispatch])
+
+    useEffect(() => {
+        const errors = []
+
+        if (name.length < 5) errors.push('Name must have at least 5 characters')
+        if (description.length < 50) errors.push('Description must be at least 50 characters')
+        if (new Date(startDate) <= new Date()) errors.push('Start date must be in the future')
+        if (new Date(endDate) < new Date(startDate)) errors.push('End date must be after the start date')
+
+        setvalidationErrors(errors)
+
+    }, [name, startDate, endDate])
+
 
     const handleSubmit = async e => {
         e.preventDefault()
+
+        setIsSubmitted(true)
+
+        if (validationErrors.length > 0) return
 
         const newEvent = {
             venueId,
@@ -42,23 +56,26 @@ function EditEventForm() {
             endDate
         }
 
-        const data = await dispatch(editEventDetails(eventId, newEvent))
-        history.push(`/events/${eventId}`)
+        const data = await dispatch(editEventDetails(event.id, newEvent))
+        .then(() => updateCurrTab('about'))
     }
 
     const handleDelete = async e => {
         e.preventDefault()
-        const data = await dispatch(deleteAnEvent(eventId))
+        const data = await dispatch(deleteAnEvent(event.id))
 
         history.push(`/groups/${event.groupId}`)
     }
 
-    return (isLoaded &&
+    return (
         <>
             <div>
                 <form onSubmit={handleSubmit}>
+                    {isSubmitted && validationErrors.length > 0 &&
+                        <ul>
+                            {validationErrors.map(error => <li key={error}>{error}</li>)}
+                        </ul>}
                     <div className="event-form-div">
-
                         <label htmlFor="event-name">Event Name</label>
                         <input
                             name="event-name"
@@ -67,7 +84,7 @@ function EditEventForm() {
                     </div>
                     <div className="event-form-div">
 
-                        <label htmlfor="event-about">About this event</label>
+                        <label htmlFor="event-about">About this event</label>
                         <textarea
                             rows='13'
                             cols='76'
@@ -75,16 +92,18 @@ function EditEventForm() {
                             value={description}
                             placeholder='Please write at least 50 characters'
                             name='event-about' />
+                        <p>{description.length} characters</p>
+
                     </div>
                     <div className="event-form-div">
-                        <label htmlfor='event-type'>Will this event be in person or offline?</label>
+                        <label htmlFor='event-type'>Will this event be in person or offline?</label>
                         <select name='event-type'>
                             <option value='In Person' onChange={e => setType(e.target.value)}>In Person</option>
                             <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
                         </select>
                     </div>
                     <div className="event-form-div">
-                        <label htmlfor='event-capacity'>How many people are allowed to attend this event?</label>
+                        <label htmlFor='event-capacity'>How many people are allowed to attend this event?</label>
                         <input
                             name="event-capacity"
                             type="number"
@@ -93,7 +112,7 @@ function EditEventForm() {
                             min="1" />
                     </div>
                     <div className="event-form-div">
-                        <label htmlfor="event-price">How much will it cost to attend this event?</label>
+                        <label htmlFor="event-price">How much will it cost to attend this event?</label>
                         <input
                             name="event-price"
                             value={price}
@@ -103,7 +122,7 @@ function EditEventForm() {
                     <div className="event-form-div">
                         <p>When will the event take place?</p>
                         <div>
-                            <label htmlfor="event-start-date">Start Date</label>
+                            <label htmlFor="event-start-date">Start Date</label>
                             <input
                                 name="event-start-date"
                                 type="datetime-local"
@@ -111,7 +130,7 @@ function EditEventForm() {
                                 onChange={e => setStartDate(e.target.value)} />
                         </div>
                         <div>
-                            <label htmlfor="event-end-date">End Date</label>
+                            <label htmlFor="event-end-date">End Date</label>
                             <input
                                 name="event-end-date"
                                 type="datetime-local"
@@ -120,7 +139,7 @@ function EditEventForm() {
                         </div>
                     </div>
                     <button onClick={handleDelete}>Delete</button>
-                    <button type="submit">Submit</button>
+                    <button type="submit" disabled={isSubmitted && validationErrors.length > 0}>Submit</button>
                 </form>
             </div>
         </>
