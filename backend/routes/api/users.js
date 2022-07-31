@@ -79,7 +79,10 @@ router.get(
       ]
     })
 
-    const allGroups = []
+    // const allGroups = []
+
+    const organized = []
+    const memberOf = []
 
     for (let group of orgGroups) {
       const numMembers = await group.countMembers({ where: { status: { [Op.in]: ['member', 'co-host'] }}})
@@ -87,7 +90,8 @@ router.get(
 
       groupJSON.numMembers = numMembers
       if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
-      allGroups.push(groupJSON)
+      // allGroups.push(groupJSON)
+      organized.push(groupJSON)
     }
 
     for (let group of joinedGroups) {
@@ -96,10 +100,11 @@ router.get(
 
       groupJSON.numMembers = numMembers
       if (groupJSON.previewImage[0]) groupJSON.previewImage = groupJSON.previewImage[0].url
-      allGroups.push(groupJSON)
+      // allGroups.push(groupJSON)
+      memberOf.push(groupJSON)
     }
 
-    res.json(allGroups)
+    res.json({organized, memberOf})
   }
 )
 
