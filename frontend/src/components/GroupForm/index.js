@@ -155,7 +155,7 @@ function GroupForm() {
                                 <li>Have a host present at all events</li>
                                 <li>Be transparent about the group's intentions</li>
                             </ul>
-                            <span>Once you submit your group, a human at Meetup will review it based on these guidelines and make sure it gets promoted to the right people.</span>
+                            <span>Once you submit your group, you'll be redirected to your newly created group's page</span>
                             <div className="submission-footer">
                                 <button className="return" onClick={e => setStep('STEP 4')}>Back</button>
                                 <button className="default" type="submit">{'Agree & Create group'}</button>
