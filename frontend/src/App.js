@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import GroupsList from "./components/Groups";
+import GroupsList from "./components/GroupsList";
 import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
 import EventDetails from "./components/EventDetails";
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={isLoaded}/>
       {isLoaded && (
         <Switch>
           <Route exact path='/'>
