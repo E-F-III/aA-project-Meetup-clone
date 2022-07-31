@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, useParams, NavLink } from 'react-router-dom';
+import { Route, useParams, NavLink, useRouteMatch, Switch } from 'react-router-dom';
 import { getGroupDetails } from '../../store/GroupDetails';
 import EditGroupForm from '../EditGroupForm';
 import GroupEvents from '../GroupEvents';
@@ -14,14 +13,15 @@ function GroupDetails() {
     const group = useSelector(state => state.groupDetails)
 
     const { groupId } = useParams()
+    const { url } = useRouteMatch()
 
     const [isLoaded, setIsLoaded] = useState(false)
     const [currTab, setCurrTab] = useState('about')
 
     useEffect(() => {
         dispatch(getGroupDetails(groupId))
-        .then(() => dispatch(getEventsOfGroup(groupId)))
-        .then(() => setIsLoaded(true))
+            .then(() => dispatch(getEventsOfGroup(groupId)))
+            .then(() => setIsLoaded(true))
     }, [dispatch])
 
     return isLoaded && (
@@ -35,33 +35,43 @@ function GroupDetails() {
                     <li>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</li>
                 </ul>
             </div>
-            <nav>
-                <span onClick={() => setCurrTab('about')}>About</span>
-                <span onClick={() => setCurrTab('events')}>Events</span>
-                {(sessionUser) && sessionUser.id === group.Organizer.id && <span onClick={() => setCurrTab('edit')}>Edit</span>}
-            </nav>
 
-            {
-                currTab === 'about' &&
-                <>
+            <div className='groupNavBar'>
+                <ul>
+                    <li>
+                        <NavLink to={`${url}/about`}>About</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={`${url}/events`}>Events</NavLink>
+                    </li>
+                    {
+                        sessionUser && sessionUser.id === group.Organizer.id &&
+                        <li>
+                            <NavLink to={`${url}/edit`}>Edit</NavLink>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <Switch>
+                <Route path={`${url}/about`}>
                     <div>
                         <h2>What we're about</h2>
                         <p>{group.about}</p>
                     </div>
-                </>
-            }
-            {
-                currTab === 'events' &&
-                <div>
+                </Route>
+                <Route path={`${url}/events`}>
                     <h2>Events</h2>
-                    <NavLink to={`/groups/${groupId}/events/create-event`}>Add Event</NavLink>
+                    {
+                        sessionUser && sessionUser.id === group.Organizer.id &&
+                        <NavLink to={`${url}/events/create-event`}>Add Event</NavLink>
+                    }
                     <GroupEvents groupId={groupId} />
-                </div>
-            }
-            {
-                currTab === 'edit' &&
-                <EditGroupForm group={group} updateCurrTab={setCurrTab} />
-            }
+                </Route>
+                <Route path={`${url}/edit`}>
+                    <EditGroupForm group={group} updateCurrTab={setCurrTab} />
+                </Route>
+            </Switch>
         </div>
     );
 }
