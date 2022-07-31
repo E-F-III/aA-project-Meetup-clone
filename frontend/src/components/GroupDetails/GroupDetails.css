@@ -12,10 +12,12 @@ div.header-img {
 }
 
 div.groupNavBar {
-    border-top: 2px  #E5E7E9 solid;
-    border-bottom: 2px  #E5E7E9 solid;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+    border-top: 2px  #E5E7E9 solid;
+    border-bottom: 2px  #E5E7E9 solid;
 }
 
 div.groupNav {
@@ -25,6 +27,7 @@ div.groupNav {
     border-bottom: 5px;
     margin-right: 15px;
 }
+
 div.group-body {
     display: flex;
     flex-direction: row;
@@ -32,6 +35,13 @@ div.group-body {
     justify-content: center;
     background-color: #F6F7F8;
     /* height: 100vh; */
+}
+
+div.group-events-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 div.group-content {

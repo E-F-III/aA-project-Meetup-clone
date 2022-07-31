@@ -12,6 +12,7 @@ import GroupForm from "./components/GroupForm";
 import EditEventForm from "./components/EditEventForm";
 import SplashPage from "./components/SplashPage";
 import EventForm from "./components/CreateEventForm";
+import FooterInfo from "./components/FooterInfo";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path ='/'>
+          <Route exact path='/'>
             <SplashPage />
           </Route>
           <Route path="/signup">
@@ -54,6 +55,9 @@ function App() {
           </Route>
         </Switch>
       )}
+      <footer>
+        <FooterInfo />
+      </footer>
     </>
   );
 }

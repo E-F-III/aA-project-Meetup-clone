@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { editGroupDetails } from "../../../store/GroupDetails";
 import { deleteAGroup } from "../../../store/Groups";
 
+import './EditGroupForm.css'
+
 function EditGroupForm({ group }) {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -26,8 +28,6 @@ function EditGroupForm({ group }) {
             city: city,
             state: state
         }
-
-        console.log(editedGroup)
 
         const data = await dispatch(editGroupDetails(group.id, editedGroup))
 
@@ -94,12 +94,6 @@ function EditGroupForm({ group }) {
                         value={city}
                         placeholder='city...'
                         name="city" />
-                    {/* <input
-                        type='text'
-                        onChange={e => setState(e.target.value)}
-                        value={state}
-                        placeholder='state...'
-                        name='state' /> */}
                     <select
                         required
                         name='state'
@@ -118,7 +112,7 @@ function EditGroupForm({ group }) {
                             )
                         })}
                     </select>
-                    <div>
+                    <div className="form-buttons">
                         <button className="return" onClick={handleDelete}>Delete</button>
                         <button className="default" type="submit">Save</button>
                     </div>

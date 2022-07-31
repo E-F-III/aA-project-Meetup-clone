@@ -85,14 +85,15 @@ function GroupDetails() {
                     </Route>
                     <Route path={`${url}/events`}>
                         <div className='group-content'>
-                            <h2>Events</h2>
-
-                            <NavLink
-                                to={`${url}/events/create-event`}
-                                style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
-                            >
-                                <button className='default'>Add Event</button>
-                            </NavLink>
+                            <div className='group-events-header'>
+                                <h2>Events</h2>
+                                <NavLink
+                                    to={`${url}/events/create-event`}
+                                    style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
+                                >
+                                    <button className='default'>Add Event</button>
+                                </NavLink>
+                            </div>
 
                             <GroupEvents groupId={groupId} />
                         </div>
