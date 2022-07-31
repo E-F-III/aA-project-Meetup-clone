@@ -4,14 +4,16 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import GroupsList from "./components/Groups";
+import GroupsList from "./components/GroupsList";
 import GroupDetails from "./components/GroupDetails";
 import EventsList from "./components/EventsList";
 import EventDetails from "./components/EventDetails";
 import GroupForm from "./components/GroupForm";
-import EditGroupForm from "./components/EditGroupForm";
-import EventForm from "./components/EditEventForm";
+import EditEventForm from "./components/EditEventForm";
 import SplashPage from "./components/SplashPage";
+import EventForm from "./components/CreateEventForm";
+import FooterInfo from "./components/FooterInfo";
+import GroupsOfUser from "./components/GroupsOfUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,33 +26,43 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <Switch>
-          <Route exact path ='/'>
-            <SplashPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route exact path="/groups">
-            <GroupsList />
-          </Route>
-          <Route exact path="/events">
-            <EventsList />
-          </Route>
-          <Route exact path="/groups/:groupId">
-            <GroupDetails />
-          </Route>
-          <Route exact path="/events/:eventId">
-            <EventDetails />
-          </Route>
-          <Route exact path='/group-form'>
-            <GroupForm />
-          </Route>
-          <Route exact path='/events/:eventId/edit'>
-            <EventForm />
-          </Route>
-        </Switch>
+        <>
+          <Switch>
+            <Route exact path='/'>
+              <SplashPage />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route exact path="/groups">
+              <GroupsList />
+            </Route>
+            <Route exact path="/events">
+              <EventsList />
+            </Route>
+            <Route path="/groups/:groupId">
+              <GroupDetails />
+            </Route>
+            <Route exact path="/events/:eventId">
+              <EventDetails />
+            </Route>
+            <Route exact path='/group-form'>
+              <GroupForm />
+            </Route>
+            <Route exact path='/events/:eventId/edit'>
+              <EditEventForm />
+            </Route>
+            <Route exact path='/your-groups'>
+              <GroupsOfUser />
+            </Route>
+          </Switch>
+          <footer>
+            <FooterInfo />
+          </footer>
+        </>
       )}
+
+
     </>
   );
 }
