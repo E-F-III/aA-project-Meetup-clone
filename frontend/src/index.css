@@ -47,6 +47,7 @@ div.main-div {
 }
 
 input {
+    width: 100%;
     height: 55;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
@@ -79,4 +80,20 @@ textarea {
 
 .navLink.header {
     font-size: 20px;
+}
+
+img.cover {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+p.spacing {
+    line-height: 35px;
+}
+
+ul {
+    list-style: none;
 }

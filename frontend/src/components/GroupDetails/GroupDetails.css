@@ -1,0 +1,39 @@
+div.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+}
+
+div.header-img {
+    width: 600px;
+    height: 340px;
+    margin: 0 10px;
+}
+
+div.groupNavBar {
+    border-top: 2px  #E5E7E9 solid;
+    border-bottom: 2px  #E5E7E9 solid;
+    display: flex;
+    justify-content: space-around;
+}
+
+div.groupNav {
+    font-weight: 600;
+    color: #008294;
+    cursor: pointer;
+    border-bottom: 5px;
+    margin-right: 15px;
+}
+div.group-body {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    background-color: #F6F7F8;
+    /* height: 100vh; */
+}
+
+div.group-content {
+    width: 70%;
+}

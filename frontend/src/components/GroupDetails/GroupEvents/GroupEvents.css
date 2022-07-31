@@ -1,0 +1,26 @@
+div.group-event-card {
+    box-sizing: border-box;
+    position: relative;
+    width: 630px;
+    border-radius: 15px;
+    background-color: white;
+    padding: 5px 20px;
+    margin: 10px 0;
+    transition: top ease 1s;
+}
+
+div.group-event-card:hover{
+    box-shadow: 0 0 5px 0px grey;
+    top: -10px;
+}
+
+div.group-event-card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.event-card-image {
+    width: 180px;
+    height: 101px;
+}

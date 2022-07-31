@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { editGroupDetails } from "../../store/GroupDetails";
-import { deleteAGroup } from "../../store/Groups";
+import { editGroupDetails } from "../../../store/GroupDetails";
+import { deleteAGroup } from "../../../store/Groups";
 
-function EditGroupForm({ group, updateCurrTab }) {
+function EditGroupForm({ group }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -30,7 +30,7 @@ function EditGroupForm({ group, updateCurrTab }) {
         console.log(editedGroup)
 
         const data = await dispatch(editGroupDetails(group.id, editedGroup))
-            .then(() => updateCurrTab('about'))
+
         history.push(`/groups/${group.id}`)
     }
 
@@ -76,6 +76,7 @@ function EditGroupForm({ group, updateCurrTab }) {
                         value={about}
                         placeholder='Please write at least 50 characters'
                         name='about' />
+                        <p>Character count {about.length}</p>
                     <h2>Type</h2>
                     <select name='type'>
                         <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
@@ -118,8 +119,8 @@ function EditGroupForm({ group, updateCurrTab }) {
                         })}
                     </select>
                     <div>
-                        <button onClick={handleDelete}>Delete</button>
-                        <button type="submit">Save</button>
+                        <button className="return" onClick={handleDelete}>Delete</button>
+                        <button className="default" type="submit">Save</button>
                     </div>
                 </form>
             </div>
