@@ -14,6 +14,7 @@ function LoginForm() {
     return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
+        console.log(data)
         if (data && data.errors) setErrors(data.errors);
       }
     );
@@ -27,7 +28,7 @@ function LoginForm() {
         ))}
       </ul>
       <label>
-        Username or Email
+        Email
         <input
           type="text"
           value={credential}

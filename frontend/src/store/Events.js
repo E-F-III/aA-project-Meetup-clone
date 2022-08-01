@@ -40,7 +40,7 @@ const deleteEvent = (payload) => {
 export const getAllEvents = () => async dispatch => {
     const response = await csrfFetch('/api/events')
     const data = await response.json()
-    dispatch(getEvents(data.Events))
+    await dispatch(getEvents(data.Events))
     return data
 }
 

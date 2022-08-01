@@ -19,7 +19,7 @@ div.group-header {
     margin-top: 10px;
 }
 
-div.group-header > li {
+.group-header-list {
     list-style: none;
 }
 

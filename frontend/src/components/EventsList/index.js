@@ -17,7 +17,7 @@ function EventsList() {
 
     useEffect(() => {
         dispatch(getAllEvents())
-            .then((res) => eventsList = Object.values(res))
+            .then(() => dispatch(getAllEvents()))
             .then(() => setIsLoaded(true))
     }, [dispatch])
 
