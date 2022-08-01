@@ -38,11 +38,11 @@ function GroupsList() {
                                     </div>
                                     <div>
                                         <div className='card-title'>
-                                            <h3>{group.name}</h3>
-                                            <h4>{group.city}, {group.state}</h4>
+                                            <h3 className='group-card-title'>{group.name}</h3>
+                                            <h4 className='group-card-location'>{group.city}, {group.state}</h4>
                                         </div>
-                                        <p className='about-group'>{group.about}</p>
-                                        <p>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
+                                        <p className='card-about-group'>{group.about}</p>
+                                        <p className='card-about-group'>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
                                     </div>
                                 </div>
                             </NavLink>

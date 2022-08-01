@@ -55,11 +55,11 @@ function EventsList() {
                                             </div>
                                             <div>
                                                 <div className='card-title'>
-                                                    <h3>{`${day}, ${date} • ${hours}:${minutes} ${AMPM}`}</h3>
-                                                    <h3>{event.name}</h3>
-                                                    <h4>{event.Group.name} • {event.Group.city}, {event.Group.state}</h4>
+                                                    <h3 className='card-time'>{`${day}, ${date} • ${hours}:${minutes} ${AMPM}`}</h3>
+                                                    <h3 className='card-title'>{event.name}</h3>
+                                                    <h4 className='card-details'>{event.Group.name} • {event.Group.city}, {event.Group.state}</h4>
                                                 </div>
-                                                <p>{event.numAttending} attendees</p>
+                                                <p className='card-details'>{event.numAttending} attendees</p>
                                             </div>
                                         </div>
                                     </NavLink>

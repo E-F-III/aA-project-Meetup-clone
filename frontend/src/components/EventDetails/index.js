@@ -47,21 +47,14 @@ function EventDetails() {
                 </div>
             </div>
             <div className='event-info-body'>
-                <Switch>
-                    <Route path={`${url}/about`}>
-                        <div>
-                            <img className='event-main-image'
-                                src={event.images.length > 0 ? event.images[0].url : ""}
-                                hidden={event.images.length > 0 ? false : true}
-                            />
-                            <h3>Details</h3>
-                            <p>{event.description}</p>
-                        </div>
-                    </Route>
-                    <Route path={`${url}/edit`}>
-                        <EditEventForm />
-                    </Route>
-                </Switch>
+                <div>
+                    <img className='event-main-image'
+                        src={event.images.length > 0 ? event.images[0].url : ""}
+                        hidden={event.images.length > 0 ? false : true}
+                    />
+                    <h3>Details</h3>
+                    <p>{event.description}</p>
+                </div>
                 <div className='other-info-card'>
                     <div>
                         <NavLink className='event-group-card navLink' to={`/groups/${group.id}`}>
@@ -96,11 +89,11 @@ function EventDetails() {
                 </div>
                 <div>
                     <div>
-                    <button className='default' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
+                        <button className='default' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
                     </div>
                     <div>
-                    <h3>{event.price}</h3>
-                    <h3>{Number(event.capacity) - Number(event.numAttending)} spots left</h3>
+                        <h3>{event.price}</h3>
+                        <h3>{Number(event.capacity) - Number(event.numAttending)} spots left</h3>
                     </div>
                 </div>
             </div>
