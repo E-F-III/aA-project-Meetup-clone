@@ -7,6 +7,7 @@ import eventReducer from './Events';
 import eventDetailsReducer from './EventDetails';
 import groupDetailsReducer from './GroupDetails';
 import groupEventsReducer from './Group-Events';
+import usersGroupReducer from './UsersGroups';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     eventDetails: eventDetailsReducer,
     groupDetails: groupDetailsReducer,
     groupEvents: groupEventsReducer,
+    usersGroups: usersGroupReducer
   });
 
 let enhancer;

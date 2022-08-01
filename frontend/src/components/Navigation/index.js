@@ -33,9 +33,9 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button className='default' onClick={demoLogin}>Demo User</button>
+        <button className='demo' onClick={demoLogin}>Demo User</button>
         <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
+        <NavLink to="/signup" style={{color:"black"}}>Sign Up</NavLink>
       </>
     );
   }

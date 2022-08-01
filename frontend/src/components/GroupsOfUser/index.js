@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { getUserGroups } from '../../store/Groups';
+import { getUserGroups } from '../../store/UsersGroups';
 
 import './GroupsOfUser.css'
 
 function GroupsOfUser() {
     const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user)
-    const groups = useSelector(state => state.groups?.usersGroups)
+    const groups = useSelector(state => state.usersGroups)
 
     const [isLoaded, setIsLoaded] = useState(false)
 
