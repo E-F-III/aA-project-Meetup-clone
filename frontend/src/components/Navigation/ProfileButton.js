@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
             <li className="profile-dropdown" >{user.firstName} {user.lastName}</li>
             <li className="profile-dropdown" >{user.email}</li>
             <li className="profile-dropdown" >
-              <button onClick={logout}>Log Out</button>
+              <button  className="profile-button" onClick={logout}>Log Out</button>
             </li>
           </ul>
         </div>
