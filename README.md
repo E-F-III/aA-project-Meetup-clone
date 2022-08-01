@@ -7,3 +7,26 @@ Hike up is a website clone, inspired by [Meet Up](https://www.meetup.com/). Hike
 - [Database Schema](/E-F-III/aA-project-Meetup-clone/wiki/Database-Schema)
 - [Features List](/E-F-III/aA-project-Meetup-clone/wiki/Features-List)
 - [Redux State Shape](/E-F-III/aA-project-Meetup-clone/wiki/Redux-State-Shape)
+
+## Technologies
+- SQLite3
+- Sequelize
+- Postgres
+
+- JavaScript
+- HTML
+- CSS
+
+- Node.js
+- Express.js
+- React
+- Redux
+
+- Heroku
+
+## Splash page
+
+Access to the sign up, log in, and demo user are all located on the navbar.
+Links to see the list of groups and events are also provided here
+
+![image](https://user-images.githubusercontent.com/75222415/182069349-366b3087-bc73-4c01-a569-bc63f6a37c04.png)
