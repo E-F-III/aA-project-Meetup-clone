@@ -50,12 +50,6 @@ export const getAllGroups = () => async dispatch => {
     return data
 }
 
-// export const getUserGroups = () => async dispatch => {
-//     const response = await csrfFetch('/api/users/currentUser/groups')
-//     const data = await response.json()
-//     dispatch(getUsersGroups(data))
-// }
-
 export const createNewGroup = (payload) => async dispatch => {
     const response = await csrfFetch(
         '/api/groups',
@@ -69,7 +63,7 @@ export const createNewGroup = (payload) => async dispatch => {
     )
     const data = await response.json()
     await dispatch(createGroup(data))
-    await dispatch()
+    await dispatch(getAllGroups())
     return data
 }
 
@@ -84,7 +78,7 @@ export const deleteAGroup = (groupId) => async dispatch => {
     const data = await response.json()
 
     await dispatch(deleteGroup(groupId))
-    .then(dispatch(getAllGroups()))
+    await (dispatch(getAllGroups()))
     return data
 }
 
@@ -102,11 +96,6 @@ const groupReducer = (state = initialState, action) => {
             })
             return newState
         }
-        // case GET_USERS_GROUPS: {
-        //     newState = {...state}
-        //     newState.usersGroups = action.payload
-        //     return newState
-        // }
         case CREATE_GROUP: {
             newState = { ...state }
             newState[action.payload.id] = action.payload
