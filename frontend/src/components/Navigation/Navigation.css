@@ -63,3 +63,9 @@ button.demo {
     border: none;
     border-radius: 10px
 }
+
+button.no-style {
+    background: none;
+    border: none;
+    color: inherit;
+}
