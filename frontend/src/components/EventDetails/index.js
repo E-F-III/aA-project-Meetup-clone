@@ -39,7 +39,7 @@ function EventDetails() {
     }
 
     return isLoaded && (
-        <>
+        <div>
             <div className='event-title-header'>
                 <div>
                     <p>{date.toDateString()}</p>
@@ -47,7 +47,7 @@ function EventDetails() {
                 </div>
             </div>
             <div className='event-info-body'>
-                <div>
+                <div style={{width: "660px"}}>
                     <img className='event-main-image'
                         src={event.images.length > 0 ? event.images[0].url : ""}
                         hidden={event.images.length > 0 ? false : true}
@@ -84,7 +84,7 @@ function EventDetails() {
             </div>
             <div className='event-footer'>
                 <div>
-                    <p>{event.startDate}</p>
+                    <p>{date.toDateString()}</p>
                     <h3>{event.name}</h3>
                 </div>
                 <div>
@@ -92,7 +92,7 @@ function EventDetails() {
                         <button className='default' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
                     </div>
                     <div>
-                        <h3>{event.price}</h3>
+                        <h3>Price: ${event.price}</h3>
                         <h3>{Number(event.capacity) - Number(event.numAttending)} spots left</h3>
                     </div>
                 </div>
@@ -100,7 +100,7 @@ function EventDetails() {
             <footer>
                 <FooterInfo />
             </footer>
-        </>
+        </div>
 
     );
 }

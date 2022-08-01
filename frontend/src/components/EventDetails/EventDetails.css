@@ -3,7 +3,7 @@
     border-top: #e5e7e9 solid 5px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     padding: 50px 25px 15px 20px;
 }
 
@@ -15,7 +15,6 @@
     padding: 15px 25px 15px 25px;
     background-color: white;
     border-radius: 15px;
-    /* border: 1px black solid; */
     width: 350px;
     height: 110px;
     display: flex;
@@ -27,11 +26,14 @@
     padding: 15px 25px 15px 25px;
     background-color: white;
     border-radius: 15px;
-    /* border: 1px black solid; */
     width: 350px;
     height: 110px;
     margin: 5px;
 
+}
+
+div.other-info-card {
+    margin: 20px;
 }
 
 .event-group-image {
@@ -49,10 +51,10 @@
 }
 
 .event-footer {
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-left: 20px;
     padding-right: 10px;
     bottom: 0px;
