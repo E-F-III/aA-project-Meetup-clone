@@ -19,10 +19,9 @@ function GroupsOfUser() {
     }, [dispatch])
 
     return isLoaded && (
-        <div>
-            <h1>Your Groups</h1>
+        <div className='usersList-main'>
             <div>
-                <h3>Groups you've organized</h3>
+                <h3>Organizer</h3>
                 {groups.organized.map(group => {
                     return (
                         <NavLink className='navLink' key={group.id} to={`/groups/${group.id}/about`}>
@@ -36,11 +35,11 @@ function GroupsOfUser() {
                                 </div>
                                 <div>
                                     <div className='card-title'>
-                                        <h3>{group.name}</h3>
-                                        <h4>{group.city}, {group.state}</h4>
+                                        <h3 className='group-card-title'>{group.name}</h3>
+                                        <h4 className='group-card-location'>{group.city}, {group.state}</h4>
                                     </div>
-                                    <p className='about-group'>{group.about}</p>
-                                    <p>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
+                                    <p className='card-about-group'>{group.about}</p>
+                                    <p className='card-about-group'>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
                                 </div>
                             </div>
                         </NavLink>
@@ -48,7 +47,7 @@ function GroupsOfUser() {
                 })}
             </div>
             <div>
-                <h3>Groups you're a member of</h3>
+                <h3>Member</h3>
                 {groups.memberOf.map(group => {
                     return (
                         <NavLink className='navLink' key={group.id} to={`/groups/${group.id}/about`}>
@@ -62,11 +61,11 @@ function GroupsOfUser() {
                                 </div>
                                 <div>
                                     <div className='card-title'>
-                                        <h3>{group.name}</h3>
-                                        <h4>{group.city}, {group.state}</h4>
+                                        <h3 className='group-card-title'>{group.name}</h3>
+                                        <h4 className='group-card-location'>{group.city}, {group.state}</h4>
                                     </div>
-                                    <p className='about-group'>{group.about}</p>
-                                    <p>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
+                                    <p className='card-about-group'>{group.about}</p>
+                                    <p className='card-about-group'>{group.numMembers} members • {group.private ? 'Private' : 'Public'}</p>
                                 </div>
                             </div>
                         </NavLink>
