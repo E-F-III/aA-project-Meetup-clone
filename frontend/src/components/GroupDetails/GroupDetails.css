@@ -4,19 +4,31 @@ div.group-main {
     justify-content: center;
     width: 100%;
 }
-
-div.group-header {
+div.group-header-div {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70%;
+}
+
+div.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 50%;
     margin-top: 10px;
+}
+
+div.group-header > li {
+    list-style: none;
 }
 
 div.header-img {
     width: 600px;
     height: 340px;
     margin: 0 10px;
+    left: 0px;
+    position: relative;
 }
 
 div.groupNavBar {
@@ -37,7 +49,7 @@ div.groupNav {
 }
 
 div.groupNavDiv {
-    width: 70%;
+    width: 50%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,5 +71,5 @@ div.group-events-header {
 }
 
 div.group-content {
-    width: 70%;
+    width: 50%;
 }

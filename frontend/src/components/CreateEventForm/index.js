@@ -68,7 +68,7 @@ function EventForm({ group }) {
     }
 
     return isLoaded && (
-        <div>
+        <div className="form-div">
             <form onSubmit={handleSubmit}>
                 <h1>Create an event!</h1>
                 {isSubmitted && validationErrors.length > 0 &&
@@ -144,7 +144,7 @@ function EventForm({ group }) {
                             onChange={e => setEndDate(e.target.value)} />
                     </div>
                 </div>
-                <button>Submit</button>
+                <button className="default">Submit</button>
             </form>
         </div>
     )
