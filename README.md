@@ -4,3 +4,6 @@ Hike up is a website clone, inspired by [Meet Up](https://www.meetup.com/). Hike
 
 ## Wiki Link
 [API routes](/E-F-III/aA-project-Meetup-clone/wiki/API-Routes)
+[Database Schema](/E-F-III/aA-project-Meetup-clone/wiki/Database-Schema)
+[Features List](/E-F-III/aA-project-Meetup-clone/wiki/Features-List)
+[Redux State Shape](/E-F-III/aA-project-Meetup-clone/wiki/Redux-State-Shape)
