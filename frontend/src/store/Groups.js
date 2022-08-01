@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+import { getAllEvents } from './Events';
 
 const GET_GROUPS = 'groups/get-all-groups'
 const GET_USERS_GROUPS = 'groups/get-users-groups'
@@ -84,6 +85,7 @@ export const deleteAGroup = (groupId) => async dispatch => {
 
     await dispatch(deleteGroup(groupId))
     await dispatch(getAllGroups())
+    await dispatch(getAllEvents())
     return data
 }
 

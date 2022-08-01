@@ -14,6 +14,7 @@ import './GroupDetails.css'
 
 function GroupDetails() {
     const dispatch = useDispatch()
+
     const sessionUser = useSelector(state => state.session.user)
     const group = useSelector(state => state.groupDetails)
 

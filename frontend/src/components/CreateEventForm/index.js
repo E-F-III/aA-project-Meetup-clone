@@ -10,9 +10,6 @@ function EventForm({ group }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    // const { groupId } = useParams()
-
-    // const group = useSelector(state => state.groupDetails)
     const groupId = group.id
 
     // const [venueId, setVenueId] = useState()

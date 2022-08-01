@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -13,11 +13,14 @@ function GroupsList() {
     const groups = useSelector(state => state.groups)
     const groupsList = Object.values(groups)
 
+    const [isLoaded, setIsLoaded] = useState(false)
+
     useEffect(() => {
         dispatch(getAllGroups())
+        .then(()=> setIsLoaded(true))
     }, [dispatch])
 
-    return (
+    return isLoaded && (
         <>
             <div className='listbody-container'>
                 <div className='listbody'>

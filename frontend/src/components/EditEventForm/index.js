@@ -5,31 +5,45 @@ import { editEventDetails, getEventDetails } from '../../store/EventDetails';
 import { deleteAnEvent } from "../../store/Events";
 
 
-function EditEventForm({ event, updateCurrTab}) {
+function EditEventForm() {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [venueId, setVenueId] = useState(event.venueId)
-    const [name, setName] = useState(event.name)
-    const [type, setType] = useState(event.type)
-    const [capacity, setCapacity] = useState(event.capacity)
-    const [price, setPrice] = useState(event.price)
-    const [description, setDescription] = useState(event.description)
-    const [startDate, setStartDate] = useState(event.startDate)
-    const [endDate, setEndDate] = useState(event.endDate)
+    const event = useSelector(state => state.eventDetails)
+
+    const { eventId } = useParams()
+
+    // const [venueId, setVenueId] = useState(event?.Venue?.id)
+    const [name, setName] = useState(event?.name)
+    const [type, setType] = useState(event?.type)
+    const [capacity, setCapacity] = useState(event?.capacity)
+    const [price, setPrice] = useState(event?.price)
+    const [description, setDescription] = useState(event?.description)
+    const [startDate, setStartDate] = useState(event?.startDate)
+    const [endDate, setEndDate] = useState(event?.endDate)
 
     const [validationErrors, setvalidationErrors] = useState([])
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(getEventDetails(event.id))
+        console.log(eventId, 'inside use effect')
+        dispatch(getEventDetails(eventId))
+            .then((res)=> {
+                setName(res.name)
+                setType(res.type)
+                setCapacity(res.capacity)
+                setPrice(res.price)
+                setDescription(res.description)
+            })
+            .then(() => setIsLoaded(true))
     }, [dispatch])
 
     useEffect(() => {
         const errors = []
 
-        if (name.length < 5) errors.push('Name must have at least 5 characters')
-        if (description.length < 50) errors.push('Description must be at least 50 characters')
+        if (name?.length < 5) errors.push('Name must have at least 5 characters')
+        if (description?.length < 50) errors.push('Description must be at least 50 characters')
         if (new Date(startDate) <= new Date()) errors.push('Start date must be in the future')
         if (new Date(endDate) < new Date(startDate)) errors.push('End date must be after the start date')
 
@@ -46,7 +60,7 @@ function EditEventForm({ event, updateCurrTab}) {
         if (validationErrors.length > 0) return
 
         const newEvent = {
-            venueId,
+            // venueId,
             name,
             type,
             capacity,
@@ -68,7 +82,7 @@ function EditEventForm({ event, updateCurrTab}) {
         history.push(`/groups/${event.groupId}/about`)
     }
 
-    return (
+    return isLoaded && (
         <>
             <div>
                 <form onSubmit={handleSubmit}>
@@ -79,6 +93,7 @@ function EditEventForm({ event, updateCurrTab}) {
                     <div className="event-form-div">
                         <label htmlFor="event-name">Event Name</label>
                         <input
+                            required
                             name="event-name"
                             value={name}
                             onChange={e => setName(e.target.value)} />
@@ -87,18 +102,22 @@ function EditEventForm({ event, updateCurrTab}) {
 
                         <label htmlFor="event-about">About this event</label>
                         <textarea
+                            required
                             rows='13'
                             cols='76'
                             onChange={e => setDescription(e.target.value)}
                             value={description}
                             placeholder='Please write at least 50 characters'
                             name='event-about' />
-                        <p>{description.length} characters</p>
+                        <p>{description?.length} characters</p>
 
                     </div>
                     <div className="event-form-div">
                         <label htmlFor='event-type'>Will this event be in person or offline?</label>
-                        <select name='event-type'>
+                        <select
+                            required
+                            name='event-type'
+                        >
                             <option value='In Person' onChange={e => setType(e.target.value)}>In Person</option>
                             <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
                         </select>
@@ -106,6 +125,7 @@ function EditEventForm({ event, updateCurrTab}) {
                     <div className="event-form-div">
                         <label htmlFor='event-capacity'>How many people are allowed to attend this event?</label>
                         <input
+                            required
                             name="event-capacity"
                             type="number"
                             value={capacity}
@@ -115,6 +135,7 @@ function EditEventForm({ event, updateCurrTab}) {
                     <div className="event-form-div">
                         <label htmlFor="event-price">How much will it cost to attend this event?</label>
                         <input
+                            required
                             name="event-price"
                             value={price}
                             onChange={e => setPrice(e.target.value)}
@@ -125,6 +146,7 @@ function EditEventForm({ event, updateCurrTab}) {
                         <div>
                             <label htmlFor="event-start-date">Start Date</label>
                             <input
+                                required
                                 name="event-start-date"
                                 type="datetime-local"
                                 value={startDate}
@@ -134,6 +156,7 @@ function EditEventForm({ event, updateCurrTab}) {
                         <div>
                             <label htmlFor="event-end-date">End Date</label>
                             <input
+                                required
                                 name="event-end-date"
                                 type="datetime-local"
                                 value={endDate}

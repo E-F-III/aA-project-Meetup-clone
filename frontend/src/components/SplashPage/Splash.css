@@ -16,6 +16,7 @@ div.splash-bg {
 
 div.splash-main {
     max-width: 70%;
+    min-width: 750px;
 }
 
 
@@ -27,6 +28,7 @@ div.splash-title-div {
     background-color: #f6f7f8;
     border-radius: 15px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+
 }
 
 div.splash-title-text {
@@ -43,7 +45,8 @@ div.splash-title-pic-div{
 }
 
 .splash-title-pic {
-    width: 520px;
+    width: 500px;
+    min-width: 300px;
 }
 
 div.splash-body-title {

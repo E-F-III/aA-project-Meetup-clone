@@ -8,12 +8,15 @@ import './SignupForm.css';
 
 function SignupFormPage() {
   const dispatch = useDispatch();
+
   const sessionUser = useSelector((state) => state.session.user);
+
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [errors, setErrors] = useState([]);
 
   if (sessionUser) return <Redirect to="/" />;
@@ -37,7 +40,7 @@ function SignupFormPage() {
         <div className="signup-form-body">
           <form onSubmit={handleSubmit}>
             <ul>
-              {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+              {errors.map((error, idx) => <li key={idx}>{Object.values(error)[0]}</li>)}
             </ul>
             <label>
               Email

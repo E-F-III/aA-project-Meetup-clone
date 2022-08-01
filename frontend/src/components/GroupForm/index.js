@@ -77,7 +77,7 @@ function GroupForm() {
                                     placeholder='city...'
                                     name="city" />
                                 <select value={state} onChange={e => setState(e.target.value)}>
-                                    {USstates.map(el => <option value={el} onChange={e => setState(el)}>{el}</option>)}
+                                    {USstates.map(el => <option key={el} value={el} onChange={e => setState(el)}>{el}</option>)}
                                 </select>
                                 <div className="submission-footer">
                                     <button className="default" disabled={city.length < 3} onClick={e => setStep('STEP 2')}>Next</button>
