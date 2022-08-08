@@ -11,13 +11,13 @@ import FooterInfo from '../FooterInfo'
 function EventsList() {
     const dispatch = useDispatch()
     const events = useSelector(state => state.events)
-    let eventsList = Object.values(events)
+    // let eventsList = Object.values(events)
 
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         dispatch(getAllEvents())
-            .then((res) => eventsList = Object.values(res))
+            // .then((res) => eventsList = Object.values(res))
             .then(() => setIsLoaded(true))
     }, [dispatch])
 
@@ -28,7 +28,8 @@ function EventsList() {
                     <GroupsEventsNav />
                     <div className='eventList'>
                         {
-                            eventsList.map(event => {
+                            // eventsList.map(event => {
+                            Object.values(events).map(event => {
 
                                 const eventStart = new Date(event.startDate)
                                 const startArray = eventStart.toString().split(' ')

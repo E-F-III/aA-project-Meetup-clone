@@ -83,7 +83,7 @@ const eventReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_EVENTS: {
-            newState = { ...state };
+            newState = { };
             action.payload.forEach(event => {
                 newState[event.id] = event
             });
