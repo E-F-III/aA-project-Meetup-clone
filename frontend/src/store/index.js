@@ -9,8 +9,14 @@ import groupDetailsReducer from './GroupDetails';
 import groupEventsReducer from './Group-Events';
 import usersGroupReducer from './UsersGroups';
 
+import groupReducerDEV from './devGroups';
+import eventReducerDEV from './devEvents';
+
 const rootReducer = combineReducers({
     session: sessionReducer,
+    groupsDev: groupReducerDEV,
+    eventsDeve: eventReducerDEV,
+
     groups: groupReducer,
     events: eventReducer,
     eventDetails: eventDetailsReducer,

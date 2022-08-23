@@ -92,7 +92,7 @@ const groupReducer = (state = initialState, action) => {
     let newState;
     switch (action.type){
         case GET_GROUPS: {
-            newState = { ...state };
+            newState = { };
             action.payload.forEach(group => {
                 newState[group.id] = group
             })
