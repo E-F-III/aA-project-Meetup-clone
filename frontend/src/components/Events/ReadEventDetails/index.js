@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, useParams, useHistory, NavLink, useRouteMatch, Switch } from 'react-router-dom';
 import { getEventDetails } from '../../store/EventDetails';
 import { getGroupDetails } from '../../store/GroupDetails';
-import { deleteAnEvent } from '../../store/Events';
+import { deleteAnEvent } from '../../../store/Events';
 
 import './EventDetails.css'
 import EditEventForm from '../EditEventForm';
-import FooterInfo from '../FooterInfo'
+import FooterInfo from '../../FooterInfo'
 
 function EventDetails() {
     const dispatch = useDispatch()

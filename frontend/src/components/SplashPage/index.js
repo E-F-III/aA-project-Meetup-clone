@@ -32,12 +32,12 @@ function SplashPage() {
                         <div className='splash-nav-container'>
                             <div className='splash-nav'>
                                 <img src={handsup} />
-                                <h3 className='splash-link' onClick={() => history.push('/groups')}>Join a group</h3>
+                                <h3 className='splash-link' onClick={() => history.push('/find/groups')}>Join a group</h3>
                                 <p>Do what you love, meet others who love it, find your community. The rest is history!</p>
                             </div>
                             <div className='splash-nav'>
                                 <img src={ticket} />
-                                <h3 className='splash-link' onClick={() => history.push('/events')}>Find an event</h3>
+                                <h3 className='splash-link' onClick={() => history.push('/find/events')}>Find an event</h3>
                                 <p>Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking</p>
                             </div>
                             <div className='splash-nav'>

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './Events.css'
-import { getAllEvents } from '../../store/Events'
+import { getAllEvents } from '../../../store/Events'
 import { NavLink } from 'react-router-dom';
 
-import GroupsEventsNav from '../GroupsAndEventsNavBar';
-import FooterInfo from '../FooterInfo'
+import GroupsEventsNav from '../../GroupsAndEventsNavBar';
+import FooterInfo from '../../FooterInfo'
 
 function EventsList() {
     const dispatch = useDispatch()

@@ -1,52 +1,43 @@
-import { csrfFetch } from './csrf';
+import { csrfFetch } from "./csrf";
 
-const GET_EVENTS = 'events/get-all-events'
+// ACTION TYPES
 
-const CREATE_EVENT = 'events/create-event'
-const EDIT_EVENT = 'events/edit-event'
-const DELETE_EVENT = 'events/delete-event'
+const GET_EVENTS = "events/get-all-events"
+const GET_EVENT_DETAILS = "events/get-details-of-events"
 
+// ACTION CREATORS
 
-// actions
-
-const getEvents = (payload) => {
+const getEventsAction = (payload) => {
     return {
         type: GET_EVENTS,
         payload
     }
 }
 
-const createEvent = (payload) => {
+const getEventDetailsAction = (payload) => {
     return {
-        type: CREATE_EVENT,
-        payload
-    }
-}
-const editEvent = (payload) => {
-    return {
-        type: EDIT_EVENT,
-        payload
-    }
-}
-const deleteEvent = (payload) => {
-    return {
-        type: DELETE_EVENT,
+        type: GET_EVENT_DETAILS,
         payload
     }
 }
 
-// thunk
+// THUNK ACTION CREATORS
 
-export const getAllEvents = () => async dispatch => {
+// Read Events
+
+export const getEventsThunk = () => async dispatch => {
     const response = await csrfFetch('/api/events')
     const data = await response.json()
-    await dispatch(getEvents(data.Events))
+
+    await dispatch(getEventsAction(data.Events))
     return data
 }
 
-export const createNewEvent = (payload) => async dispatch => {
-    const response = await csrfFetch(
-        `/api/groups/${payload.groupId}/events`,
+// Event CRUD
+
+// Create
+export const createEventThunk = (payload) => async dispatch => {
+    const response = await csrfFetch(`/api/groups/${payload.groupId}/events`,
         {
             method: 'POST',
             headers: {
@@ -55,43 +46,73 @@ export const createNewEvent = (payload) => async dispatch => {
             body: JSON.stringify(payload.newEvent)
         }
     )
-
     const data = await response.json()
-    await dispatch(createEvent(data))
-    return data
+
+    if (response.ok) {
+        await dispatch(getEventDetailsAction(data))
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
+
 }
 
-export const deleteAnEvent = (eventId) => async dispatch => {
-    const response = await csrfFetch(
-        `/api/events/${eventId}`,
+// Read
+export const getEventDetailsThunk = (eventId) => async dispatch => {
+    const response = await csrfFetch(`/api/events/${eventId}`)
+    const data = await response.json()
+
+    if (response.ok) {
+        await dispatch(getEventDetailsAction(data))
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
+}
+
+// Update
+
+// Delete
+export const deleteEventThunk = (eventId) => async dispatch => {
+    const response = await csrfFetch(`/api/events/${eventId}`,
         {
             method: 'DELETE'
         }
     )
-
     const data = await response.json()
 
-    await dispatch(deleteEvent(eventId))
-    return data
+    if (response.ok) {
+        await dispatch(getEventsAction(data))
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
 }
 
-// reducer
+// Bonuse features related to Events
 
-const initialState = {}
+// Feature #4 Attendees of Event
 
-const eventReducer = (state = initialState, action) => {
-    let newState;
+// REDUCER
+
+const initialState = {
+    eventsList: {},
+    eventDetails: {}
+}
+
+const eventsReducer = (state = initialState, action) => {
+    let newState = { ...state }
     switch (action.type) {
         case GET_EVENTS: {
-            newState = { };
-            action.payload.forEach(event => {
-                newState[event.id] = event
-            });
+            let eventsList = {} // create an empty object to overwrite part of the newState
+            action.payload.forEach(event => { // if not, could cause issues with deleting
+                eventsList[event.id] = event
+            })
+            newState.eventsList = eventsList
             return newState
         }
-        case DELETE_EVENT: {
-            newState = { ...state }
-            delete newState[action.payload]
+        case GET_EVENT_DETAILS: {
+            newState.eventDetails = action.payload
             return newState
         }
         default: {
@@ -100,4 +121,4 @@ const eventReducer = (state = initialState, action) => {
     }
 }
 
-export default eventReducer;
+export default eventsReducer

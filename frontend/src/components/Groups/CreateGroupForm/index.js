@@ -1,19 +1,13 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom"
+import { createNewGroup } from "../../../store/Groups"
 
-import { createNewGroupThunk } from "../../../store/devGroups"
-
-import FooterInfo from "../../FooterInfo"
+import FooterInfo from '../../FooterInfo'
 import './GroupForm.css'
 
-function CreateGroupForm() {
-    const history = useHistory()
-    const dispatch = useDispatch()
-
-    const sessionUser = useSelector((state) => state.session.user);
-    if (!sessionUser) return <Redirect to="/signup" />;
-
+function GroupForm() {
+    // const [isLoaded, setIsLoaded] = useState(false)
     const [name, setName] = useState('')
     const [about, setAbout] = useState('')
     const [type, setType] = useState('In person')
@@ -21,6 +15,12 @@ function CreateGroupForm() {
     const [city, setCity] = useState('')
     const [state, setState] = useState('AL')
     const [step, setStep] = useState('STEP 1')
+
+    const history = useHistory()
+    const dispatch = useDispatch()
+
+    const sessionUser = useSelector((state) => state.session.user);
+    if (!sessionUser) return <Redirect to="/signup" />;
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -34,7 +34,9 @@ function CreateGroupForm() {
             state: state
         }
 
-        const data = await dispatch(createNewGroupThunk(newGroup))
+        console.log(newGroup)
+
+        const data = await dispatch(createNewGroup(newGroup))
 
         history.push(`/groups/${data.id}`)
     }
@@ -172,4 +174,4 @@ function CreateGroupForm() {
     )
 }
 
-export default CreateGroupForm;
+export default GroupForm;

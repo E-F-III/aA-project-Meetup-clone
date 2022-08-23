@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { editEventDetails, getEventDetails } from '../../store/EventDetails';
-import { deleteAnEvent } from "../../store/Events";
+import { deleteAnEvent } from "../../../store/Events";
 
 
 function EditEventForm() {

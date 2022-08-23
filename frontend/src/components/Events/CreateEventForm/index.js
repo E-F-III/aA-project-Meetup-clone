@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroupDetails } from "../../store/GroupDetails";
-import { createNewEvent } from "../../store/Events";
+import { createNewEvent } from "../../../store/Events";
 
 import './CreateEventForm.css'
 
@@ -119,6 +119,7 @@ function EventForm({ group }) {
                         name="event-price"
                         value={price}
                         onChange={e => setPrice(e.target.value)}
+                        min={0}
                         type='number' />
                 </div>
                 <div className="event-form-div">

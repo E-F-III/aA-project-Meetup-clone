@@ -1,113 +1,192 @@
 import { csrfFetch } from './csrf';
-import { getAllEvents } from './Events';
 
-const GET_GROUPS = 'groups/get-all-groups'
-// const GET_USERS_GROUPS = 'groups/get-users-groups'
+// ACTION TYPES
 
-const CREATE_GROUP ='groups/create-group'
-// const EDIT_GROUP = 'groups/edit-group'
-const DELETE_GROUP = 'groups/delete-group'
+const GET_GROUPS = "groups/get-all-groups"
+const GET_USERS_GROUPS = "groups/get-users-groups"
+const GET_GROUP_DETAILS = "groups/get-details-of-group"
 
+const CREATE_UPDATE_GROUP = "groups/create-or-update-a-group"
+const DELETE_GROUP = "groups/delete-a-group"
 
-// GET actions
-const getGroups = (payload) => {
-    // console.log(payload)
+const GET_GROUP_EVENTS = "groups/get-events-of-group"
+
+// ACTION CREATORS
+
+const getGroupsAction = (payload) => {
     return {
         type: GET_GROUPS,
         payload
     }
-};
+}
 
-// const getUsersGroups = (payload) => {
+const getUsersGroupsAction = (payload) => {
+    return {
+        type: GET_USERS_GROUPS,
+        payload
+    }
+}
+
+const getGroupDetailsAction = (payload) => {
+    return {
+        type: GET_GROUP_DETAILS,
+        payload
+    }
+}
+
+
+// const getGroupEventsAction = (payload) => {
 //     return {
-//         type: GET_USERS_GROUPS,
+//         type: GET_GROUP_EVENTS,
 //         payload
 //     }
-// };
+// }
 
+// THUNK ACTION CREATORS
 
-// other actions
+// Read groups
 
-const createGroup = (payload) => {
-    return {
-        type: CREATE_GROUP,
-        payload
-    }
-};
-
-const deleteGroup = (payload) => {
-    return {
-        type: DELETE_GROUP,
-        payload
-    }
-};
-
-// Thunk action creators
-
-export const getAllGroups = () => async dispatch => {
+export const getGroupsThunk = () => async dispatch => {
     const response = await csrfFetch('/api/groups')
     const data = await response.json()
-    dispatch(getGroups(data.Groups))
+
+    dispatch(getGroupsAction(data))
     return data
 }
 
-export const createNewGroup = (payload) => async dispatch => {
-    const response = await csrfFetch(
-        '/api/groups',
+export const getUserGroupsThunk = () => async dispatch => {
+    const response = await csrfFetch('/api/users/currentUser/groups')
+    const data = await response.json()
+
+    dispatch(getUsersGroupsAction(data))
+    return data
+}
+
+
+
+// Group CRUD
+
+// Create
+export const createNewGroupThunk = (payload) => async dispatch => {
+    const response = await csrfFetch('/api/groups',
         {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
-        }
-    )
+        })
+
     const data = await response.json()
-    await dispatch(createGroup(data))
-    await dispatch(getAllGroups())
-    return data
+
+    if (response.ok) {
+        await dispatch(getGroupsAction())
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
+
 }
 
-export const deleteAGroup = (groupId) => async dispatch => {
+// Read
+export const getGroupDetailsThunk = (groupId) => async dispatch => {
+    const response = await csrfFetch(`/api/groups/${groupId}`)
+    const data = await response.json()
+
+    if (response.ok) {
+        dispatch(getGroupDetailsAction(data))
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
+}
+
+// Update
+export const editGroupDetailsThunk = (groupId, group) => async dispatch => {
     const response = await csrfFetch(
         `/api/groups/${groupId}`,
         {
-            method: 'DELETE'
-        }
-    )
-
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(group)
+        })
     const data = await response.json()
 
-    await dispatch(deleteGroup(groupId))
-    await (dispatch(getAllGroups()))
-    await (dispatch(getAllEvents()))
-    return data
+    if (response.ok) {
+        await dispatch(getGroupsAction())
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
+
 }
 
-//Reducer
+// Delete
+export const deleteGroupThunk = (groupId) => async dispatch => {
+    const response = await csrfFetch(`/api/groups/${groupId}`,
+        {
+            method: 'DELETE'
+        })
+    const data = await response.json()
+
+    if (response.ok) {
+        await dispatch(getGroupsAction())
+        return data
+    } else { // any bad requests and errors
+        return data
+    }
+}
+
+// Bonus Features related to Groups
+
+// Read Events of a Group
+// export const getEventsOfGroup = (groupId) => async dispatch => {
+//     const response = await csrfFetch(`/api/groups/${groupId}/events`)
+//     const data = await response.json()
+
+//     if (response.ok) {
+//         dispatch(getGroupEventsAction(data))
+//         return data
+//     } else {
+//         return data
+//     }
+// }
+
+// Feature #3 Members of Group
+
+// REDUCER
 
 const initialState = {}
 
 const groupReducer = (state = initialState, action) => {
-    let newState;
-    switch (action.type){
+    let newState = {};
+    switch (action.type) {
         case GET_GROUPS: {
-            newState = { };
-            action.payload.forEach(group => {
+            action.payload.Groups.forEach(group => {
                 newState[group.id] = group
             })
             return newState
         }
-        case CREATE_GROUP: {
-            newState = { ...state }
-            newState[action.payload.id] = action.payload
+        case GET_USERS_GROUPS: {
+            action.payload.Groups.forEach(group => {
+                newState[group.id] = group
+            })
             return newState
         }
-        case DELETE_GROUP: {
+        case GET_GROUP_DETAILS: {
             newState = { ...state }
-            delete newState[action.payload]
+            newState[action.payload.id] = { ...newState[action.payload.id], ...action.payload }
             return newState
         }
+        // case GET_GROUP_EVENTS: {
+        //     let events = {} // add an event object to the specific group to allow normalization of the events of said group
+        //     action.payload.forEach(event => {
+        //         events[event.id] = event
+        //     })
+        //     return newState
+        // }
         default: {
             return state
         }
