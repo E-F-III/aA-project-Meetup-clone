@@ -3,7 +3,13 @@ import { csrfFetch } from "./csrf";
 // ACTION TYPES
 
 const GET_EVENTS = "events/get-all-events"
-const GET_EVENT_DETAILS = "events/get-details-of-events"
+const GET_GROUPS_EVENTS = "events/get-events-of-a-group"
+
+const CREATE_EVENT = "events/create-a-event"
+const READ_EVENT = "events/get-details-of-events"
+// const UPDATE_EVENT = "events/update-a-event"
+const DELETE_EVENT = "events/delete-a-event"
+
 
 // ACTION CREATORS
 
@@ -14,9 +20,30 @@ const getEventsAction = (payload) => {
     }
 }
 
+const createEventAction = (payload) => {
+    return {
+        type: CREATE_EVENT,
+        payload
+    }
+}
+
 const getEventDetailsAction = (payload) => {
     return {
-        type: GET_EVENT_DETAILS,
+        type: READ_EVENT,
+        payload
+    }
+}
+
+// const updateEventAction = (payload) => {
+//     return {
+//         type: UPDATE_EVENT,
+//         payload
+//     }
+// }
+
+const deleteEventAction = (payload) => {
+    return {
+        type: DELETE_EVENT,
         payload
     }
 }
@@ -29,7 +56,7 @@ export const getEventsThunk = () => async dispatch => {
     const response = await csrfFetch('/api/events')
     const data = await response.json()
 
-    await dispatch(getEventsAction(data.Events))
+    await dispatch(getEventsAction(data))
     return data
 }
 
@@ -49,7 +76,7 @@ export const createEventThunk = (payload) => async dispatch => {
     const data = await response.json()
 
     if (response.ok) {
-        await dispatch(getEventDetailsAction(data))
+        await dispatch(createEventAction(data))
         return data
     } else { // any bad requests and errors
         return data
@@ -82,7 +109,7 @@ export const deleteEventThunk = (eventId) => async dispatch => {
     const data = await response.json()
 
     if (response.ok) {
-        await dispatch(getEventsAction(data))
+        await dispatch(deleteEventAction(eventId))
         return data
     } else { // any bad requests and errors
         return data
@@ -95,24 +122,30 @@ export const deleteEventThunk = (eventId) => async dispatch => {
 
 // REDUCER
 
-const initialState = {
-    eventsList: {},
-    eventDetails: {}
-}
+const initialState = {}
 
 const eventsReducer = (state = initialState, action) => {
-    let newState = { ...state }
+    let newState = {}
     switch (action.type) {
         case GET_EVENTS: {
-            let eventsList = {} // create an empty object to overwrite part of the newState
-            action.payload.forEach(event => { // if not, could cause issues with deleting
-                eventsList[event.id] = event
+            action.payload.Events.forEach(event => { // if not, could cause issues with deleting
+                newState[event.id] = event
             })
-            newState.eventsList = eventsList
             return newState
         }
-        case GET_EVENT_DETAILS: {
+        case CREATE_EVENT:{
+
+        }
+        case READ_EVENT: {
             newState.eventDetails = action.payload
+            return newState
+        }
+        // case UPDATE_EVENT: {
+
+        // }
+        case DELETE_EVENT: {
+            newState = { ...state }
+            delete newState[action.payload]
             return newState
         }
         default: {
