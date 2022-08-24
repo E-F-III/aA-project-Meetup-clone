@@ -42,7 +42,7 @@ function SplashPage() {
                             </div>
                             <div className='splash-nav'>
                                 <img src={joinGroup} />
-                                <h3 className='splash-link' onClick={() => history.push('/group-form')}>Start a group</h3>
+                                <h3 className='splash-link' onClick={() => history.push('/create-group')}>Start a group</h3>
                                 <p>You don't have to be an expert to gather people together and explore shared interests.</p>
                             </div>
                         </div>

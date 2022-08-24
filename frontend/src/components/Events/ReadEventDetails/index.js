@@ -1,40 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, useParams, useHistory, NavLink, useRouteMatch, Switch } from 'react-router-dom';
-import { getEventDetails } from '../../store/EventDetails';
-import { getGroupDetails } from '../../store/GroupDetails';
-import { deleteAnEvent } from '../../../store/Events';
+
+import { getEventDetailsThunk, deleteEventThunk } from '../../../store/Events';
+import { getGroupDetailsThunk } from '../../../store/Groups';
 
 import './EventDetails.css'
-import FooterInfo from '../../FooterInfo'
 
 function EventDetails() {
+    const { eventId } = useParams()
+    const { url } = useRouteMatch()
+
     const dispatch = useDispatch()
     const history = useHistory()
 
     const sessionUser = useSelector(state => state.session.user)
-    const event = useSelector(state => state.eventDetails)
-    const group = useSelector(state => state.groupDetails)
+    const events = useSelector(state => state.events)
+    const groups = useSelector(state => state.groups)
 
-    const { eventId } = useParams()
-    const { url } = useRouteMatch()
+    const event = events[Number(eventId)]
+    const group = groups[Number(event?.groupId)]
 
     const [isLoaded, setIsLoaded] = useState(false)
 
-    const date = new Date(event.startDate)
-    const endDate = new Date(event.endDate)
+    const date = new Date(event?.startDate)
+    const endDate = new Date(event?.endDate)
 
-    useEffect(() => {
-        dispatch(getEventDetails(eventId))
-            .then((res) => dispatch(getGroupDetails(res.Group.id)))
-            .then(() => setIsLoaded(true))
+    useEffect( () => {
+       dispatch(getEventDetailsThunk(eventId))
+       .then(data => dispatch(getGroupDetailsThunk(data.groupId)))
+       .then(()=>setIsLoaded(true))
     }, [dispatch])
 
     const handleDelete = async e => {
         e.preventDefault()
-        const data = await dispatch(deleteAnEvent(event.id))
+        const data = dispatch(deleteEventThunk(event.id))
 
-        history.push(`/groups/${event.groupId}/about`)
+        history.push(`/find/events`)
     }
 
     return isLoaded && (
@@ -96,9 +98,6 @@ function EventDetails() {
                     </div>
                 </div>
             </div>
-            <footer>
-                <FooterInfo />
-            </footer>
         </div>
 
     );

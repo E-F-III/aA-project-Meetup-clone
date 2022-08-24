@@ -11,14 +11,17 @@ function FindPage() {
     return (
         <>
             <ListsNav />
-            <Switch>
-                <Route exact path='/find/events'>
-                    <EventsList />
-                </Route>
-                <Route exact path='/find/groups'>
-                    <GroupsList />
-                </Route>
-            </Switch>
+            <div>
+                <Switch>
+                    <Route exact path='/find/events'>
+                        <EventsList />
+                    </Route>
+                    <Route exact path='/find/groups'>
+                        <GroupsList />
+                    </Route>
+                </Switch>
+            </div>
+
         </>
     )
 }
