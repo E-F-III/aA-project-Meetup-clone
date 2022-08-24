@@ -1,13 +1,16 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect, useHistory } from "react-router-dom"
-import { createNewGroup } from "../../../store/Groups"
+
+import { createNewGroupThunk } from "../../../store/Groups"
 
 import FooterInfo from '../../FooterInfo'
 import './GroupForm.css'
 
 function GroupForm() {
-    // const [isLoaded, setIsLoaded] = useState(false)
+    const history = useHistory()
+    const dispatch = useDispatch()
+
     const [name, setName] = useState('')
     const [about, setAbout] = useState('')
     const [type, setType] = useState('In person')
@@ -15,9 +18,6 @@ function GroupForm() {
     const [city, setCity] = useState('')
     const [state, setState] = useState('AL')
     const [step, setStep] = useState('STEP 1')
-
-    const history = useHistory()
-    const dispatch = useDispatch()
 
     const sessionUser = useSelector((state) => state.session.user);
     if (!sessionUser) return <Redirect to="/signup" />;
@@ -36,7 +36,7 @@ function GroupForm() {
 
         console.log(newGroup)
 
-        const data = await dispatch(createNewGroup(newGroup))
+        const data = await dispatch(createNewGroupThunk(newGroup))
 
         history.push(`/groups/${data.id}`)
     }

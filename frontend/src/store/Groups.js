@@ -4,9 +4,10 @@ import { csrfFetch } from './csrf';
 
 const GET_GROUPS = "groups/get-all-groups"
 const GET_USERS_GROUPS = "groups/get-users-groups"
-const GET_GROUP_DETAILS = "groups/get-details-of-group"
 
-const CREATE_UPDATE_GROUP = "groups/create-or-update-a-group"
+const CREATE_GROUP = "groups/create-a-group"
+const READ_GROUP = "groups/get-details-of-group"
+const UPDATE_GROUP = "groups/update-a-group"
 const DELETE_GROUP = "groups/delete-a-group"
 
 const GET_GROUP_EVENTS = "groups/get-events-of-group"
@@ -27,9 +28,23 @@ const getUsersGroupsAction = (payload) => {
     }
 }
 
+const createGroupAction = (payload) => {
+    return {
+        type: CREATE_GROUP,
+        payload
+    }
+}
+
 const getGroupDetailsAction = (payload) => {
     return {
-        type: GET_GROUP_DETAILS,
+        type: READ_GROUP,
+        payload
+    }
+}
+
+const updateGroupAction = (payload) => {
+    return {
+        type: UPDATE_GROUP,
         payload
     }
 }
@@ -87,7 +102,7 @@ export const createNewGroupThunk = (payload) => async dispatch => {
     const data = await response.json()
 
     if (response.ok) {
-        await dispatch(getGroupsAction())
+        await dispatch(createGroupAction(data))
         return data
     } else { // any bad requests and errors
         return data
@@ -122,7 +137,7 @@ export const editGroupDetailsThunk = (groupId, group) => async dispatch => {
     const data = await response.json()
 
     if (response.ok) {
-        await dispatch(getGroupsAction())
+        await dispatch(updateGroupAction(data))
         return data
     } else { // any bad requests and errors
         return data
@@ -182,9 +197,19 @@ const groupReducer = (state = initialState, action) => {
             })
             return newState
         }
-        case GET_GROUP_DETAILS: { // Can this be reused for Create and Update as well ? Since for Create and Update, itll be updating
-            newState = { ...state } // this specific part of the state?
-            newState[action.payload.id] = { ...newState[action.payload.id], ...action.payload }
+        case CREATE_GROUP: {
+            newState = { ...state }
+            newState[action.payload.id] = action.payload
+            return newState
+        }
+        case READ_GROUP: {
+            newState = { ...state }
+            newState[action.payload.id] = { ...newState[action.payload.id], ...action.payload } // Gets the new data from the response and adds it to what exists
+            return newState
+        }
+        case UPDATE_GROUP: {
+            newState = { ...state }
+            newState[action.payload.id] = { ...newState[action.payload.id], ...action.payload } // Gets the newly edited data, and updates those specific parts
             return newState
         }
         case DELETE_GROUP: {

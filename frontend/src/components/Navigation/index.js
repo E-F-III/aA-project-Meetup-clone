@@ -26,7 +26,7 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     sessionLinks = (
       <>
-        <button className='default' onClick={()=>history.push('/group-form')}>Create a group</button>
+        <button className='default' onClick={()=>history.push('/create-group')}>Create a group</button>
         <ProfileButton user={sessionUser} />
       </>
     );
