@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { getGroupDetails } from "../../store/GroupDetails";
-import { createNewEvent } from "../../../store/Events";
+import { useHistory} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+
+import { createEventThunk } from "../../../store/Events";
 
 import './CreateEventForm.css'
 
@@ -21,14 +21,8 @@ function EventForm({ group }) {
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
 
-    const [isLoaded, setIsLoaded] = useState(false)
     const [validationErrors, setvalidationErrors] = useState([])
     const [isSubmitted, setIsSubmitted] = useState(false)
-
-    useEffect(() => {
-        dispatch(getGroupDetails(groupId))
-            .then(() => setIsLoaded(true))
-    }, [dispatch])
 
     useEffect(() => {
         const errors = []
@@ -62,12 +56,12 @@ function EventForm({ group }) {
 
         const payload = { groupId, newEvent }
 
-        const data = await dispatch(createNewEvent(payload))
+        const data = await dispatch(createEventThunk(payload))
 
         history.push(`/events/${data.id}`)
     }
 
-    return isLoaded && (
+    return (
         <div className="form-div">
             <form onSubmit={handleSubmit}>
                 <h1>Create an event!</h1>

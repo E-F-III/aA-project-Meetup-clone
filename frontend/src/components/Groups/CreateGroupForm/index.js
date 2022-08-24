@@ -34,8 +34,6 @@ function GroupForm() {
             state: state
         }
 
-        console.log(newGroup)
-
         const data = await dispatch(createNewGroupThunk(newGroup))
 
         history.push(`/groups/${data.id}`)
@@ -167,9 +165,6 @@ function GroupForm() {
                     </form>
                 </div>
             </div>
-            <footer>
-                <FooterInfo />
-            </footer>
         </>
     )
 }

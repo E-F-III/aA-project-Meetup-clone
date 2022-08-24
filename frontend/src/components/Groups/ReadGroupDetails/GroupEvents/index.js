@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { getEventsOfGroup } from '../../../store/Group-Events';
+
+import { getGroupEventsThunk } from '../../../../store/Events';
 
 import './GroupEvents.css'
 
 function GroupEvents({ groupId }) {
     const dispatch = useDispatch()
-    const groupEvents = useSelector(state => state.groupEvents)
+    const groupEvents = useSelector(state => state.events)
     const groupEventsList = Object.values(groupEvents)
 
     const [isLoaded, setIsLoaded] = useState(false)
 
 
     useEffect(() => {
-        dispatch(getEventsOfGroup(groupId))
+        dispatch(getGroupEventsThunk(groupId))
             .then(() => setIsLoaded(true))
     }, [dispatch])
 
@@ -31,14 +32,13 @@ function GroupEvents({ groupId }) {
                 const minutesDefault = eventStart.getMinutes()
                 const minutes = minutesDefault.length === 2 ? minutesDefault : '0'.concat(minutesDefault)
                 const AMPM = Number(hours24) > 12 ? 'PM' : 'AM'
+
                 return (
                     <NavLink className="navLink" key={event.id} to={`/events/${event.id}`}>
                         <div className="group-event-card">
                             <div className='group-event-card-header'>
                                 <div>
-
                                     <p className='group-event-time'>{`${day}, ${date} • ${hours}:${minutes} ${AMPM}`}</p>
-
                                     <h3 className='group-event-name'>{event.name}</h3>
                                 </div>
                                 <div className="event-card-image">
