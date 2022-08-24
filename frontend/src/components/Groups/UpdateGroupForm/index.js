@@ -53,10 +53,10 @@ function EditGroupForm({ group }) {
         history.push(`/groups/${group.id}/about`)
     }
 
-    const handleDelete = async e => {
+    const handleDelete = e => {
         e.preventDefault()
-        const data = await dispatch(deleteGroupThunk(group.id))
-        history.push('/groups')
+        const data = dispatch(deleteGroupThunk(group.id))
+        history.push('/find/groups')
     }
 
     const USstates = [

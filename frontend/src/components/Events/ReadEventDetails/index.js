@@ -6,7 +6,6 @@ import { getGroupDetails } from '../../store/GroupDetails';
 import { deleteAnEvent } from '../../../store/Events';
 
 import './EventDetails.css'
-import EditEventForm from '../EditEventForm';
 import FooterInfo from '../../FooterInfo'
 
 function EventDetails() {
