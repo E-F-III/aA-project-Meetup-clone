@@ -7,6 +7,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import Navigation from "./components/Navigation";
 import SplashPage from "./components/SplashPage";
 import FindPage from "./components/FindEventsAndGroups";
+import GroupDetails from "./components/Groups/ReadGroupDetails";
 
 
 function App() {
@@ -30,6 +31,9 @@ function App() {
             </Route>
             <Route path="/find">
               <FindPage />
+            </Route>
+            <Route path="/groups/:groupId">
+              <GroupDetails />
             </Route>
           </Switch>
         </>

@@ -34,6 +34,13 @@ const getGroupDetailsAction = (payload) => {
     }
 }
 
+const deleteGroupAction = (payload) => {
+    return {
+        type: DELETE_GROUP,
+        payload
+    }
+}
+
 
 // const getGroupEventsAction = (payload) => {
 //     return {
@@ -132,7 +139,7 @@ export const deleteGroupThunk = (groupId) => async dispatch => {
     const data = await response.json()
 
     if (response.ok) {
-        await dispatch(getGroupsAction())
+        await dispatch(deleteGroupAction(groupId))
         return data
     } else { // any bad requests and errors
         return data
@@ -175,9 +182,14 @@ const groupReducer = (state = initialState, action) => {
             })
             return newState
         }
-        case GET_GROUP_DETAILS: {
-            newState = { ...state }
+        case GET_GROUP_DETAILS: { // Can this be reused for Create and Update as well ? Since for Create and Update, itll be updating
+            newState = { ...state } // this specific part of the state?
             newState[action.payload.id] = { ...newState[action.payload.id], ...action.payload }
+            return newState
+        }
+        case DELETE_GROUP: {
+            newState = { ...state }
+            delete newState[action.payload]
             return newState
         }
         // case GET_GROUP_EVENTS: {

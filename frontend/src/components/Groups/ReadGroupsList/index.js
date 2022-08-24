@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 import { getGroupsThunk } from '../../../store/Groups';
 
+import GroupCard from './GroupCard';
 import './Groups.css';
 
 function GroupsList() {
@@ -20,7 +20,9 @@ function GroupsList() {
 
     return isLoaded && (
         <>
-            HELLO FROM GROUPS COMPONENT
+            {groupsList.map(group => (
+                <GroupCard group={group} />
+            ))}
         </>
     )
 }
