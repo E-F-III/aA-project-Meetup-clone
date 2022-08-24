@@ -12,8 +12,8 @@ function FindPage() {
         <>
             <ListsNav />
             <Switch>
-                <Route exact path='/events'>
-                    {/* <EventsList /> */}
+                <Route exact path='/find/events'>
+                    <EventsList />
                 </Route>
                 <Route exact path='/find/groups'>
                     <GroupsList />

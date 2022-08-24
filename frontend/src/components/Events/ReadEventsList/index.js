@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getEventsThunk } from '../../../store/Events';
 
-
+import EventCard from './EventCard';
 import './Events.css'
 
 function EventsList() {
