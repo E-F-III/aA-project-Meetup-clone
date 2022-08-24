@@ -20,6 +20,13 @@ const getEventsAction = (payload) => {
     }
 }
 
+const getGroupsEventsAction = (payload) => {
+    return {
+        type: GET_GROUPS_EVENTS,
+        payload
+    }
+}
+
 const createEventAction = (payload) => {
     return {
         type: CREATE_EVENT,
@@ -58,6 +65,18 @@ export const getEventsThunk = () => async dispatch => {
 
     await dispatch(getEventsAction(data))
     return data
+}
+
+export const getGroupEventsThunk = (groupId) => async dispatch => {
+    const response = await csrfFetch(`/api/groups/${groupId}/events`)
+    const data = await response.json()
+
+    if (response.ok) {
+        dispatch(getGroupsEventsAction(data))
+        return data
+    } else {
+        return data
+    }
 }
 
 // Event CRUD
@@ -116,10 +135,6 @@ export const deleteEventThunk = (eventId) => async dispatch => {
     }
 }
 
-// Bonuse features related to Events
-
-// Feature #4 Attendees of Event
-
 // REDUCER
 
 const initialState = {}
@@ -128,16 +143,25 @@ const eventsReducer = (state = initialState, action) => {
     let newState = {}
     switch (action.type) {
         case GET_EVENTS: {
-            action.payload.Events.forEach(event => { // if not, could cause issues with deleting
+            action.payload.Events.forEach(event => {
+                newState[event.id] = event
+            })
+            return newState
+        }
+        case GET_GROUPS_EVENTS: {
+            action.payload.Events.forEach(event => {
                 newState[event.id] = event
             })
             return newState
         }
         case CREATE_EVENT:{
-
+            newState = { ...state }
+            newState[action.payload.id] = action.payload
+            return newState
         }
         case READ_EVENT: {
-            newState.eventDetails = action.payload
+            newState = { ...state }
+            newState[action.payload.id] = { ...newState[action.payload.id], ...action.payload } // Gets the new data from the response and adds it to what exists
             return newState
         }
         // case UPDATE_EVENT: {

@@ -10,8 +10,6 @@ const READ_GROUP = "groups/get-details-of-group"
 const UPDATE_GROUP = "groups/update-a-group"
 const DELETE_GROUP = "groups/delete-a-group"
 
-const GET_GROUP_EVENTS = "groups/get-events-of-group"
-
 // ACTION CREATORS
 
 const getGroupsAction = (payload) => {
@@ -56,14 +54,6 @@ const deleteGroupAction = (payload) => {
     }
 }
 
-
-// const getGroupEventsAction = (payload) => {
-//     return {
-//         type: GET_GROUP_EVENTS,
-//         payload
-//     }
-// }
-
 // THUNK ACTION CREATORS
 
 // Read groups
@@ -80,11 +70,14 @@ export const getUserGroupsThunk = () => async dispatch => {
     const response = await csrfFetch('/api/users/currentUser/groups')
     const data = await response.json()
 
-    dispatch(getUsersGroupsAction(data))
-    return data
+    if (response.ok) {
+        dispatch(getUsersGroupsAction(data))
+        return data
+    } else {
+        return data
+    }
+
 }
-
-
 
 // Group CRUD
 
@@ -161,23 +154,6 @@ export const deleteGroupThunk = (groupId) => async dispatch => {
     }
 }
 
-// Bonus Features related to Groups
-
-// Read Events of a Group
-// export const getEventsOfGroup = (groupId) => async dispatch => {
-//     const response = await csrfFetch(`/api/groups/${groupId}/events`)
-//     const data = await response.json()
-
-//     if (response.ok) {
-//         dispatch(getGroupEventsAction(data))
-//         return data
-//     } else {
-//         return data
-//     }
-// }
-
-// Feature #3 Members of Group
-
 // REDUCER
 
 const initialState = {}
@@ -197,7 +173,7 @@ const groupReducer = (state = initialState, action) => {
             })
             return newState
         }
-        case CREATE_GROUP: {
+        case CREATE_GROUP: { // although we get redirected, itd be safe to have this for future proofing
             newState = { ...state }
             newState[action.payload.id] = action.payload
             return newState
@@ -217,13 +193,6 @@ const groupReducer = (state = initialState, action) => {
             delete newState[action.payload]
             return newState
         }
-        // case GET_GROUP_EVENTS: {
-        //     let events = {} // add an event object to the specific group to allow normalization of the events of said group
-        //     action.payload.forEach(event => {
-        //         events[event.id] = event
-        //     })
-        //     return newState
-        // }
         default: {
             return state
         }
