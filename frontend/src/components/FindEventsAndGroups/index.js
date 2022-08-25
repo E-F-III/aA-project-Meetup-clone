@@ -23,7 +23,6 @@ function FindPage() {
                     </Route>
                 </Switch>
             </div>
-
         </div>
     )
 }
