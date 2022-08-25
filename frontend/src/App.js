@@ -47,7 +47,7 @@ function App() {
             <Route exact path="/create-group">
               <GroupForm />
             </Route>
-            <Route exact path="/your-groups">
+            <Route path="/your-groups">
               <GroupsOfUser />
             </Route>
           </Switch>

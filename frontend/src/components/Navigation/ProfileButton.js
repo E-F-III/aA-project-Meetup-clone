@@ -42,7 +42,7 @@ function ProfileButton({ user }) {
         <div className="profile-dropdown">
           <ul className="profile-dropdown">
             <li className="profile-dropdown" >
-              <NavLink className='profile-groups' to={'/your-groups'}>Your groups</NavLink>
+              <NavLink className='profile-groups' to={'/your-groups/organized'}>Your groups</NavLink>
             </li>
             <li className="profile-dropdown" >{user.firstName} {user.lastName}</li>
             <li className="profile-dropdown" >{user.email}</li>
