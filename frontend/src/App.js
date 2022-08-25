@@ -55,8 +55,6 @@ function App() {
           </Switch>
         </>
       )}
-
-
     </>
   );
 }
