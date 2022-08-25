@@ -11,7 +11,7 @@ import './Splash.css'
 function SplashPage() {
     const history = useHistory()
     return (
-        <>
+        <div>
             <div className='splash-bg'></div>
             <div className='splash-outer'>
                 <div className='splash-main'>
@@ -49,7 +49,7 @@ function SplashPage() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

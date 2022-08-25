@@ -19,11 +19,11 @@ function EventsList() {
   }, [dispatch])
 
   return isLoaded && (
-    <>
+    <div>
       {eventsList.map(event => (
             <EventCard event={event} key={event.id}/>
       ))}
-    </>
+    </div>
   )
 }
 

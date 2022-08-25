@@ -19,11 +19,11 @@ function GroupsList() {
     }, [dispatch])
 
     return isLoaded && (
-        <>
+        <div>
             {groupsList.map(group => (
                 <GroupCard group={group} key={group.id}/>
             ))}
-        </>
+        </div>
     )
 }
 

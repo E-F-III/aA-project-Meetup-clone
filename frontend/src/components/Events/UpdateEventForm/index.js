@@ -83,7 +83,6 @@ function EditEventForm() {
     }
 
     return isLoaded && (
-        <>
             <div>
                 <form onSubmit={handleSubmit}>
                     {isSubmitted && validationErrors.length > 0 &&
@@ -168,7 +167,6 @@ function EditEventForm() {
                     <button type="submit" disabled={isSubmitted && validationErrors.length > 0}>Submit</button>
                 </form>
             </div>
-        </>
     )
 }
 

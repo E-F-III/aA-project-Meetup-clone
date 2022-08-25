@@ -75,7 +75,6 @@ function EditGroupForm({ group }) {
     ];
 
     return (
-        <>
             <div>
                 <form onSubmit={handleSubmit}>
                     {isSubmitted && validationErrors.length > 0 &&
@@ -142,7 +141,6 @@ function EditGroupForm({ group }) {
                     </div>
                 </form>
             </div>
-        </>
     )
 }
 
