@@ -53,7 +53,7 @@ function App() {
           </Switch>
         </div>
       )}
-      <FooterInfo isLoaded={isLoaded}/>
+      {/* <FooterInfo isLoaded={isLoaded}/> */}
     </div>
   );
 }
