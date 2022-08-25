@@ -35,7 +35,7 @@ function Navigation({ isLoaded }) {
       <>
         <button className='demo' onClick={demoLogin}>Demo User</button>
         <LoginFormModal />
-        <NavLink to="/signup" style={{color:"black"}}>Sign Up</NavLink>
+        <NavLink to="/signup" style={{color:"black", textDecoration:"none"}}>Sign Up</NavLink>
       </>
     );
   }

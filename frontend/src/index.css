@@ -1,19 +1,15 @@
-#root{
-    margin: 0;
-}
-
 body {
     background-color: #FFFFFF;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 }
 
+/* NavLinks */
 .navLink {
     text-decoration: none;
     color: black;
 }
 
 /* Buttons */
-
 button.default {
     padding: 10px 20px;
     margin: 10px;
@@ -59,6 +55,7 @@ div.main-div {
     justify-content: center;
 }
 
+/* Form Stuff */
 input {
     width: 100%;
     height: 55;
@@ -91,6 +88,7 @@ textarea {
     box-sizing: border-box;
 }
 
+/* Images */
 img.cover {
     border-radius: 15px;
     width: 100%;
@@ -99,16 +97,72 @@ img.cover {
     overflow: hidden;
 }
 
+/* Text */
 p.spacing {
     line-height: 35px;
 }
 
-footer{
-    position: relative;
-    bottom: 0px;
-    width: 100%;
-}
-
 .text20 {
     font-size: 20px;
+}
+
+.text14 {
+    font-size: 14px;
+}
+
+.textcolor-gold {
+    color: #877457;
+}
+
+.textcolor-bluegreen {
+    color: #008294;
+}
+
+.textcolor-grey {
+    color: #757575;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+/* Displays */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.center {
+    justify-content: center;
+}
+
+/* Margin, Borders, and Padding */
+.padding20 {
+    padding: 20px;
+}
+
+/* Event/Group list card  */
+.card {
+    width: 640px;
+    border-top: #D9D9D9 3px solid;
+    padding: 5px 0px;
+}
+
+/* Card Image Stuff */
+div.card-image-container {
+    height: 100px;
+    width: 178px;
+    border-radius: 10px;
+}
+
+img.group-image {
+    height: 100px;
+    width: 178px;
+    border-radius: 10px;
+    object-fit: cover;
 }
