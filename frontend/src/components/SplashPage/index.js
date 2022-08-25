@@ -49,9 +49,6 @@ function SplashPage() {
                     </div>
                 </div>
             </div>
-            <footer>
-                <FooterInfo />
-            </footer>
         </>
     )
 }

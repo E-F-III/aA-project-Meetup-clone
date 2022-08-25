@@ -14,6 +14,8 @@ import GroupDetails from "./components/Groups/ReadGroupDetails";
 import EventDetails from "./components/Events/ReadEventDetails";
 import GroupsOfUser from "./components/Groups/ReadUsersGroups";
 
+import FooterInfo from "./components/FooterInfo";
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -22,10 +24,10 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="main-container">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <>
+        <div>
           <Switch>
             <Route exact path='/'>
               <SplashPage />
@@ -49,11 +51,10 @@ function App() {
               <GroupsOfUser />
             </Route>
           </Switch>
-        </>
+        </div>
       )}
-
-
-    </>
+      <FooterInfo isLoaded={isLoaded}/>
+    </div>
   );
 }
 

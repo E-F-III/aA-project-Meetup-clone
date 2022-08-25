@@ -31,7 +31,6 @@ function SignupFormPage() {
           if (data && data.errors) setErrors(data.errors);
         });
     }
-    // console.log(error)
     return setErrors([{password:'Confirm Password field must be the same as the Password field'}]);
   };
 

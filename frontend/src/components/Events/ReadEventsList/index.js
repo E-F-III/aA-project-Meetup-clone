@@ -7,24 +7,24 @@ import EventCard from './EventCard';
 import './Events.css'
 
 function EventsList() {
-    const dispatch = useDispatch()
-    const events = useSelector(state => state.events)
-    const eventsList = Object.values(events)
+  const dispatch = useDispatch()
+  const events = useSelector(state => state.events)
+  const eventsList = Object.values(events)
 
-    const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-    useEffect(() => {
-        dispatch(getEventsThunk())
-        .then(() => setIsLoaded(true))
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(getEventsThunk())
+      .then(() => setIsLoaded(true))
+  }, [dispatch])
 
-    return isLoaded && (
-        <>
-        {eventsList.map(event => (
+  return isLoaded && (
+    <>
+      {eventsList.map(event => (
             <EventCard event={event} key={event.id}/>
-        ))}
-        </>
-    )
+      ))}
+    </>
+  )
 }
 
 export default EventsList;

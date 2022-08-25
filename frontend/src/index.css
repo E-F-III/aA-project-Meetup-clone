@@ -5,13 +5,14 @@
 body {
     background-color: #FFFFFF;
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
-    width: 99vw
 }
 
 .navLink {
     text-decoration: none;
     color: black;
 }
+
+/* Buttons */
 
 button.default {
     padding: 10px 20px;
@@ -44,6 +45,14 @@ button.default:disabled {
     color: #A4A4A4;
     border: none;
     border-radius: 10px
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+button:disabled{
+    cursor: default;
 }
 
 div.main-div {
@@ -80,18 +89,6 @@ textarea {
     border-radius: 10px;
     border: 1px solid black;
     box-sizing: border-box;
-}
-
-button:hover{
-    cursor: pointer;
-}
-
-button:disabled{
-    cursor:default;
-}
-
-.navLink.header {
-    font-size: 20px;
 }
 
 img.cover {
