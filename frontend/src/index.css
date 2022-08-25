@@ -106,6 +106,10 @@ p.spacing {
     font-size: 20px;
 }
 
+.text16{
+    font-size: 16px;
+}
+
 .text14 {
     font-size: 14px;
 }
@@ -160,7 +164,7 @@ div.card-image-container {
     border-radius: 10px;
 }
 
-img.group-image {
+img.card-image {
     height: 100px;
     width: 178px;
     border-radius: 10px;

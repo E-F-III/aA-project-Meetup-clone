@@ -9,7 +9,7 @@ function GroupCard({ group }) {
         <div className='card-left flex-row center padding20'>
           <div className='card-image-container'>
             <img
-              className='group-image'
+              className='card-image'
               src={group.previewImage?.length > 0 ? group.previewImage : ""}
               style={{ visibility: `${group.previewImage?.length > 0 ? "visible" : "hidden"}` }}
             />
