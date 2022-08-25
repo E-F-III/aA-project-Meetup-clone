@@ -3,6 +3,11 @@ body {
     font-family: Graphik Meetup,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
 }
 
+/* Main Div  */
+.main-div {
+    width: 100vw;
+}
+
 /* NavLinks */
 .navLink {
     text-decoration: none;
@@ -146,6 +151,10 @@ p.spacing {
 
 .center {
     justify-content: center;
+}
+
+.align-center{
+    align-items: center;
 }
 
 /* Margin, Borders, and Padding */

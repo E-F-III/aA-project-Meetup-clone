@@ -9,8 +9,10 @@ import ListsNav from './ListsNav'
 function FindPage() {
 
     return (
-        <>
-            <ListsNav />
+        <div className='main-div align-center flex-column'>\
+            <div style={{margin:"5px"}}>
+                <ListsNav />
+            </div>
             <div>
                 <Switch>
                     <Route exact path='/find/events'>
@@ -22,7 +24,7 @@ function FindPage() {
                 </Switch>
             </div>
 
-        </>
+        </div>
     )
 }
 
