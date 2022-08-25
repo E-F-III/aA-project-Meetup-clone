@@ -12,6 +12,7 @@ import GroupForm from "./components/Groups/CreateGroupForm";
 import GroupDetails from "./components/Groups/ReadGroupDetails";
 
 import EventDetails from "./components/Events/ReadEventDetails";
+import GroupsOfUser from "./components/Groups/ReadUsersGroups";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,8 +42,11 @@ function App() {
             <Route path="/events/:eventId">
               <EventDetails />
             </Route>
-            <Route path="/create-group">
+            <Route exact path="/create-group">
               <GroupForm />
+            </Route>
+            <Route exact path="/your-groups">
+              <GroupsOfUser />
             </Route>
           </Switch>
         </>

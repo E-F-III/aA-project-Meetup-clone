@@ -26,7 +26,7 @@ function EventDetails() {
     const date = new Date(event?.startDate)
     const endDate = new Date(event?.endDate)
 
-    useEffect( () => {
+    useEffect(() => {
        dispatch(getEventDetailsThunk(eventId))
        .then(data => dispatch(getGroupDetailsThunk(data.groupId)))
        .then(()=>setIsLoaded(true))
@@ -36,7 +36,7 @@ function EventDetails() {
         e.preventDefault()
         const data = dispatch(deleteEventThunk(event.id))
 
-        history.push(`/find/events`)
+        history.push(`/groups/${group.id}`)
     }
 
     return isLoaded && (

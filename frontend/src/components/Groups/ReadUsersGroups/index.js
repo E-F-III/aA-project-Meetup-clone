@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { getUserGroups } from '../../store/UsersGroups';
+import { getUserGroupsThunk } from '../../../store/Groups';
 
 import './GroupsOfUser.css'
 
 function GroupsOfUser() {
     const dispatch = useDispatch()
     const sessionUser = useSelector(state => state.session.user)
-    const groups = useSelector(state => state.usersGroups)
+    const groups = useSelector(state => state.groups)
+
+    const organizedGroups = Object.values(groups).filter(group => sessionUser.id === group.organizerId)
+    const joinedGroups = Object.values(groups).filter(group => sessionUser.id !== group.organizerId)
 
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(getUserGroups())
+        dispatch(getUserGroupsThunk())
             .then(() => setIsLoaded(true))
     }, [dispatch])
 
@@ -22,7 +25,7 @@ function GroupsOfUser() {
         <div className='usersList-main'>
             <div>
                 <h3>Organizer</h3>
-                {groups.organized.map(group => {
+                {organizedGroups.map(group => {
                     return (
                         <NavLink className='navLink' key={group.id} to={`/groups/${group.id}/about`}>
                             <div className='group-card'>
@@ -48,7 +51,7 @@ function GroupsOfUser() {
             </div>
             <div>
                 <h3>Member</h3>
-                {groups.memberOf.map(group => {
+                {joinedGroups.map(group => {
                     return (
                         <NavLink className='navLink' key={group.id} to={`/groups/${group.id}/about`}>
                             <div className='group-card'>

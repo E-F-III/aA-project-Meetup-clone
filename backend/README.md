@@ -260,7 +260,7 @@ Returns all the groups.
 
     ```json
     {
-      "organized":[
+      "Groups":[
         {
           "id": 1,
           "organizerId": 1,
@@ -276,22 +276,6 @@ Returns all the groups.
           "previewImage": "image url",
         }
       ],
-      "memberOf":[
-        {
-          "id": 1,
-          "organizerId": 1,
-          "name": "Evening Tennis on the Water",
-          "about": "Enjoy rounds of tennis with a tight-nit group of people on the water facing the Brooklyn Bridge. Singles or doubles.",
-          "type": "In person",
-          "private": true,
-          "city": "New York",
-          "state": "NY",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "numMembers": 10,
-          "previewImage": "image url",
-        }
-      ]
     }
     ```
 
