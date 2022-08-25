@@ -21,7 +21,7 @@ function EventsList() {
     return isLoaded && (
         <>
         {eventsList.map(event => (
-            <EventCard event={event} />
+            <EventCard event={event} key={event.id}/>
         ))}
         </>
     )

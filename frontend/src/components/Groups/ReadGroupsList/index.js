@@ -21,7 +21,7 @@ function GroupsList() {
     return isLoaded && (
         <>
             {groupsList.map(group => (
-                <GroupCard group={group} />
+                <GroupCard group={group} key={group.id}/>
             ))}
         </>
     )
