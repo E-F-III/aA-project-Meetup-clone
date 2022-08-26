@@ -5,8 +5,8 @@ import './GroupCard.css'
 
 function GroupCard({ group }) {
   return (
-    <NavLink className='navLink card flex-row' to={`/groups/${group.id}/about`}>
-        <div className='card-left flex-row center padding20'>
+    <NavLink className='navLink card flex-row-center' to={`/groups/${group.id}/about`}>
+        <div className='card-left flex-row-center padding20'>
           <div className='card-image-container'>
             <img
               className='card-image'

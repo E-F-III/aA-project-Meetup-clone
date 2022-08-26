@@ -26,7 +26,7 @@ function GroupDetails() {
     }, [dispatch])
 
     return isLoaded && (
-        <>
+        <div className='main-div'>
             <div>
                 <div className='details-general-info-container'>
                     <div className='details-general-info'>
@@ -105,7 +105,7 @@ function GroupDetails() {
                     </Route>
                 </Switch>
             </div>
-        </>
+        </div>
     );
 }
 

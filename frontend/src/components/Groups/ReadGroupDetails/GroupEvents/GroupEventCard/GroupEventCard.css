@@ -1,0 +1,36 @@
+.group-event-card {
+    box-sizing: border-box;
+    position: relative;
+    width: 662px;
+    border-radius: 15px;
+    background-color: white;
+    padding: 20px 20px;
+    margin: 20px 0;
+    transition: top ease 1s;
+}
+
+.group-event-card:hover{
+    box-shadow: 0 0 5px 0px grey;
+    top: -10px;
+}
+
+.event-card-image {
+    width: 180px;
+    height: 101px;
+}
+
+.group-event-time {
+    text-transform: uppercase;
+    color: #0098ab;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.group-event-name {
+    font-size: larger;
+}
+
+.group-event-description {
+    font-size: 14px;
+    color: #757575;
+}

@@ -16,8 +16,8 @@ function EventCard({ event }) {
     const AMPM = Number(hours24) > 12 ? 'PM' : 'AM'
 
     return (
-        <NavLink className='navLink card flex-row' to={`/events/${event.id}`} key={event.id}>
-            <div className='card-left flex-row center padding20'>
+        <NavLink className='navLink card flex-row-center' to={`/events/${event.id}`} key={event.id}>
+            <div className='card-left flex-row-center padding20'>
                 <div className='card-image-container'>
                     <img
                         className='card-image'
