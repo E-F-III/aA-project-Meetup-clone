@@ -266,7 +266,8 @@ div.card-image-container {
 }
 
 div.header-img {
-    width: 600px;
+    width: 80%;
+    max-width: 600px;
     height: 338px;
 }
 
