@@ -24,7 +24,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="main-container">
+    <div className="w100vw">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <div>
@@ -53,7 +53,9 @@ function App() {
           </Switch>
         </div>
       )}
-      {/* <FooterInfo isLoaded={isLoaded}/> */}
+      <footer>
+        <FooterInfo />
+      </footer>
     </div>
   );
 }

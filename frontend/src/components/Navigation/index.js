@@ -1,39 +1,28 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
-import * as sessionActions from "../../store/session";
+
 
 import './Navigation.css';
 
 import logo from '../../assets/images/logo.png'
 
 function Navigation({ isLoaded }) {
-  const dispatch = useDispatch()
-  const history = useHistory()
   const sessionUser = useSelector(state => state.session.user);
-
-  const demoLogin = (e) => {
-    e.preventDefault();
-
-    const demoUser = { credential: 'demo@user.io', password: 'password' }
-
-    return dispatch(sessionActions.login(demoUser))
-  }
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <>
-        <button className='default' onClick={()=>history.push('/create-group')}>Create a group</button>
+      <div className='flex-row-justify-between flex-row-align-center'>
+        <NavLink to={'/create-group'}>Create a group</NavLink>
         <ProfileButton user={sessionUser} />
-      </>
+      </div>
     );
   } else {
     sessionLinks = (
       <>
-        <button className='demo' onClick={demoLogin}>Demo User</button>
         <LoginFormModal />
         <NavLink to="/signup" style={{color:"black", textDecoration:"none"}}>Sign Up</NavLink>
       </>

@@ -9,7 +9,7 @@ function LoginFormModal() {
     <>
       <button style={{backgroundColor:"white", border:"none", textDecoration:"none", fontSize:"15px"}} onClick={() => setShowModal(true)}>Log In</button>
       {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
+        <Modal className="w450px" onClose={() => setShowModal(false)}>
           <LoginForm />
         </Modal>
       )}

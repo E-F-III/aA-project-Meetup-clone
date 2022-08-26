@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import './FooterInfo.css'
 
-function FooterInfo({ isLoaded }) {
+function FooterInfo() {
     const sessionUser = useSelector(state => state.session.user);
 
-    return  isLoaded && (
+    return  (
         <div className='footer-info-main'>
             <div className='footer-content'>
                 <p>

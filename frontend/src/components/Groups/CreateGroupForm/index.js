@@ -55,8 +55,7 @@ function GroupForm() {
     ];
 
     return (
-            <div>
-                <div className="main-form-div">
+                <div className="main-div">
                     <div className="group-form-steps">
                         {step} OF 5
                     </div>
@@ -163,7 +162,6 @@ function GroupForm() {
                         }
                     </form>
                 </div>
-            </div>
     )
 }
 
