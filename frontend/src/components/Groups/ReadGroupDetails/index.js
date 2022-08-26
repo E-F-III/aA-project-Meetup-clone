@@ -4,11 +4,14 @@ import { useParams, useRouteMatch, Route, NavLink, Switch } from 'react-router-d
 
 import { getGroupDetailsThunk } from '../../../store/Groups';
 
-import GroupEvents from './GroupEvents';
+import GroupGeneralInfo from './GroupGeneralInfo';
+import GroupNavBar from './GroupNavBar';
+
 import EditGroupForm from '../UpdateGroupForm';
+
+import GroupEvents from './GroupEvents';
 import EventForm from '../../Events/CreateEventForm';
 
-import GroupNavBar from './GroupNavBar';
 import './GroupDetails.css'
 
 function GroupDetails() {
@@ -31,37 +34,9 @@ function GroupDetails() {
         <div className='main-div'>
             <div>
                 <div className='details-general-info-container'>
-                    <div className='details-general-info'>
-                        <div className='header-img'>
-                            <img className='cover'
-                                src={group.images.length > 0 ? group.images[0].url : ""}
-                                style={{ visibility: `${group.images.length > 0 ? "visible" : "hidden"}` }}
-                            />
-                        </div>
-                        <div>
-                            <h1>{group.name}</h1>
-                            <ul>
-                                <li>{group.city}, {group.state}</li>
-                                <li>{group.numMembers} members • {group.private ? 'Private' : 'Public'} group</li>
-                                <li>Organized by {group.Organizer.firstName} {group.Organizer.lastName}</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <GroupGeneralInfo group={group} />
                 </div>
                 <div className='details-navbar-container'>
-                    {/* <div className='details-navbar'>
-                        <div className='groupNav'>
-                            <NavLink className="navLink header" activeClassName='tab-active' to={`${url}/about`}>About</NavLink>
-                        </div>
-                        <div className='groupNav'>
-                            <NavLink className="navLink header" activeClassName='tab-active' to={`${url}/events`}>Events</NavLink>
-                        </div>
-                        <div className='groupNav'>
-                            <NavLink className="navLink header" to={`${url}/edit`} style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}>
-                                <button className='default'>Edit</button>
-                            </NavLink>
-                        </div>
-                    </div> */}
                     <GroupNavBar />
                 </div>
             </div>

@@ -110,6 +110,7 @@ p.spacing {
 .text25 {
     font-size: 25px
 }
+
 .text20 {
     font-size: 20px;
 }
@@ -194,6 +195,10 @@ p.spacing {
     padding: 20px;
 }
 
+.border20 {
+    border: 20px;
+}
+
 /* Event/Group list card  */
 .card {
     width: 640px;
@@ -217,9 +222,22 @@ div.card-image-container {
     border-radius: 10px;
 }
 
+div.header-img {
+    width: 600px;
+    height: 338px;
+}
+
 img.card-image {
     height: 100px;
     width: 178px;
     border-radius: 10px;
     object-fit: cover;
+}
+
+/* List stuff */
+
+.list-no-style {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
