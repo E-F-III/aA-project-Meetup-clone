@@ -20,17 +20,9 @@
 }
 
 .group-event-time {
-    text-transform: uppercase;
-    color: #0098ab;
-    font-size: 15px;
     font-weight: bolder;
 }
 
 .group-event-name {
     font-size: larger;
-}
-
-.group-event-description {
-    font-size: 14px;
-    color: #757575;
 }

@@ -16,15 +16,17 @@ function GroupEventCard({ event }) {
     const AMPM = Number(hours24) > 12 ? 'PM' : 'AM'
 
     return (
-        <NavLink className="navLink" style={{width: "662px"}} key={event.id} to={`/events/${event.id}`}>
-            <div className='group-event-card'>
-                <div>
-                    <p className='group-event-time'>{`${day}, ${date} • ${hours}:${minutes} ${AMPM}`}</p>
+        <NavLink className="navLink" style={{ width: "662px" }} key={event.id} to={`/events/${event.id}`}>
+            <div className='group-event-card flex-row-center'>
+                <div className='card-right'>
+                    <p className='group-event-time uppercase textcolor-bluegreen text15'>{`${day}, ${date} • ${hours}:${minutes} ${AMPM}`}</p>
                     <h3 className='group-event-name'>{event.name}</h3>
-                    <p className='group-event-description'>{event.numAttending} attendees</p>
+                    <p className='group-event-description textcolor-grey text14'>{event.numAttending} attendees</p>
                 </div>
-                <div className="event-card-image">
-                    <img className='cover' src={event.previewImage.length > 0 ? event.previewImage : ""} />
+                <div className='card-left'>
+                    <div className="event-card-image">
+                        <img className='cover' src={event.previewImage.length > 0 ? event.previewImage : ""} />
+                    </div>
                 </div>
             </div>
         </NavLink>

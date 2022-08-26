@@ -7,6 +7,8 @@ import { getGroupDetailsThunk } from '../../../store/Groups';
 import GroupEvents from './GroupEvents';
 import EditGroupForm from '../UpdateGroupForm';
 import EventForm from '../../Events/CreateEventForm';
+
+import GroupNavBar from './GroupNavBar';
 import './GroupDetails.css'
 
 function GroupDetails() {
@@ -47,35 +49,20 @@ function GroupDetails() {
                     </div>
                 </div>
                 <div className='details-navbar-container'>
-                    <div className='details-navbar'>
+                    {/* <div className='details-navbar'>
                         <div className='groupNav'>
-                            <NavLink
-                                className="navLink header"
-                                activeClassName='tab-active'
-                                to={`${url}/about`}
-                            >
-                                About
-                            </NavLink>
+                            <NavLink className="navLink header" activeClassName='tab-active' to={`${url}/about`}>About</NavLink>
                         </div>
                         <div className='groupNav'>
-                            <NavLink
-                                className="navLink header"
-                                activeClassName='tab-active'
-                                to={`${url}/events`}
-                            >
-                                Events
-                            </NavLink>
+                            <NavLink className="navLink header" activeClassName='tab-active' to={`${url}/events`}>Events</NavLink>
                         </div>
                         <div className='groupNav'>
-                            <NavLink
-                                className="navLink header"
-                                to={`${url}/edit`}
-                                style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
-                            >
+                            <NavLink className="navLink header" to={`${url}/edit`} style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}>
                                 <button className='default'>Edit</button>
                             </NavLink>
                         </div>
-                    </div>
+                    </div> */}
+                    <GroupNavBar />
                 </div>
             </div>
 
