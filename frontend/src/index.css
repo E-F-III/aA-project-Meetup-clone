@@ -16,6 +16,10 @@ div.w100vw{
     width: 100vw;
 }
 
+.backround-light-blue {
+    background-color: #F6F7F8;
+}
+
 /* Main Div  */
 .main-div {
     width: 100%;
@@ -224,6 +228,10 @@ p.spacing {
     width: 30%;
 }
 
+.h100 {
+    height: 100%;
+}
+
 /* Margin, Borders, and Padding */
 .border-none-sides {
     border-top: #E6E6E6 1px solid;
@@ -277,6 +285,10 @@ img.card-image {
     border-radius: 10px;
     object-fit: cover;
 }
+
+/* .small-square-image {
+
+} */
 
 /* List stuff */
 

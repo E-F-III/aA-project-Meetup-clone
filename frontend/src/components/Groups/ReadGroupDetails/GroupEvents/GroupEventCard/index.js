@@ -16,7 +16,7 @@ function GroupEventCard({ event }) {
     const AMPM = Number(hours24) > 12 ? 'PM' : 'AM'
 
     return (
-        <NavLink className="navLink" style={{ width: "662px" }} key={event.id} to={`/events/${event.id}`}>
+        <NavLink className="navLink" style={{ width: "70%" }} key={event.id} to={`/events/${event.id}`}>
             <div className='group-event-card flex-row-center'>
                 <div className='card-right'>
                     <p className='group-event-time uppercase textcolor-bluegreen text15'>{`${day}, ${date} • ${hours}:${minutes} ${AMPM}`}</p>

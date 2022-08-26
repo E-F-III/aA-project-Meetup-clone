@@ -31,7 +31,7 @@ function GroupDetails() {
     }, [dispatch])
 
     return isLoaded && (
-        <div className='main-div'>
+        <div className='main-div backround-light-blue'>
             <div className='flex-row-center w100 border-none-sides'>
                 <GroupGeneralInfo group={group} />
             </div>
@@ -40,12 +40,12 @@ function GroupDetails() {
                 <GroupNavBar />
             </div>
 
-            <div className='flex-row-center w100'>
-                <div className='flex-row w70'>
+            <div className='flex-row-center w100 backround-light-blue h100'>
+                <div className='flex-row w70 h100 backround-light-blue'>
                     <div className='w70'>
                         <Switch>
                             <Route path={`${url}/about`}>
-                                <div>
+                                <div className='h100 backround-light-blue'>
                                     <h2>What we're about</h2>
                                     <p className='spacing'>{group.about}</p>
                                 </div>
@@ -71,13 +71,13 @@ function GroupDetails() {
 
                     </div>
                     <div className='w30'>
-                        <div>
+                        {/* <div>
                             <h2>Organizer</h2>
                             <div>
 
                                 <p>{group.Organizer.firstName} {group.Organizer.lastName}</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

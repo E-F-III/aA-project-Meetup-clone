@@ -1,7 +1,8 @@
 .group-event-card {
     box-sizing: border-box;
     position: relative;
-    width: 662px;
+    width: 100%;
+    max-width: 662px;
     border-radius: 15px;
     background-color: white;
     padding: 20px 20px;
@@ -15,7 +16,8 @@
 }
 
 .event-card-image {
-    width: 180px;
+    min-width: 120px;
+    max-width: 180px;
     height: 101px;
 }
 
