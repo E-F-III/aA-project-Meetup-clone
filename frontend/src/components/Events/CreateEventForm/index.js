@@ -70,7 +70,7 @@ function EventForm({ group }) {
                         {validationErrors.map(error => <li key={error}>{error}</li>)}
                     </ul>}
                 <div className="event-form-div">
-                    <label htmlFor="event-name">Event Name</label>
+                    <h2>Event Name</h2>
                     <input
                         required
                         name="event-name"
@@ -78,7 +78,7 @@ function EventForm({ group }) {
                         onChange={e => setName(e.target.value)} />
                 </div>
                 <div className="event-form-div">
-                    <label htmlFor="event-about">About this event</label>
+                    <h2>About this event</h2>
                     <textarea
                         required
                         rows='13'
@@ -90,14 +90,14 @@ function EventForm({ group }) {
                     <p>{description.length} characters</p>
                 </div>
                 <div className="event-form-div">
-                    <label htmlFor='event-type'>Will this event be in person or online?</label>
+                    <h2>Will this event be in person or online?</h2>
                     <select name='type' value={type} onChange={e => setType(e.target.value)} >
                         <option value='In person'>In Person</option>
                         <option value='Online'>Online</option>
                     </select>
                 </div>
                 <div className="event-form-div">
-                    <label htmlFor='event-capacity'>How many people are allowed to attend this event?</label>
+                    <h2>How many people are allowed to attend this event?</h2>
                     <input
                         required
                         name="event-capacity"
@@ -107,7 +107,7 @@ function EventForm({ group }) {
                         min="1" />
                 </div>
                 <div className="event-form-div">
-                    <label htmlFor="event-price">How much will it cost to attend this event?</label>
+                    <h2>How much will it cost to attend this event?</h2>
                     <input
                         required
                         name="event-price"
@@ -119,7 +119,7 @@ function EventForm({ group }) {
                 <div className="event-form-div">
                     <p>When will the event take place?</p>
                     <div>
-                        <label htmlFor="event-start-date">Start Date</label>
+                        <h2>Start Date</h2>
                         <input
                             required
                             name="event-start-date"
@@ -129,7 +129,7 @@ function EventForm({ group }) {
                             onChange={e => setStartDate(e.target.value)} />
                     </div>
                     <div>
-                        <label htmlFor="event-end-date">End Date</label>
+                        <h2>End Date</h2>
                         <input
                             required
                             name="event-end-date"

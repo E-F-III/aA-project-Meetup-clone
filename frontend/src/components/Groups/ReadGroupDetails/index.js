@@ -32,40 +32,54 @@ function GroupDetails() {
 
     return isLoaded && (
         <div className='main-div'>
-            <div>
-                <div className='details-general-info-container'>
-                    <GroupGeneralInfo group={group} />
-                </div>
-                <div className='details-navbar-container'>
-                    <GroupNavBar />
-                </div>
+            <div className='flex-row-center w100 border-none-sides'>
+                <GroupGeneralInfo group={group} />
             </div>
 
-            <div className='group-content'>
-                <Switch>
-                    <Route path={`${url}/about`}>
-                            <h2>What we're about</h2>
-                            <p className='spacing'>{group.about}</p>
-                    </Route>
-                    <Route path={`${url}/events`}>
-                            <div className='group-events-header'>
-                                <h2>Events</h2>
-                                <NavLink
-                                    to={`${url}/create-event`}
-                                    style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
-                                >
-                                    <button className='default'>Add Event</button>
-                                </NavLink>
+            <div className='details-navbar-container flex-row-center w100 border-none-sides'>
+                <GroupNavBar />
+            </div>
+
+            <div className='flex-row-center w100'>
+                <div className='flex-row w70'>
+                    <div className='w70'>
+                        <Switch>
+                            <Route path={`${url}/about`}>
+                                <div>
+                                    <h2>What we're about</h2>
+                                    <p className='spacing'>{group.about}</p>
+                                </div>
+                            </Route>
+                            <Route path={`${url}/events`}>
+                                <div className='flex-row'>
+                                    <NavLink
+                                        to={`${url}/create-event`}
+                                        style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}
+                                    >
+                                        <button className='default'>Add Event</button>
+                                    </NavLink>
+                                </div>
+                                <GroupEvents groupId={groupId} />
+                            </Route>
+                            <Route path={`${url}/edit`}>
+                                <EditGroupForm group={group} />
+                            </Route>
+                            <Route path={`${url}/create-event`}>
+                                <EventForm group={group} />
+                            </Route>
+                        </Switch>
+
+                    </div>
+                    <div className='w30'>
+                        <div>
+                            <h2>Organizer</h2>
+                            <div>
+
+                                <p>{group.Organizer.firstName} {group.Organizer.lastName}</p>
                             </div>
-                            <GroupEvents groupId={groupId} />
-                    </Route>
-                    <Route path={`${url}/edit`}>
-                            <EditGroupForm group={group} />
-                    </Route>
-                    <Route path={`${url}/create-event`}>
-                            <EventForm group={group} />
-                    </Route>
-                </Switch>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

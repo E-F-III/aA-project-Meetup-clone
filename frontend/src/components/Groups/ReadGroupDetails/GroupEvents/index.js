@@ -22,7 +22,7 @@ function GroupEvents({ groupId }) {
     return isLoaded && (
         <div>
             {groupEventsList.map(event => (
-                <GroupEventCard event={event} />
+                <GroupEventCard key={event.id} event={event} />
             ))}
         </div>
     )

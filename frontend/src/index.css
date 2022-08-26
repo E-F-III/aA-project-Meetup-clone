@@ -14,6 +14,11 @@ body {
     color: black;
 }
 
+.navLink-bluegreen {
+    text-decoration: none;
+    color: #008294;
+}
+
 /* Buttons */
 button.default {
     padding: 10px 20px;
@@ -62,7 +67,7 @@ div.main-div {
 
 /* Form Stuff */
 input {
-    width: 100%;
+    width: 70%;
     height: 55;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
@@ -73,7 +78,7 @@ input {
 }
 
 select {
-    width: 100%;
+    width: 70%;
     height: 55;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
@@ -84,7 +89,7 @@ select {
 }
 
 textarea {
-    width: 100%;
+    width: 70%;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
     margin-top: 5px;
@@ -162,7 +167,6 @@ p.spacing {
     align-items: center;
 }
 
-
 .flex-row-justify-between{
     display: flex;
     flex-direction: row;
@@ -182,6 +186,10 @@ p.spacing {
 }
 
 /* Width and Heights */
+.w100 {
+    width: 100%
+}
+
 .w70 {
     width: 70%;
 }
@@ -191,6 +199,15 @@ p.spacing {
 }
 
 /* Margin, Borders, and Padding */
+.border-none-sides {
+    border-top: #E6E6E6 1px solid;
+    border-bottom: #E6E6E6 1px solid;
+}
+
+.padding-none-sides {
+    padding: 20px 0px 20px 0px
+}
+
 .padding20 {
     padding: 20px;
 }

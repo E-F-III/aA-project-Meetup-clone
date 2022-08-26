@@ -20,15 +20,15 @@ function GroupNavBar() {
     }, [dispatch])
 
     return isLoaded && (
-        <div className='flex-row'>
-            <div className='flex-row-justify-around flex-row-align-center w70'>
-                <NavLink className="navLink header" activeClassName='tab-active' to={`${url}/about`}>About</NavLink>
-                <NavLink className="navLink header" activeClassName='tab-active' to={`${url}/events`}>Events</NavLink>
-                <NavLink className="navLink header" activeClassName='tab-active' style={{visibility:"hidden"}} to={`${url}/members`}>Members</NavLink>
-                <NavLink className="navLink header" activeClassName='tab-active' style={{visibility:"hidden"}} to={`${url}/photos`}>Photos</NavLink>
+        <div className='flex-row-center w70'>
+            <div className='flex-row-justify-between flex-row-align-center w70'>
+                <NavLink className="navLink-bluegreen header text20" activeClassName='tab-active' to={`${url}/about`}>About</NavLink>
+                <NavLink className="navLink-bluegreen header text20" activeClassName='tab-active' to={`${url}/events`}>Events</NavLink>
+                <NavLink className="navLink-bluegreen header text20" activeClassName='tab-active' style={{visibility:"hidden"}} to={`${url}/members`}>Members</NavLink>
+                <NavLink className="navLink-bluegreen header text20" activeClassName='tab-active' style={{visibility:"hidden"}} to={`${url}/photos`}>Photos</NavLink>
             </div>
 
-            <div className=' flex-row-align-center w30'>
+            <div className='flex-row-align-center w30'>
                 <NavLink className="navLink header" to={`${url}/edit`} style={{ visibility: `${sessionUser && sessionUser.id === group.Organizer.id ? "visible" : "hidden"}` }}>
                     <button className='default'>Edit</button>
                 </NavLink>
