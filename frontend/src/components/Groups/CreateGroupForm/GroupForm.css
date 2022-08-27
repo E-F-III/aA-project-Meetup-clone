@@ -1,0 +1,50 @@
+div.main-form-div {
+    justify-content: center;
+<<<<<<< HEAD:frontend/src/components/GroupForm/GroupForm.css
+=======
+    /* height: 70vh; */
+>>>>>>> dev:frontend/src/components/Groups/CreateGroupForm/GroupForm.css
+    min-width: 900px;
+}
+
+div.group-form {
+    justify-content: center;
+    height: 100%;
+    min-width: 900px;
+}
+
+div.group-form-steps {
+    text-align: center;
+    color: darkgray;
+}
+
+div.create-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 0 25%;
+    height: 100%;
+}
+
+div.submission-footer {
+    position: relative;
+    bottom: 0px;
+    border-top: 2px solid black;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 10px;
+}
+
+h2.create-group {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+p.create-group {
+    font-size: 16px;
+}
+
+form.group-form {
+    height: 80%;
+}

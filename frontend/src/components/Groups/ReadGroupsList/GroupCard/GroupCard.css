@@ -1,0 +1,23 @@
+/* .card-left {
+
+} */
+
+/* .card-right {
+
+} */
+
+p.card-about-group {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* h4.group-card-location {
+
+} */
+
+/* h3.group-card-title {
+
+} */

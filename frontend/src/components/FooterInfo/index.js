@@ -6,11 +6,7 @@ import './FooterInfo.css'
 function FooterInfo() {
     const sessionUser = useSelector(state => state.session.user);
 
-    const [isLoaded, setIsLoaded] = useState(false)
-
-    useEffect(()=>setIsLoaded(true),[])
-
-    return  isLoaded && (
+    return  (
         <div className='footer-info-main'>
             <div className='footer-content'>
                 <p>

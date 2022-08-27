@@ -1,0 +1,19 @@
+div.groupList {
+    margin-top: 10px;
+}
+
+.listbody-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 70%;
+}
+
+.listbody {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px;
+}

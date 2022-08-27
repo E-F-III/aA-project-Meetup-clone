@@ -11,7 +11,7 @@ import './Splash.css'
 function SplashPage() {
     const history = useHistory()
     return (
-        <>
+        <div>
             <div className='splash-bg'></div>
             <div className='splash-outer'>
                 <div className='splash-main'>
@@ -32,27 +32,24 @@ function SplashPage() {
                         <div className='splash-nav-container'>
                             <div className='splash-nav'>
                                 <img src={handsup} />
-                                <h3 className='splash-link' onClick={() => history.push('/groups')}>Join a group</h3>
+                                <h3 className='splash-link' onClick={() => history.push('/find/groups')}>Join a group</h3>
                                 <p>Do what you love, meet others who love it, find your community. The rest is history!</p>
                             </div>
                             <div className='splash-nav'>
                                 <img src={ticket} />
-                                <h3 className='splash-link' onClick={() => history.push('/events')}>Find an event</h3>
+                                <h3 className='splash-link' onClick={() => history.push('/find/events')}>Find an event</h3>
                                 <p>Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking</p>
                             </div>
                             <div className='splash-nav'>
                                 <img src={joinGroup} />
-                                <h3 className='splash-link' onClick={() => history.push('/group-form')}>Start a group</h3>
+                                <h3 className='splash-link' onClick={() => history.push('/create-group')}>Start a group</h3>
                                 <p>You don't have to be an expert to gather people together and explore shared interests.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <footer>
-                <FooterInfo />
-            </footer>
-        </>
+        </div>
     )
 }
 

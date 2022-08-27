@@ -33,7 +33,7 @@ function ProfileButton({ user }) {
   };
 
   return (
-    <>
+    <div>
       <button className="profile-button" onClick={openMenu}>
         {/* <i className="fas fa-user-circle" /> */}
         {user.firstName[0] + user.lastName[0]}
@@ -42,17 +42,17 @@ function ProfileButton({ user }) {
         <div className="profile-dropdown">
           <ul className="profile-dropdown">
             <li className="profile-dropdown" >
-              <NavLink className='profile-groups' to={'/your-groups'}>Your groups</NavLink>
+              <NavLink className='profile-groups' to={'/your-groups/organized'}>Your groups</NavLink>
             </li>
-            <li className="profile-dropdown" >{user.firstName} {user.lastName}</li>
-            <li className="profile-dropdown" >{user.email}</li>
-            <li className="profile-dropdown" >
-              <button  className="no-style" onClick={logout}>Log Out</button>
+            <li className="profile-dropdown text14" >{user.firstName} {user.lastName}</li>
+            <li className="profile-dropdown text14" >{user.email}</li>
+            <li className="profile-dropdown text14" >
+              <button  className="no-style text14" style={{padding: "0"}} onClick={logout}>Log Out</button>
             </li>
           </ul>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

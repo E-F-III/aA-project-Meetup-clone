@@ -275,7 +275,7 @@ Returns all the groups.
           "numMembers": 10,
           "previewImage": "image url",
         }
-      ]
+      ],
     }
     ```
 

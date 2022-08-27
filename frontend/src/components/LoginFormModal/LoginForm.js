@@ -20,32 +20,47 @@ function LoginForm() {
     );
   };
 
+  const demoLogin = (e) => {
+    e.preventDefault();
+
+    const demoUser = { credential: 'demo@user.io', password: 'password' }
+
+    return dispatch(sessionActions.login(demoUser))
+  }
+
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Log In</h1>
+
       <ul>
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      <label>
-        Email
+      <div>
+        <h2>Email</h2>
         <input
           type="text"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
+          className="w100"
         />
-      </label>
-      <label>
-        Password
+      </div>
+      <div>
+        <h2>Password</h2>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className="w100"
         />
-      </label>
-      <button className="default" type="submit">Log In</button>
+        <div className="w100 flex-column-center">
+          <button className="default" type="submit" >Log In</button>
+          <button className='demo' onClick={demoLogin}>Demo User</button>
+        </div>
+      </div>
     </form>
   );
 }

@@ -1,0 +1,23 @@
+/* div.signup-form-main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+div.signup-form-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 50%;
+    margin: 50px;
+    padding:  5px 20px;
+    border: 2px solid grey;
+    border-radius: 15px;
+}
+
+div.signup-footer {
+    justify-content: flex-end;
+    display: flex;
+    margin-top: 10px;
+} */
