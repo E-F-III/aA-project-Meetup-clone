@@ -49,15 +49,8 @@ function App() {
           </Switch>
         </div>
       )}
-<<<<<<< HEAD
-    </>
-=======
-      {/* <footer>
-        <FooterInfo />
-      </footer> */}
     </div>
->>>>>>> dev
-  );
+  )
 }
 
 export default App;
