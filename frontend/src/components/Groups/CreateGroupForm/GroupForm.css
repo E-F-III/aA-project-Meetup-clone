@@ -1,9 +1,5 @@
 div.main-form-div {
     justify-content: center;
-<<<<<<< HEAD:frontend/src/components/GroupForm/GroupForm.css
-=======
-    /* height: 70vh; */
->>>>>>> dev:frontend/src/components/Groups/CreateGroupForm/GroupForm.css
     min-width: 900px;
 }
 
