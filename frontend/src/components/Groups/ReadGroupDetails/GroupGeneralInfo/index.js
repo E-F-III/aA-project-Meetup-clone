@@ -4,7 +4,7 @@ function GroupGeneralInfo({ group }) {
     return (
         <div className='details-general-info flex-row-center w70'>
             <div className='w70 padding-none-sides'>
-                <div className='header-img'>
+                <div className='header-img  backround-grey'>
                     <img className='cover'
                         src={group.images.length > 0 ? group.images[0].url : ""}
                         style={{ visibility: `${group.images.length > 0 ? "visible" : "hidden"}` }}

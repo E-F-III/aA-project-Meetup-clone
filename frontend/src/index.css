@@ -20,6 +20,10 @@ div.w100vw{
     background-color: #F6F7F8;
 }
 
+.backround-grey {
+    background-color: #EFEFEF;
+}
+
 /* Main Div  */
 .main-div {
     width: 100%;
