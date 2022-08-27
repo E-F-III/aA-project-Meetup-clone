@@ -1,9 +1,10 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
-
+import SignUpFormModal from '../SignUpFormModal';
 
 import './Navigation.css';
 
@@ -15,17 +16,18 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <div className='flex-row-justify-between flex-row-align-center'>
-        <NavLink to={'/create-group'}>Create a group</NavLink>
-        <ProfileButton user={sessionUser} />
+      <div className='flex-row-justify-between flex-row-align-center '>
+        <NavLink className='padding-sides' to={'/create-group'}>Create a group</NavLink>
+        <ProfileButton className='padding-sides' user={sessionUser} />
       </div>
     );
   } else {
     sessionLinks = (
-      <>
+      <div className='flex-row'>
         <LoginFormModal />
-        <NavLink to="/signup" style={{color:"black", textDecoration:"none"}}>Sign Up</NavLink>
-      </>
+        <SignUpFormModal />
+        {/* <NavLink to="/signup" style={{color:"black", textDecoration:"none"}}>Sign Up</NavLink> */}
+      </div>
     );
   }
 

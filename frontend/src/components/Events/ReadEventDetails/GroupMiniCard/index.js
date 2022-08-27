@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 function GroupMiniCard({ group }) {
 
     return (
-        <div className='border20 padding20 minicard'>
+        <div className='verticalMargin10 padding20 minicard'>
 
             <NavLink className='navLink ' to={`/groups/${group.id}/about`}>
                 <div id='minicard-inner-div' className='flex-row'>

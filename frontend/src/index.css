@@ -242,6 +242,10 @@ p.spacing {
     padding: 20px 0px 20px 0px
 }
 
+.padding-sides {
+    padding: 0 20px 0 20px
+}
+
 .padding20 {
     padding: 20px;
 }

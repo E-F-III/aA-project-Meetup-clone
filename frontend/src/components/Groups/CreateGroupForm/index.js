@@ -59,7 +59,7 @@ function GroupForm() {
                     <div className="group-form-steps">
                         {step} OF 5
                     </div>
-                    <form className="group-form" onSubmit={handleSubmit}>
+                    <form className="group-form h100" onSubmit={handleSubmit}>
                         {
                             step === 'STEP 1' &&
                             <div className="create-group">
