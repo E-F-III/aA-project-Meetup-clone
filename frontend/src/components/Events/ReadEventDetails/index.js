@@ -41,19 +41,19 @@ function EventDetails() {
             <div className='flex-row-center border-none-sides'>
                 <EventGeneralInfo event={event} />
             </div>
-            <div className='event-info-body flex-row-center'>
+            <div className='event-info-body flex-row-center '>
                 <div className='w70 flex-row'>
-                    <div className='w70'>
+                    <div className='w70 padding20'>
                         <h3>Details</h3>
                         <p>{event.description}</p>
                     </div>
-                    <div className='other-info-card w30'>
+                    <div className='other-info-card w30 padding20'>
                             <GroupMiniCard group={group} />
                             <EventTimeCard date={date} endDate={endDate} venue={event.venue} />
                     </div>
                 </div>
             </div>
-            <div className='event-footer flex-row-center border-none-sides'>
+            <div className='footer flex-row-center border-none-sides'>
                 <EventFooter event={event} group={group} />
             </div>
         </div>

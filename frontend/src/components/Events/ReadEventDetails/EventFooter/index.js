@@ -21,7 +21,7 @@ function EventFooter({ event, group }) {
 
     return (
         <div className='w70 flex-row'>
-            <div className='w70 flex-row-justify-between'>
+            <div className='w70 flex-row-align-center flex-row-justify-between padding20'>
                 <div>
                     <p>{date.toDateString()}</p>
                     <h3>{event.name}</h3>
@@ -30,7 +30,7 @@ function EventFooter({ event, group }) {
                     <button className='default' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
                 </div>
             </div>
-            <div className='flex-row-align-center w30'>
+            <div className='flex-row-align-center w30 padding20'>
                 <div>
                     <h3>Price: ${event.price}</h3>
                     <h3>{Number(event.capacity) - Number(event.numAttending)} spots left</h3>

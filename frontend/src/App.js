@@ -53,9 +53,9 @@ function App() {
           </Switch>
         </div>
       )}
-      <footer>
+      {/* <footer>
         <FooterInfo />
-      </footer>
+      </footer> */}
     </div>
   );
 }
