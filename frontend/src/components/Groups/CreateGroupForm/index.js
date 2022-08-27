@@ -36,7 +36,7 @@ function GroupForm() {
 
         const data = await dispatch(createNewGroupThunk(newGroup))
 
-        history.push(`/groups/${data.id}`)
+        history.push(`/groups/${data.id}/about`)
     }
 
     const USstates = [

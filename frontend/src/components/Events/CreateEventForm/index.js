@@ -138,8 +138,9 @@ function EventForm({ group }) {
                             max={"9999-12-31T00:00"}
                             onChange={e => setEndDate(e.target.value)} />
                     </div>
+                    <button className="default">Submit</button>
+
                 </div>
-                <button className="default">Submit</button>
             </form>
         </div>
     )

@@ -25,7 +25,7 @@ function GroupEventCard({ event }) {
                 </div>
                 <div className='card-left'>
                     <div className="event-card-image">
-                        <img className='cover' src={event.previewImage.length > 0 ? event.previewImage : ""} />
+                        <img className='cover' src={event.previewImage.length > 0 ? event.previewImage : ""} hidden= {!event.previewImage.length > 0} />
                     </div>
                 </div>
             </div>

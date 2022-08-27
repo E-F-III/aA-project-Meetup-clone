@@ -9,6 +9,8 @@ import EventGeneralInfo from './EventGeneralnfo';
 import EventFooter from './EventFooter';
 
 import './EventDetails.css'
+import GroupMiniCard from './GroupMiniCard';
+import EventTimeCard from './EventTimeCard';
 
 function EventDetails() {
     const { eventId } = useParams()
@@ -45,35 +47,9 @@ function EventDetails() {
                         <h3>Details</h3>
                         <p>{event.description}</p>
                     </div>
-
                     <div className='other-info-card w30'>
-                        <div className='w70'>
-                            <NavLink className='event-group-card navLink' to={`/groups/${group.id}`}>
-                                <div className=' w30'>
-                                    <div className='event-group-card-image'>
-                                        <img
-                                            className='event-group-image'
-                                            src={group.images.length > 0 ? group.images[0].url : ""}
-                                            hidden={group.images.length > 0 ? false : true}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className='w70'>
-                                    <p>{event.Group.name}</p>
-                                    <p>{event.Group.private ? 'Private' : 'Public'} group</p>
-                                </div>
-                            </NavLink>
-                        </div>
-                        <div className='event-time-info'>
-                            <div>
-                                <p>{date.toString()} to</p>
-                                <p>{endDate.toString()}</p>
-                            </div>
-                            <div>
-                                <p>{event.venue}</p>
-                            </div>
-                        </div>
+                            <GroupMiniCard group={group} />
+                            <EventTimeCard date={date} endDate={endDate} venue={event.venue} />
                     </div>
                 </div>
             </div>
@@ -81,7 +57,6 @@ function EventDetails() {
                 <EventFooter event={event} group={group} />
             </div>
         </div>
-
     );
 }
 
