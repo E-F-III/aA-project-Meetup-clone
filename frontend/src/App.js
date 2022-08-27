@@ -26,7 +26,6 @@ function App() {
     <div className="w100vw">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <div>
           <Switch>
             <Route exact path='/'>
               <SplashPage />
@@ -47,7 +46,6 @@ function App() {
               <GroupsOfUser />
             </Route>
           </Switch>
-        </div>
       )}
     </div>
   )
