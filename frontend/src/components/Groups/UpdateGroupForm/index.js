@@ -134,6 +134,7 @@ function EditGroupForm({ group }) {
                 onChange={e => setCity(e.target.value)}
                 value={city}
                 // minLength={3}
+                maxLength='50'
                 placeholder='city...'
                 name="city" />
 
