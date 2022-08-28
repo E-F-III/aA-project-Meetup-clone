@@ -53,6 +53,10 @@ li.profile-dropdown {
     color: black;
 }
 
+.profile-groups:hover {
+    text-decoration: underline;
+}
+
 button.demo {
     padding: 10px 20px;
     margin: 10px;
