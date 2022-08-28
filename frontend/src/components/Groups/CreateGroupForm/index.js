@@ -83,6 +83,7 @@ function GroupForm() {
                                     type='text'
                                     onChange={e => setCity(e.target.value)}
                                     value={city}
+                                    maxLength='50'
                                     placeholder='city...'
                                     name="city" />
 
