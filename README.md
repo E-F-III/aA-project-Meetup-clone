@@ -29,7 +29,7 @@ Hike up is a website clone, inspired by [Meet Up](https://www.meetup.com/). Hike
 Access to the sign up, log in, and demo user are all located on the navbar.
 Links to see the list of groups and events are also provided here
 
-![image](https://user-images.githubusercontent.com/75222415/187095372-b7003898-e4a2-4426-9c34-5da0b11e72e2.png)
+![image](https://user-images.githubusercontent.com/75222415/187095525-1c804477-4d7e-464e-9a5d-83b2e279d08f.png)
 
 ## Find Groups and Events
 
