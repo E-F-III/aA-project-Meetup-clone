@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { deleteGroupThunk, editGroupDetailsThunk } from "../../../store/Groups";
@@ -8,6 +8,8 @@ import './EditGroupForm.css'
 function EditGroupForm({ group }) {
     const dispatch = useDispatch()
     const history = useHistory()
+
+    const sessionUser = useSelector(state => state.session.user)
 
     const [name, setName] = useState(group.name)
     const [about, setAbout] = useState(group.about)
@@ -31,6 +33,12 @@ function EditGroupForm({ group }) {
         setValidationErrors(errors)
 
     }, [name, about, city])
+
+    if (sessionUser.id !== group.organizerId) {
+        return (
+            <h1>Only the organizer can edit this group</h1>
+        )
+    }
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -75,72 +83,85 @@ function EditGroupForm({ group }) {
     ];
 
     return (
-            <div>
-                <form onSubmit={handleSubmit}>
-                    {isSubmitted && validationErrors.length > 0 &&
-                        <ul>
-                            {validationErrors.map(error => <li key={error}>{error}</li>)}
-                        </ul>}
-                    <h2>Name</h2>
-                    <input
-                        required
-                        type='text'
-                        onChange={e => setName(e.target.value)}
-                        value={name}
-                        placeholder='group name...'
-                        name='name' />
-                    <h2>About</h2>
-                    <textarea
-                        required
-                        rows='13'
-                        cols='76'
-                        onChange={e => setAbout(e.target.value)}
-                        value={about}
-                        placeholder='Please write at least 50 characters'
-                        name='about' />
-                    <p>Character count {about.length}</p>
-                    <h2>Type</h2>
-                    <select name='type'>
-                        <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
-                        <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
-                    </select>
-                    <select name='private'>
-                        <option value={false} onChange={e => setPrivate(e.target.value)}>Public</option>
-                        <option value={true} onChange={e => setPrivate(e.target.value)}>Private</option>
-                    </select>
-                    <h2>Location</h2>
-                    <input
-                        required
-                        type='text'
-                        onChange={e => setCity(e.target.value)}
-                        value={city}
-                        placeholder='city...'
-                        name="city" />
-                    <select
-                        required
-                        name='state'
-                        placeholder="state..."
-                        value={state}
-                        onChange={e => setState(e.target.value)}
-                    >
-                        {USstates.map(USstate => {
-                            return (
-                                <option
-                                    key={USstate}
-                                    onChange={e => setState(e.target.value)}
-                                    value={USstate}
-                                >
-                                    {USstate}
-                                </option>
-                            )
-                        })}
-                    </select>
-                    <div className="form-buttons">
-                        <button className="return" onClick={handleDelete}>Delete</button>
-                        <button className="default" type="submit">Save</button>
-                    </div>
-                </form>
+        <form onSubmit={handleSubmit}>
+            <h2>Edit {group.name}'s info!</h2>
+            {isSubmitted && validationErrors.length > 0 &&
+                <ul>
+                    {validationErrors.map(error => <li key={error}>{error}</li>)}
+                </ul>}
+
+            <h3>Name</h3>
+            <input
+                required
+                type='text'
+                onChange={e => setName(e.target.value)}
+                value={name}
+                minLength={'5'}
+                maxLength={'60'}
+                placeholder='Please write at least 5 characters and at most 60 characters'
+                name='name' />
+            <span className="text14 textcolor-grey">Character count: {name.length}</span>
+
+
+            <h3>About</h3>
+            <textarea
+                required
+                rows='13'
+                cols='76'
+                onChange={e => setAbout(e.target.value)}
+                value={about}
+                // minLength={'50'}
+                maxLength={'1000'}
+                placeholder='Please write at least 50 characters and at most 1000 characters'
+                name='about' />
+            <span className="text14 textcolor-grey">Character count: {about.length}</span>
+
+            <h3>Type</h3>
+            <select name='type'>
+                <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
+                <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
+            </select>
+            <select name='private'>
+                <option value={false} onChange={e => setPrivate(e.target.value)}>Public</option>
+                <option value={true} onChange={e => setPrivate(e.target.value)}>Private</option>
+            </select>
+
+            <h3>Location</h3>
+            <span>City</span>
+            <input
+                required
+                type='text'
+                onChange={e => setCity(e.target.value)}
+                value={city}
+                // minLength={3}
+                placeholder='city...'
+                name="city" />
+
+            <span>State</span>
+            <select
+                required
+                name='state'
+                placeholder="state..."
+                value={state}
+                onChange={e => setState(e.target.value)}
+            >
+                {USstates.map(USstate => {
+                    return (
+                        <option
+                            key={USstate}
+                            onChange={e => setState(e.target.value)}
+                            value={USstate}
+                        >
+                            {USstate}
+                        </option>
+                    )
+                })}
+            </select>
+            <div className="flex-row-justify-between">
+                <button className="return" onClick={handleDelete}>Delete</button>
+                <button className="default" type="submit">Save</button>
             </div>
+        </form>
     )
 }
 

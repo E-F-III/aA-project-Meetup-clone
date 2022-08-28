@@ -7,18 +7,16 @@ body {
     background-color: #FFFFFF;
     font-family: Graphik Meetup, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
     margin: 0px;
-    min-height: 100%;
+    padding: 0px;
+    height: 100vh;
+    width: 100vw;
     position: relative;
     /* padding-bottom: 6rem; */
 }
 
-div.w100vw{
-    width: 100vw;
-}
-
-.backround-light-blue {
+/* .backround-light-blue {
     background-color: #F6F7F8;
-}
+} */
 
 .backround-grey {
     background-color: #EFEFEF;
@@ -27,7 +25,8 @@ div.w100vw{
 /* Main Div  */
 .main-div {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    /* justify-content: center; */
 }
 
 /* Footer */
@@ -91,17 +90,13 @@ button:disabled {
     cursor: default;
 }
 
-div.main-div {
-    justify-content: center;
-}
-
 /* Form Stuff */
 .w450px {
     width: 450px;
 }
 
 input {
-    width: 70%;
+    width: 100%;
     height: 55;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
@@ -109,10 +104,11 @@ input {
     border-radius: 10px;
     border: 1px solid black;
     box-sizing: border-box;
+    font-family: Graphik Meetup, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
 }
 
 select {
-    width: 70%;
+    width: 100%;
     height: 55;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
@@ -120,16 +116,18 @@ select {
     border-radius: 10px;
     border: 1px solid black;
     box-sizing: border-box;
+    font-family: Graphik Meetup, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
 }
 
 textarea {
-    width: 70%;
+    width: 100%;
     padding: 10px 20px 10px 40px;
     margin-bottom: 5px;
     margin-top: 5px;
     border-radius: 10px;
     border: 1px solid black;
     box-sizing: border-box;
+    font-family: Graphik Meetup, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* Images */
@@ -240,6 +238,10 @@ p.spacing {
 .border-none-sides {
     border-top: #E6E6E6 1px solid;
     border-bottom: #E6E6E6 1px solid;
+}
+
+.border-top-black-2px {
+    border-top: 2px solid black;
 }
 
 .padding-none-sides {

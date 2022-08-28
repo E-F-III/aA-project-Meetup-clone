@@ -27,7 +27,7 @@ function EventFooter({ event, group }) {
                     <h3>{event.name}</h3>
                 </div>
                 <div>
-                    <button className='default' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
+                    <button className='return' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
                 </div>
             </div>
             <div className='flex-row-align-center w30 padding20'>
