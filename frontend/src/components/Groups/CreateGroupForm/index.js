@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Redirect, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 import { createNewGroupThunk } from "../../../store/Groups"
 
-import FooterInfo from '../../FooterInfo'
+// import FooterInfo from '../../FooterInfo'
 import './GroupForm.css'
 
 function GroupForm() {
@@ -20,7 +20,14 @@ function GroupForm() {
     const [step, setStep] = useState('STEP 1')
 
     const sessionUser = useSelector((state) => state.session.user);
-    if (!sessionUser) return <Redirect to="/signup" />;
+
+    if (!sessionUser) {
+        return (
+            <div className="main-div flex-row-center">
+                <h1> PLEASE LOG IN TO CONTINUE MAKING A GROUP </h1>
+            </div>
+        )
+    }
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -58,6 +65,7 @@ function GroupForm() {
         <div className="main-div flex-row-center">
             <div className="w70 h100 flex-row-center flex-column-center">
                 <form className="h100 flex-column-center" onSubmit={handleSubmit}>
+
                     <div className="textcolor-grey">
                         {step} OF 5
                     </div>
