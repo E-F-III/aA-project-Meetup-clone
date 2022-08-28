@@ -12,7 +12,8 @@ function EventCard({ event }) {
     const hours24 = eventStart.getHours()
     const hours = Number(hours24) > 12 ? Number(hours24) - 12 : hours24
     const minutesDefault = eventStart.getMinutes()
-    const minutes = minutesDefault.length === 2 ? minutesDefault : '0'.concat(minutesDefault)
+    console.log(minutesDefault)
+    const minutes = (minutesDefault > 10) ? minutesDefault : '0'.concat(minutesDefault)
     const AMPM = Number(hours24) > 12 ? 'PM' : 'AM'
 
     return (
@@ -32,7 +33,7 @@ function EventCard({ event }) {
                     <h3 className='card-title text16'>{event.name}</h3>
                     <h4 className='card-details text14 textcolor-grey'>{event.Group.name} • {event.Group.city}, {event.Group.state}</h4>
                 </div>
-                <p className='card-details'>{event.numAttending} attendees</p>
+                <p className='card-details text14 textcolor-grey'>{event.numAttending} attendees</p>
             </div>
         </NavLink>
     )

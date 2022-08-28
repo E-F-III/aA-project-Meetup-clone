@@ -21,19 +21,19 @@ function EventFooter({ event, group }) {
 
     return (
         <div className='w70 flex-row'>
-            <div className='w70 flex-row-align-center flex-row-justify-between padding20'>
+            <div className='w70 flex-row-align-center flex-row-justify-between padding5'>
                 <div>
                     <p>{date.toDateString()}</p>
-                    <h3>{event.name}</h3>
+                    <p>{event.name}</p>
                 </div>
                 <div>
                     <button className='return' hidden={(sessionUser) && sessionUser.id === group.organizerId ? false : true} onClick={handleDelete}>Delete</button>
                 </div>
             </div>
-            <div className='flex-row-align-center w30 padding20'>
+            <div className='flex-row-align-center w30 padding5'>
                 <div>
-                    <h3>Price: ${event.price}</h3>
-                    <h3>{Number(event.capacity) - Number(event.numAttending)} spots left</h3>
+                    <p>Price: ${event.price}</p>
+                    <p>{Number(event.capacity) - Number(event.numAttending)} spots left</p>
                 </div>
             </div>
         </div>

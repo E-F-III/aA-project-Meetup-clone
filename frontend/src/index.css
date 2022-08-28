@@ -14,6 +14,10 @@ body {
     /* padding-bottom: 6rem; */
 }
 
+div {
+    overflow-wrap: break-word;
+}
+
 /* .backround-light-blue {
     background-color: #F6F7F8;
 } */
