@@ -40,7 +40,7 @@ function EventForm({ group }) {
         e.preventDefault()
 
         setIsSubmitted(true)
-        // console.log(startDate, endDate)
+        console.log(price)
         // handle event dates for local time
 
         if (validationErrors.length > 0) return
@@ -113,7 +113,8 @@ function EventForm({ group }) {
                     type="number"
                     value={capacity}
                     onChange={e => setCapacity(e.target.value)}
-                    min="1" />
+                    min="1"
+                    max="100" />
             </div>
 
             <div className="event-form-div">
@@ -123,8 +124,9 @@ function EventForm({ group }) {
                     name="event-price"
                     value={price}
                     onChange={e => setPrice(e.target.value)}
-                    min={0}
-                    type='number' />
+                    min='0'
+                    maxLength='4'
+                    type='currency' />
             </div>
 
             <div className="event-form-div">
