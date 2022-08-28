@@ -41,13 +41,13 @@ function ProfileButton({ user }) {
       {showMenu && (
         <div className="profile-dropdown">
           <ul className="profile-dropdown">
-            <li className="profile-dropdown" >
-              <NavLink className='profile-groups' to={'/your-groups/organized'}>Your groups</NavLink>
-            </li>
             <li className="profile-dropdown text14" >{user.firstName} {user.lastName}</li>
             <li className="profile-dropdown text14" >{user.email}</li>
+            <li className="profile-dropdown" >
+              <NavLink className='profile-groups text14' to={'/your-groups/organized'}>Your groups</NavLink>
+            </li>
             <li className="profile-dropdown text14" >
-              <button  className="no-style text14" style={{padding: "0"}} onClick={logout}>Log Out</button>
+              <button className="no-style text14" style={{ padding: "0" }} onClick={logout}>Log Out</button>
             </li>
           </ul>
         </div>
