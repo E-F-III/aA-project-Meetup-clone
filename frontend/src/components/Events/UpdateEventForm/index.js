@@ -27,7 +27,7 @@ function EditEventForm() {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        console.log(eventId, 'inside use effect')
+        // console.log(eventId, 'inside use effect')
         dispatch(getEventDetails(eventId))
             .then((res)=> {
                 setName(res.name)

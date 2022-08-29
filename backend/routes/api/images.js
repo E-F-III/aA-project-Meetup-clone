@@ -21,7 +21,7 @@ router.delete(
             err.status = 404
             return next(err)
         }
-        console.log(image)
+        // console.log(image)
         if (image.userId === req.user.id) {
             await image.destroy()
             res.json({message: "Successfully deleted", statusCode: 200})

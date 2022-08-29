@@ -20,8 +20,6 @@ const handleValidationErrors = (req, _res, next) => {
       errors.push(individualErrors)
     })
 
-    // console.log("-------------------SEND HELP----------------------")
-
     const err = Error('Validation error');
     err.errors = errors;
     err.status = 400;

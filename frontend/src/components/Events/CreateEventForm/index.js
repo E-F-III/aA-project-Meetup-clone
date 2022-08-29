@@ -41,7 +41,6 @@ function EventForm({ group }) {
         e.preventDefault()
 
         setIsSubmitted(true)
-        console.log(price)
         // handle event dates for local time
 
         if (validationErrors.length > 0) return
