@@ -29,6 +29,7 @@ function EventForm({ group }) {
 
         if (name.length < 5) errors.push('Name must have at least 5 characters')
         if (description.length < 50) errors.push('Description must be at least 50 characters')
+        if (price < 0) errors.push('Price can not be a negative value')
         if (new Date(startDate) <= new Date()) errors.push('Start date must be in the future')
         if (new Date(endDate) < new Date(startDate)) errors.push('End date must be after the start date')
 
