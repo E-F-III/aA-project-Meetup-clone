@@ -35,7 +35,7 @@ function EventForm({ group }) {
 
         setvalidationErrors(errors)
 
-    }, [name, description, startDate, endDate])
+    }, [name, description, startDate, endDate, price])
 
     const handleSubmit = async e => {
         e.preventDefault()
