@@ -18,7 +18,6 @@
 - Express.js
 - React
 - Redux
-
 - Heroku Postgres
 - Heroku for hosting
 
