@@ -16,7 +16,7 @@ function EventFooter({ event, group }) {
         e.preventDefault()
         const data = dispatch(deleteEventThunk(event.id))
 
-        history.push(`/groups/${group.id}`)
+        history.push(`/groups/${group.id}/about`)
     }
 
     return (

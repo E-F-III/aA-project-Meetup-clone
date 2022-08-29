@@ -27,7 +27,6 @@ function EditEventForm() {
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        // console.log(eventId, 'inside use effect')
         dispatch(getEventDetails(eventId))
             .then((res)=> {
                 setName(res.name)
@@ -78,7 +77,6 @@ function EditEventForm() {
     const handleDelete = async e => {
         e.preventDefault()
         const data = await dispatch(deleteAnEvent(event.id))
-
         history.push(`/groups/${event.groupId}/about`)
     }
 
