@@ -117,11 +117,11 @@ function EditGroupForm({ group }) {
             <span className="text14 textcolor-grey">Character count: {about.length}</span>
 
             <h3>Type</h3>
-            <select name='type' value={type}>
+            <select name='type' >
                 <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
                 <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
             </select>
-            <select name='private' value={privates}>
+            <select name='private' >
                 <option value={false} onChange={e => setPrivate(e.target.value)}>Public</option>
                 <option value={true} onChange={e => setPrivate(e.target.value)}>Private</option>
             </select>
