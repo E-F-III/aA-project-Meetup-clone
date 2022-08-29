@@ -14,7 +14,7 @@ function EventFooter({ event, group }) {
 
     const handleDelete = async e => {
         e.preventDefault()
-        const data = dispatch(deleteEventThunk(event.id))
+        const data = await dispatch(deleteEventThunk(event.id))
 
         history.push(`/groups/${group.id}/about`)
     }
