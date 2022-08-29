@@ -11,7 +11,7 @@
 ## Technologies
 - SQLite3
 - Sequelize
-- Postgres
+- Heroku Postgres
 
 - JavaScript
 - HTML
