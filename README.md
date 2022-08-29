@@ -47,3 +47,31 @@ View information about an event.
 
 ![image](https://user-images.githubusercontent.com/75222415/187095480-ee670a11-4aaa-4bbc-bd6b-6743af46def8.png)
 
+# Run locally
+- Clone the repository
+- Change directory into the backend folder and run `npm install`, then `npm run`
+- Open a second terminal and change directory into the frontend folder, run `npm install`, then `npm run`
+
+## Environment Variables
+```
+PORT=8000
+DB_FILE=db/dev.db
+JWT_SECRET=«generate_strong_secret_here»
+JWT_EXPIRES_IN=604800
+```
+
+## Database
+Run the following commands to migrate and seed the project
+```
+npx dotenv sequelize db:migrate
+npx dotenv sequelize db:seed:all
+```
+
+# TODO List
+- Images feature
+- Group members
+- Event attendees
+- Venues
+
+The above features already have database tables and API routes setup. The frontend part of these features are yet to be implemented
+
