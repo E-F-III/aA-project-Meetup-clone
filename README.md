@@ -1,4 +1,4 @@
-### Hike Up
+# Hike Up
 
 [Hike up](https://hike-up.herokuapp.com/) is a website clone, inspired by [Meet Up](https://www.meetup.com/). Hike Up can be used to create groups for other users with similar interests. and hosting events, both in person and online. Users can join groups that may interest them. Hike up was made with the idea that although hiking can be done solo, its best to go with a group. 
 
@@ -46,4 +46,34 @@ View information about a group.
 View information about an event.
 
 ![image](https://user-images.githubusercontent.com/75222415/187095480-ee670a11-4aaa-4bbc-bd6b-6743af46def8.png)
+
+# Run locally
+- Clone the repository
+- Create a .env file in the backend folder. See below for an example
+- Change directory into the backend folder and run `npm install`, then `npm run`
+- Open a second terminal and change directory into the frontend folder, run `npm install`, then `npm run`
+
+## Environment Variables
+```
+PORT=8000
+DB_FILE=db/dev.db
+JWT_SECRET=«generate_strong_secret_here»
+JWT_EXPIRES_IN=604800
+```
+
+## Database
+Run the following commands to migrate and seed the project
+```
+npx dotenv sequelize db:migrate
+npx dotenv sequelize db:seed:all
+```
+
+# TODO List
+The following features already have database tables and API routes setup. The frontend part of these features are yet to be implemented
+- Images feature
+- Group members
+- Event attendees
+- Venues
+
+
 
