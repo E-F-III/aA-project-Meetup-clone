@@ -68,10 +68,11 @@ npx dotenv sequelize db:seed:all
 ```
 
 # TODO List
+The following features already have database tables and API routes setup. The frontend part of these features are yet to be implemented
 - Images feature
 - Group members
 - Event attendees
 - Venues
 
-The above features already have database tables and API routes setup. The frontend part of these features are yet to be implemented
+
 
