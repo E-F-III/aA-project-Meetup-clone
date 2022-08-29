@@ -11,18 +11,16 @@
 ## Technologies
 - SQLite3
 - Sequelize
-- Heroku Postgres
-
 - JavaScript
 - HTML
 - CSS
-
 - Node.js
 - Express.js
 - React
 - Redux
 
-- Heroku
+- Heroku Postgres
+- Heroku for hosting
 
 ## Splash page
 
