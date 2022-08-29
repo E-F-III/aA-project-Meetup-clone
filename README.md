@@ -49,6 +49,7 @@ View information about an event.
 
 # Run locally
 - Clone the repository
+- Create a .env file in the backend folder. See below for an example
 - Change directory into the backend folder and run `npm install`, then `npm run`
 - Open a second terminal and change directory into the frontend folder, run `npm install`, then `npm run`
 
