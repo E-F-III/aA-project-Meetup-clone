@@ -45,7 +45,7 @@ function EventDetails() {
                 <div className='w70 flex-row'>
                     <div className='w70 padding20'>
                         <h3>Details</h3>
-                        <p>{event.description}</p>
+                        <p className='spacing text16'>{event.description}</p>
                     </div>
                     <div className='other-info-card w30 padding20'>
                             <GroupMiniCard group={group} />

@@ -10,7 +10,7 @@ function FindPage() {
 
     return (
         <div className='main-div flex-column-center flex-column'>
-            <div style={{margin:"10px 0px 5px 0px"}}>
+            <div style={{margin:"10px 0px 5px 0px",}}>
                 <ListsNav />
             </div>
             <div>

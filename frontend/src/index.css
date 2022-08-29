@@ -176,6 +176,10 @@ p.spacing {
     color: #757575;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .uppercase {
     text-transform: uppercase;
 }

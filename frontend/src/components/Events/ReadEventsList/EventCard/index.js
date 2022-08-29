@@ -12,7 +12,6 @@ function EventCard({ event }) {
     const hours24 = eventStart.getHours()
     const hours = Number(hours24) > 12 ? Number(hours24) - 12 : hours24
     const minutesDefault = eventStart.getMinutes()
-    console.log(minutesDefault)
     const minutes = (minutesDefault > 10) ? minutesDefault : '0'.concat(minutesDefault)
     const AMPM = Number(hours24) > 12 ? 'PM' : 'AM'
 

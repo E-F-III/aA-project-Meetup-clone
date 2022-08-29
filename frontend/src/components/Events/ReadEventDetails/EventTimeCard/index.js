@@ -10,7 +10,7 @@ function EventTimeCard({ date, endDate, venue }) {
     endString = endarr.slice(0, 5).join(' ')
 
     return (
-        <div id='event-time-card' className='padding20 verticalMargin10  minicard'>
+        <div id='event-time-card' className='padding20 verticalMargin10 minicard text14 textcolor-grey'>
             <div id='event-time'>
                 <p>{startString} to</p>
                 <p>{endString}</p>
