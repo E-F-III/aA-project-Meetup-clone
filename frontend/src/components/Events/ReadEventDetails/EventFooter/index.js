@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { deleteEventThunk } from '../../../../store/Events';
 
-function EventFooter({ event, group }) {
+function EventFooter({ event, group, setIsLoaded }) {
     const sessionUser = useSelector(state => state.session.user)
 
     const dispatch = useDispatch()
@@ -14,6 +14,7 @@ function EventFooter({ event, group }) {
 
     const handleDelete = async e => {
         e.preventDefault()
+        setIsLoaded(false)
         const data = await dispatch(deleteEventThunk(event.id))
 
         history.push(`/groups/${group.id}/about`)

@@ -54,7 +54,7 @@ function EventDetails() {
                 </div>
             </div>
             <div className='footer flex-row-center border-none-sides'>
-                <EventFooter event={event} group={group} />
+                <EventFooter event={event} group={group} setIsLoaded={setIsLoaded}/>
             </div>
         </div>
     );
