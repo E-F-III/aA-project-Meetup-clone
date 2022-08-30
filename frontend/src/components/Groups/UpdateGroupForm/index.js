@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { deleteGroupThunk, editGroupDetailsThunk } from "../../../store/Groups";
 import './EditGroupForm.css'
 
-function EditGroupForm({ group }) {
+function EditGroupForm({ group, setIsLoaded }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -63,8 +63,9 @@ function EditGroupForm({ group }) {
 
     const handleDelete = e => {
         e.preventDefault()
-        const data = dispatch(deleteGroupThunk(group.id))
-        history.push('/find/groups')
+        setIsLoaded(false)
+        dispatch(deleteGroupThunk(group.id))
+        .then(() => history.push('/find/groups'))
     }
 
     const USstates = [
@@ -117,11 +118,11 @@ function EditGroupForm({ group }) {
             <span className="text14 textcolor-grey">Character count: {about.length}</span>
 
             <h3>Type</h3>
-            <select name='type' >
+            <select name='type' value={type} onChange={e => setType(e.target.value)}>
                 <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
                 <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
             </select>
-            <select name='private' >
+            <select name='private' value={privates} onChange={e => setPrivate(e.target.value)}>
                 <option value={false} onChange={e => setPrivate(e.target.value)}>Public</option>
                 <option value={true} onChange={e => setPrivate(e.target.value)}>Private</option>
             </select>

@@ -62,7 +62,7 @@ function GroupDetails() {
                                 <GroupEvents groupId={groupId} />
                             </Route>
                             <Route path={`${url}/edit`}>
-                                <EditGroupForm group={group} />
+                                <EditGroupForm group={group} setIsLoaded={setIsLoaded} />
                             </Route>
                             <Route path={`${url}/create-event`}>
                                 <EventForm group={group} />
