@@ -14,6 +14,7 @@ import EventDetails from "./components/Events/ReadEventDetails";
 import GroupsOfUser from "./components/Groups/ReadUsersGroups";
 
 import FooterInfo from "./components/FooterInfo";
+import SignupFormPage from "./components/SignupForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,37 +24,38 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="w100vw">
+    <div id='1st-child' className="h100 w100">
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <div>
-          <Switch>
-            <Route exact path='/'>
-              <SplashPage />
-            </Route>
-            <Route path="/find">
-              <FindPage />
-            </Route>
-            <Route path="/groups/:groupId">
-              <GroupDetails />
-            </Route>
-            <Route path="/events/:eventId">
-              <EventDetails />
-            </Route>
-            <Route exact path="/create-group">
-              <GroupForm />
-            </Route>
-            <Route path="/your-groups">
-              <GroupsOfUser />
-            </Route>
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path='/'>
+            <SplashPage />
+          </Route>
+          <Route path="/find">
+            <FindPage />
+          </Route>
+          <Route path="/groups/:groupId">
+            <GroupDetails />
+          </Route>
+          <Route path="/events/:eventId">
+            <EventDetails />
+          </Route>
+          <Route exact path="/create-group">
+            <GroupForm />
+          </Route>
+          <Route path="/your-groups">
+            <GroupsOfUser />
+          </Route>
+          {/* <Route path="/signup">
+              <SignupFormPage />
+          </Route> */}
+          <Route>
+            <h1>Page Not Found</h1>
+          </Route>
+        </Switch>
       )}
-      {/* <footer>
-        <FooterInfo />
-      </footer> */}
     </div>
-  );
+  )
 }
 
 export default App;

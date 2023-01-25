@@ -16,8 +16,8 @@ function GroupMiniCard({ group }) {
                         />
                     </div>
                     <div id='minicard-group-info padding5'>
-                        <div id='minicard-group-title'>{group.name}</div>
-                        <div id='minicard-grou-footer'>{group.private ? 'Private' : 'Public'} group</div>
+                        <div id='minicard-group-title' className='text16'>{group.name}</div>
+                        <div id='minicard-grou-footer' className='text14 textcolor-grey'>{group.private ? 'Private' : 'Public'} group</div>
                     </div>
                 </div>
             </NavLink>

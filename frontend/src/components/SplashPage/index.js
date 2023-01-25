@@ -4,12 +4,16 @@ import ticket from '../../assets/images/ticket.svg'
 import joinGroup from '../../assets/images/joinGroup.svg'
 import FooterInfo from '../FooterInfo'
 
-import { useHistory } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 import './Splash.css'
+import { useSelector } from 'react-redux'
 
 function SplashPage() {
     const history = useHistory()
+    const sessionUser = useSelector(state => state.session.user)
+
+    if (sessionUser) return  <Redirect to={'/find/events'} />
     return (
         <div>
             <div className='splash-bg'></div>

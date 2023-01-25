@@ -206,7 +206,6 @@ router.post(
         }
 
         const Attendance = await Attendee.findOne({ where: { eventId: req.params.eventId, userId: req.user.id, } })
-        console.log(Attendance)
 
         if (Attendance) {
             if (Attendance.status === 'pending') {

@@ -4,9 +4,9 @@ function EventGeneralInfo({ event }) {
     const date = new Date(event?.endDate)
     return (
         <div className='details-general-info w70'>
-            <div>
-                <p>{date.toDateString()}</p>
-                <h2>{event.name}</h2>
+            <div className='flex-column'>
+                <span className='uppercase text16 textcolor-grey'>{date.toDateString()}</span>
+                <span className='bold text25'>{event.name}</span>
             </div>
         </div>
     )

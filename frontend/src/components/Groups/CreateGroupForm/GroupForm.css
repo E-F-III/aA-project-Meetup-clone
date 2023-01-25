@@ -1,6 +1,5 @@
-div.main-form-div {
+/* div.main-form-div {
     justify-content: center;
-    /* height: 70vh; */
     min-width: 900px;
 }
 
@@ -26,7 +25,6 @@ div.create-group {
 div.submission-footer {
     position: relative;
     bottom: 0px;
-    border-top: 2px solid black;
     justify-content: space-between;
     display: flex;
     flex-direction: row-reverse;
@@ -44,4 +42,4 @@ p.create-group {
 
 form.group-form {
     height: 80%;
-}
+} */
