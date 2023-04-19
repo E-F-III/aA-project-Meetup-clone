@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'Images'; // define your table name in options object
-    return await queryInterface.bulkInsert('Images',
+    return await queryInterface.bulkInsert(options,
     [
       {
         url: 'https://www.journeyera.com/wp-content/uploads/2016/05/DSC02224-scaled-1024x683.jpg',
