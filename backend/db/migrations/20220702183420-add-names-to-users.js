@@ -1,10 +1,17 @@
 'use strict';
 
+let options = {};
+options.tableName = 'Users'; // define your table name in options object
+
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
   async up(queryInterface, Sequelize) {
 
     await queryInterface.addColumn(
-      'Users',
+      options,
       'firstName',
       {
         type: Sequelize.STRING(15),
@@ -13,7 +20,7 @@ module.exports = {
       }
     )
     await queryInterface.addColumn(
-      'Users',
+      options,
       'lastName',
       {
         type: Sequelize.STRING(15),
@@ -25,12 +32,12 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.removeColumn(
-      'Users',
+      options,
       'firstName'
     )
 
     await queryInterface.removeColumn(
-      'Users',
+      options,
       'lastName'
     )
   }
