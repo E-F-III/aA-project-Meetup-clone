@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
+    options.tableName = 'Attendees'; // define your table name in options object
     return await queryInterface.bulkInsert(options, [
       {
         userId: 4,
