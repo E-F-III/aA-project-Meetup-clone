@@ -119,12 +119,12 @@ function EditGroupForm({ group, setIsLoaded }) {
 
             <h3>Type</h3>
             <select name='type' value={type} onChange={e => setType(e.target.value)}>
-                <option value='In person' onChange={e => setType(e.target.value)}>In Person</option>
-                <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
+                <option value='In person' >In Person</option>
+                <option value='Online' >Online</option>
             </select>
             <select name='private' value={privates} onChange={e => setPrivate(e.target.value)}>
-                <option value={false} onChange={e => setPrivate(e.target.value)}>Public</option>
-                <option value={true} onChange={e => setPrivate(e.target.value)}>Private</option>
+                <option value={false} >Public</option>
+                <option value={true} >Private</option>
             </select>
 
             <h3>Location</h3>

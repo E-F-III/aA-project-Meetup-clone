@@ -114,9 +114,10 @@ function EditEventForm() {
                         <select
                             required
                             name='event-type'
+                            onChange={e => setType(e.target.value)}
                         >
-                            <option value='In Person' onChange={e => setType(e.target.value)}>In Person</option>
-                            <option value='Online' onChange={e => setType(e.target.value)}>Online</option>
+                            <option value='In Person' >In Person</option>
+                            <option value='Online' >Online</option>
                         </select>
                     </div>
                     <div className="event-form-div">
